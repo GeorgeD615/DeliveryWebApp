@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
+using System.Text;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -13,9 +14,22 @@ namespace OnlineShopWebApp.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public string Index()
         {
-            return View();
+            List<Product> products = new List<Product>()
+            {
+                new Product {Id = 1, Name = "Ёчпочмак", Cost = 90, Description = "ќчень вкусна€ булочка"},
+                new Product {Id = 2, Name = "’ачапури", Cost = 125, Description = "ќчень вкусна€ лепЄшка"},
+                new Product {Id = 3, Name = "’инкали", Cost = 300, Description = "ќчень вкусные пельмени"}
+            };
+
+            StringBuilder stringBuilder = new StringBuilder(100);
+            foreach(var p in products)
+            {
+                stringBuilder.Append($"{p.Id}\n{p.Name}\n{p.Cost}\n\n");
+            }
+
+            return stringBuilder.ToString();
         }
 
         public IActionResult Privacy()
