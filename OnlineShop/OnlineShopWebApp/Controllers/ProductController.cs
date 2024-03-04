@@ -7,7 +7,7 @@ namespace OnlineShopWebApp.Controllers
     {
         public string Index(int id)
         {
-            ProductsInfo.Products.TryGetValue(id, out Product result);
+            var result = ProductsInfo.Products.FirstOrDefault(p => p.Id == id);
 
             if (result != null)
                 return $"{id}\n{result.Name}\n{result.Cost}\n{result.Description}";
