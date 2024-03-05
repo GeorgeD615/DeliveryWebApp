@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace OnlineShopWebApp.Models
+﻿namespace OnlineShopWebApp.Models
 {
     public static class ProductsInfo
     {
