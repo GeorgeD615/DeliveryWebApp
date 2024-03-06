@@ -7,7 +7,7 @@ namespace OnlineShopWebApp.Controllers
     {
         public string Index(int id)
         {
-            var result = ProductsInfo.GetProductById(id);
+            var result = ProductsRepository.GetProductById(id);
 
             if (result != null)
                 return $"{id}\n{result.Name}\n{result.Cost}\n{result.Description}";

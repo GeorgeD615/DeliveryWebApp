@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Controllers
         public string Index()
         {
             var stringBuilder = new StringBuilder(100);
-            foreach (var p in ProductsInfo.Products)
+            foreach (var p in ProductsRepository.Products)
             {
                 stringBuilder.Append($"{p.Id}\n{p.Name}\n{p.Cost}\n\n");
             }
