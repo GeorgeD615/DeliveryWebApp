@@ -30,7 +30,7 @@ namespace OnlineShopWebApp.Models
         {
             return pageNum < pages ?
                 Products.GetRange((pageNum - 1) * productsNum, productsNum) :
-                Products.GetRange((pageNum - 1) * productsNum, Products.Count % productsNum);
+                Products.GetRange((pageNum - 1) * productsNum, Products.Count - productsNum * (pageNum - 1));
         }
     }
 }
