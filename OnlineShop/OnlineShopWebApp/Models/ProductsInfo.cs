@@ -35,9 +35,11 @@ namespace OnlineShopWebApp.Models
             return Products.FirstOrDefault(p => p.Id == id);
         }
 
-        public static List<Product> GetPageOfProducts(int productsNum, int pageNum)
+        public static List<Product> GetPageOfProducts(int productsNum, int pageNum, int pages)
         {
-            return Products.GetRange(((pageNum - 1) * productsNum), productsNum);
+            return pageNum < pages ? 
+                Products.GetRange((pageNum - 1) * productsNum, productsNum) :
+                Products.GetRange((pageNum - 1) * productsNum, Products.Count % productsNum);
         }
     }
 }

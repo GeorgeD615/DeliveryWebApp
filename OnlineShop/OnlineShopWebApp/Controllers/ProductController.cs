@@ -18,7 +18,16 @@ namespace OnlineShopWebApp.Controllers
 
         public string Page(int productsNum, int pageNum)
         {
-            var pageOfProducts = ProductsInfo.GetPageOfProducts(productsNum, pageNum);
+            if (productsNum <= 0)
+                return "Количество товаров на странице должно быть больше нуля";
+
+            int pages = ProductsInfo.Products.Count / productsNum + 
+                ((ProductsInfo.Products.Count % productsNum) == 0 ? 0 : 1);
+
+            if (pageNum > pages)
+                return "Указанной страницы не существует";
+
+            var pageOfProducts = ProductsInfo.GetPageOfProducts(productsNum, pageNum, pages);
 
             var stringBuilder = new StringBuilder(100);
             foreach (var p in pageOfProducts)
