@@ -5,7 +5,7 @@ namespace OnlineShopWebApp.Models
 {
     public static class ProductsRepository
     {
-        public static List<Product> Products { get; set; } = new List<Product>()
+        private static List<Product> Products { get; set; } = new List<Product>()
         {
             {new Product("Эчпочмак", 90, "Очень вкусная булочка")},
             {new Product("Хачапури", 125, "Очень вкусная лепёшка")},
@@ -21,7 +21,10 @@ namespace OnlineShopWebApp.Models
             {new Product("Хаш", 450, "Горячий, очень сытный и жирный суп из говяжьих ног")}
         };
 
-        public static Product? GetProductById(int id)
+        public static List<Product> GetAll() => Products;
+        public static int GetCount() => Products.Count; 
+
+        public static Product? TryGetById(int id)
         {
             return Products.FirstOrDefault(p => p.Id == id);
         }

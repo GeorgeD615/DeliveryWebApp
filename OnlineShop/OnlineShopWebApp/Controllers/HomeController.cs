@@ -9,9 +9,9 @@ namespace OnlineShopWebApp.Controllers
         public string Index()
         {
             var stringBuilder = new StringBuilder(100);
-            foreach (var p in ProductsRepository.Products)
+            foreach (var product in ProductsRepository.GetAll())
             {
-                stringBuilder.Append($"{p.Id}\n{p.Name}\n{p.Cost}\n\n");
+                stringBuilder.Append($"{product}\n\n");
             }
             return stringBuilder.ToString();
         }

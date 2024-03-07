@@ -8,12 +8,9 @@ namespace OnlineShopWebApp.Controllers
     {
         public string Index(int id)
         {
-            var result = ProductsRepository.GetProductById(id);
+            var result = ProductsRepository.TryGetById(id);
 
-            if (result != null)
-                return $"{id}\n{result.Name}\n{result.Cost}\n{result.Description}";
-
-            return "Товар не найден:(";
+            return result != null ? $"{result}\n{result.Description}" : "Товар не найден:(";
         }
 
         public string Page(int productsNum, int pageNum)
@@ -21,8 +18,8 @@ namespace OnlineShopWebApp.Controllers
             if (productsNum <= 0)
                 return "Количество товаров на странице должно быть больше нуля";
 
-            int pages = ProductsRepository.Products.Count / productsNum + 
-                ((ProductsRepository.Products.Count % productsNum) == 0 ? 0 : 1);
+            int pages = ProductsRepository.GetCount() / productsNum + 
+                ((ProductsRepository.GetCount() % productsNum) == 0 ? 0 : 1);
 
             if (pageNum > pages)
                 return "Указанной страницы не существует";
@@ -30,9 +27,9 @@ namespace OnlineShopWebApp.Controllers
             var pageOfProducts = ProductsRepository.GetPageOfProducts(productsNum, pageNum, pages);
 
             var stringBuilder = new StringBuilder(100);
-            foreach (var p in pageOfProducts)
+            foreach (var product in pageOfProducts)
             {
-                stringBuilder.Append($"{p.Id}\n{p.Name}\n{p.Cost}\n\n");
+                stringBuilder.Append($"{product}\n\n");
             }
 
             return stringBuilder.ToString();
