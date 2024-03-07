@@ -18,7 +18,7 @@
 
         public override string ToString()
         {
-            return $"{Id}\n{Name}\n{Cost}";
+            return $"{Id}\n{Name}\n{Cost} руб.";
         }
     }
 }

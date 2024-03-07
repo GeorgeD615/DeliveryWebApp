@@ -13,18 +13,21 @@ namespace OnlineShopWebApp.Controllers
             return result != null ? $"{result}\n{result.Description}" : "Товар не найден:(";
         }
 
-        public string Page(int productsNum, int pageNum)
+        public string Page(int size, int count)
         {
-            if (productsNum <= 0)
+            if (size <= 0)
                 return "Количество товаров на странице должно быть больше нуля";
 
-            int pages = ProductsRepository.GetCount() / productsNum + 
-                ((ProductsRepository.GetCount() % productsNum) == 0 ? 0 : 1);
+            if (count <= 0)
+                return "Номер страницы должен быть больше нуля";
 
-            if (pageNum > pages)
+            int pages = ProductsRepository.GetCount() / size + 
+                ((ProductsRepository.GetCount() % size) == 0 ? 0 : 1);
+
+            if (count > pages)
                 return "Указанной страницы не существует";
 
-            var pageOfProducts = ProductsRepository.GetPageOfProducts(productsNum, pageNum, pages);
+            var pageOfProducts = ProductsRepository.GetPageOfProducts(size, count, pages);
 
             var stringBuilder = new StringBuilder(100);
             foreach (var product in pageOfProducts)
