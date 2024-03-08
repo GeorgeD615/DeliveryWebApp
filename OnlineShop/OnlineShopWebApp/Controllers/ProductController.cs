@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
-using System.Text;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -29,13 +28,7 @@ namespace OnlineShopWebApp.Controllers
 
             var pageOfProducts = ProductsRepository.GetPageOfProducts(size, count, pages);
 
-            var stringBuilder = new StringBuilder(100);
-            foreach (var product in pageOfProducts)
-            {
-                stringBuilder.Append($"{product}\n\n");
-            }
-
-            return stringBuilder.ToString();
+            return string.Join("\n\n", pageOfProducts);
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.IO;
-
-namespace OnlineShopWebApp.Models
+﻿namespace OnlineShopWebApp.Models
 {
     public static class ProductsRepository
     {
@@ -23,12 +20,7 @@ namespace OnlineShopWebApp.Models
 
         public static List<Product> GetAll() => Products;
         public static int GetCount() => Products.Count; 
-
-        public static Product? TryGetById(int id)
-        {
-            return Products.FirstOrDefault(p => p.Id == id);
-        }
-
+        public static Product? TryGetById(int id) => Products.FirstOrDefault(p => p.Id == id);
         public static List<Product> GetPageOfProducts(int size, int count, int pages)
         {
             return count < pages ?
