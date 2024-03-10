@@ -5,6 +5,6 @@ namespace OnlineShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index() => string.Join("\n\n", ProductsRepository.GetAll());
+        public IActionResult Index() => View(ProductsRepository.GetAll());
     }
 }

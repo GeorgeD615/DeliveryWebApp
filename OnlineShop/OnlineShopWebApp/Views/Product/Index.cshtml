@@ -1,0 +1,20 @@
+﻿@model Product
+@if(Model != null)
+{
+    <div class="row">
+        <div class="col-5">
+            <img class="img-fluid" src="~/khinkali.jpg" alt="Изображение товара"/>
+        </div>
+        <div class="col-3">
+            <h5>@Model.Name</h5>
+            <h5>@Model.Cost руб.</h5>
+            <h5>@Model.Description</h5>
+            <a class="btn btn-dark" href="#" role="button">Добавить в корзину</a>
+            <a class="btn btn-dark" href="/home/index" role="button">Вернуться на главную</a>
+        </div>
+    </div>
+}
+else
+{
+    <h2>Упс..., что-то пошло не так</h2>
+}

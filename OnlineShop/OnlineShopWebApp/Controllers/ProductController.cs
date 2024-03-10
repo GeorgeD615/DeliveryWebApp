@@ -5,12 +5,7 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
-        public string Index(int id)
-        {
-            var result = ProductsRepository.TryGetById(id);
-
-            return result != null ? $"{result}\n{result.Description}" : "Товар не найден:(";
-        }
+        public IActionResult Index(int id) => View(ProductsRepository.TryGetById(id));
 
         public string Page(int size, int count)
         {
