@@ -2,9 +2,7 @@
 
 @if(Model != null)
 {
-    <div>
-        <h2 style="text-align:center">Товары</h2>
-    </div>
+    <h2 class="text-center">Товары</h2>
 
     <div class="row">
         @foreach(var product in Model)
@@ -12,7 +10,7 @@
             <div class="col-3 card shadow">
                 <img class="card-img-top" src="~/khinkali.jpg"></img>
                 <div class="card-body">
-                    <a style="color:black" class="card-title" href="/product/index/@product.Id">
+                    <a style="color:black" href="/product/index/@product.Id">
                         <h5>@product.Name</h5>
                     </a>
                     <h5 >@product.Cost руб.</h5>
