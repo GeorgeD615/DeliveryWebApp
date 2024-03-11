@@ -1,21 +1,22 @@
-﻿@model Dictionary<Product, int>
+﻿@using OnlineShopWebApp.Models.Carts
+@model Cart
 
-@if(Model.Count != 0)
+@if(Model.Size != 0)
 {
-    foreach(var product in Model)
+    foreach(var item in Model.GetAll())
     {
         <div class="row">
             <div class="col-5">
                 <img class="img-fluid" src="~/khinkali.jpg" alt="Изображение товара" />
             </div>
             <div class="col-7">
-                <h5>@product.Key.Name</h5>
-                <h5>@product.Key.Cost руб.</h5>
-                <h5>Количество товара в позиции: @product.Value</h5>
+                <h5>@item.Product.Name</h5>
+                <h5>@item.Product.Cost руб.</h5>
+                <h5>Количество товара в позиции: @item.Amount</h5>
             </div>
         </div>
     }
-    <p>Итоговая сумма: @Model.Sum(product => product.Key.Cost * product.Value)</p>
+    <p>Итоговая сумма: @Model.Cost</p>
     <a class="btn btn-dark" href="#" role="button">Оформить заказ</a>
 }
 else

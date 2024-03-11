@@ -1,4 +1,4 @@
-﻿namespace OnlineShopWebApp.Models
+﻿namespace OnlineShopWebApp.Models.Products
 {
     public static class ProductsRepository
     {
@@ -19,7 +19,7 @@
         };
 
         public static List<Product> GetAll() => Products;
-        public static int GetCount() => Products.Count; 
+        public static int GetCount() => Products.Count;
         public static Product? TryGetById(int id) => Products.FirstOrDefault(p => p.Id == id);
         public static List<Product> GetPageOfProducts(int size, int count, int pages)
         {

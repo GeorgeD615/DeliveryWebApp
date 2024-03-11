@@ -1,4 +1,4 @@
-﻿namespace OnlineShopWebApp.Models
+﻿namespace OnlineShopWebApp.Models.Products
 {
     public class Product
     {
@@ -16,7 +16,7 @@
             Description = description;
         }
 
-        public override string ToString() =>  $"{Id}\n{Name}\n{Cost} руб.";
+        public override string ToString() => $"{Id}\n{Name}\n{Cost} руб.";
 
     }
 }
