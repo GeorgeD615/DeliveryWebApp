@@ -17,9 +17,6 @@ namespace OnlineShopWebApp.Models.Carts
 
         public static List<Cart> GetAll() => carts;
         public static Cart? TryGetByUserId(int id) => carts.FirstOrDefault(cart => cart.UserId == id);
-        public static void AddProductToUserCart(Product product, int userId)
-        {
-            TryGetByUserId(userId)?.AddProduct(product);
-        }
+        public static void AddProductToUserCart(Product product, int userId) => TryGetByUserId(userId)?.AddProduct(product);
     }
 }
