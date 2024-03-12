@@ -1,22 +1,22 @@
 ﻿@using OnlineShopWebApp.Models.Carts
-@model Cart
+@model List<CartItem>
 
-@if(Model.Size != 0)
+@if(Model != null && Model.Count != 0)
 {
-    foreach(var item in Model.GetAll())
+    foreach(var item in Model)
     {
         <div class="row">
-            <div class="col-5">
+            <div class="col-2">
                 <img class="img-fluid" src="~/khinkali.jpg" alt="Изображение товара" />
             </div>
-            <div class="col-7">
+            <div class="col-10">
                 <h5>@item.Product.Name</h5>
                 <h5>@item.Product.Cost руб.</h5>
                 <h5>Количество товара в позиции: @item.Amount</h5>
             </div>
         </div>
     }
-    <p>Итоговая сумма: @Model.Cost</p>
+    <p>Итоговая сумма: @ViewData["Cost"] руб.</p>
     <a class="btn btn-dark" href="#" role="button">Оформить заказ</a>
 }
 else

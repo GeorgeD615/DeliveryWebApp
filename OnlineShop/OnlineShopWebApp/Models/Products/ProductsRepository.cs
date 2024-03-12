@@ -2,7 +2,7 @@
 {
     public static class ProductsRepository
     {
-        private static List<Product> Products { get; set; } = new List<Product>()
+        private static List<Product> Products { get; set; } = new()
         {
             {new Product("Эчпочмак", 90, "Очень вкусная булочка")},
             {new Product("Хачапури", 125, "Очень вкусная лепёшка")},

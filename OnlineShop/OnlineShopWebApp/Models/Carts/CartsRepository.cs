@@ -5,7 +5,7 @@ namespace OnlineShopWebApp.Models.Carts
 {
     public static class CartsRepository
     {
-        private static List<Cart> carts = new List<Cart>();
+        private static List<Cart> carts = new();
 
         static CartsRepository()
         {
@@ -17,6 +17,11 @@ namespace OnlineShopWebApp.Models.Carts
 
         public static List<Cart> GetAll() => carts;
         public static Cart? TryGetByUserId(int id) => carts.FirstOrDefault(cart => cart.UserId == id);
-        public static void AddProductToUserCart(Product product, int userId) => TryGetByUserId(userId)?.AddProduct(product);
+        public static Cart? AddProductToCartAndGetCart(Product product, int userId)
+        {
+            var cart = TryGetByUserId(userId);
+            cart?.AddProduct(product);
+            return cart;
+        }
     }
 }

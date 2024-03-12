@@ -15,8 +15,5 @@
             Cost = cost;
             Description = description;
         }
-
-        public override string ToString() => $"{Id}\n{Name}\n{Cost} руб.";
-
     }
 }

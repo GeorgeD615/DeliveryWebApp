@@ -11,10 +11,5 @@
             Id = ++nextId;
             Name = name;
         }
-
-        public override string ToString()
-        {
-            return $"{Id}\n{Name}";
-        }
     }
 }
