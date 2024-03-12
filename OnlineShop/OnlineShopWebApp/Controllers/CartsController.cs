@@ -16,7 +16,8 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult AddProductToCart(int userId, int productId)
         {
-            var cart = CartsRepository.AddProductToCartAndGetCart(ProductsRepository.TryGetById(productId), userId);
+            CartsRepository.AddProductToCart(ProductsRepository.TryGetById(productId), userId);
+            var cart = CartsRepository.TryGetByUserId(userId);
             ViewData["Cost"] = cart?.Cost.ToString("#,#", new CultureInfo("ru-RU"));
             return View("Index", cart?.GetAll());
         }

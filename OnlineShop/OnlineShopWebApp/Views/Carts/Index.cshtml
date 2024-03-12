@@ -1,7 +1,7 @@
 ﻿@using OnlineShopWebApp.Models.Carts
 @model List<CartItem>
 
-@if(Model != null && Model.Count != 0)
+@if(Model.Any())
 {
     foreach(var item in Model)
     {
