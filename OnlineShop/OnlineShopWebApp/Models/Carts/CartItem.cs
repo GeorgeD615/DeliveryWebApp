@@ -7,6 +7,7 @@ namespace OnlineShopWebApp.Models.Carts
         public Guid Id { get; }
         public Product Product { get; set; }
         public int Amount { get; set; }
+        public decimal Cost { get => Product.Cost * Amount; }
 
         public CartItem(Product product, int amount = 1)
         {
@@ -15,11 +16,5 @@ namespace OnlineShopWebApp.Models.Carts
             Amount = amount;
         }
 
-        public decimal Cost { 
-            get 
-            {
-                return Product.Cost * Amount;
-            } 
-        }
     }
 }

@@ -14,8 +14,20 @@ namespace OnlineShopWebApp.Models.Carts
                 carts.Add(new Cart(user.Id));
             }
         }
+        public static void CreateCartForUser(int userId) => carts.Add(new Cart(userId));
+        public static Cart TryGetByUserId(int id) => carts.FirstOrDefault(cart => cart.UserId == id);
+        public static void AddProduct(Product product, int userId)
+        {
+            var cart = TryGetByUserId(userId);
+            if (!cart.Items.Any(item => item.Product == product))
+            {
+                cart.Items.Add(new CartItem(product));
+                return;
+            }
 
-        public static Cart? TryGetByUserId(int id) => carts.FirstOrDefault(cart => cart.UserId == id);
-        public static void AddProductToCart(Product product, int userId) => TryGetByUserId(userId)?.AddProduct(product);
+            cart.Items.First(item => item.Product == product).Amount += 1;
+        }
+        public static int GetCartSize(int userId) => TryGetByUserId(userId).Items.Sum(item => item.Amount);
+        public static void ClearCart(int userId) => TryGetByUserId(userId).Items.Clear();
     }
 }

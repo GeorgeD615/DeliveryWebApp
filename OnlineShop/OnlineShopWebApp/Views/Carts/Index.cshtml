@@ -1,9 +1,9 @@
 ﻿@using OnlineShopWebApp.Models.Carts
-@model List<CartItem>
+@model Cart
 
-@if(Model != null && Model.Any())
+@if (Model != null && Model.Items.Any())
 {
-    foreach(var item in Model)
+    foreach(var item in Model.Items)
     {
         <div class="row">
             <div class="col-2">
@@ -16,8 +16,9 @@
             </div>
         </div>
     }
-    <p>Итоговая сумма: @ViewData["Cost"] руб.</p>
+    <p>Итоговая сумма: @Model.Cost руб.</p>
     <a class="btn btn-dark" href="#" role="button">Оформить заказ</a>
+    <a class="btn btn-dark" href="/carts/ClearCart?userId=1" role="button">Очистить корзину</a>
 }
 else
 {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models.Carts;
 using OnlineShopWebApp.Models.Products;
-using System.Globalization;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -10,16 +9,21 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(int userId)
         {
             var cart = CartsRepository.TryGetByUserId(userId);
-            ViewData["Cost"] = cart?.Cost.ToString("#,#", new CultureInfo("ru-RU"));
-            return View(cart?.GetAll());
+            return View(cart);
         }
 
-        public IActionResult AddProductToCart(int userId, int productId)
+        public IActionResult AddProduct(int userId, int productId)
         {
-            CartsRepository.AddProductToCart(ProductsRepository.TryGetById(productId), userId);
+            CartsRepository.AddProduct(ProductsRepository.TryGetById(productId), userId);
             var cart = CartsRepository.TryGetByUserId(userId);
-            ViewData["Cost"] = cart?.Cost.ToString("#,#", new CultureInfo("ru-RU"));
-            return View("Index", cart?.GetAll());
+            return View("Index", cart);
+        }
+
+        public IActionResult ClearCart(int userId)
+        {
+            CartsRepository.ClearCart(userId);
+            var cart = CartsRepository.TryGetByUserId(userId);
+            return View("Index", cart);
         }
     }
 }

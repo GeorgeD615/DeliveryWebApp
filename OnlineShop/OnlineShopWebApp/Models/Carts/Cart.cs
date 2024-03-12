@@ -1,27 +1,20 @@
 ﻿using OnlineShopWebApp.Models.Products;
+using System.Globalization;
 
 namespace OnlineShopWebApp.Models.Carts
 {
     public class Cart
     {
-        private List<CartItem> cartItems = new();
+        private static int nextId = 0;
+        public int Id { get; }
         public int UserId { get; }
+
+        public List<CartItem> Items = new();
+        public string Cost { get => Items.Sum(item => item.Cost).ToString("#,#", new CultureInfo("ru-RU"));}
         public Cart(int userId)
         {
+            Id = ++nextId;
             UserId = userId;
         }
-        public List<CartItem> GetAll() => cartItems;
-        public void AddProduct(Product product)
-        {
-            if (!cartItems.Any(item => item.Product == product))
-            {
-                cartItems.Add(new CartItem(product));
-                return;
-            }
-            
-            cartItems.First(item => item.Product == product).Amount += 1;
-        }
-        public int Size { get {  return cartItems.Count; } }
-        public decimal Cost { get { return cartItems.Sum(item => item.Cost); } }
     }
 }
