@@ -14,7 +14,7 @@ namespace OnlineShopWebApp.Models.Carts
                 carts.Add(new Cart(user.Id));
             }
         }
-        public static void CreateCartForUser(int userId) => carts.Add(new Cart(userId));
+        public static void CreateCart(int userId) => carts.Add(new Cart(userId));
         public static Cart TryGetByUserId(int id) => carts.FirstOrDefault(cart => cart.UserId == id);
         public static void AddProduct(Product product, int userId)
         {

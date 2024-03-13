@@ -15,6 +15,5 @@ namespace OnlineShopWebApp.Models.Carts
             Product = product;
             Amount = amount;
         }
-
     }
 }
