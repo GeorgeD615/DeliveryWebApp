@@ -4,18 +4,18 @@
     {
         private static List<Product> Products { get; set; } = new()
         {
-            {new Product("Эчпочмак", 90, "Очень вкусная булочка")},
-            {new Product("Хачапури", 125, "Очень вкусная лепёшка")},
-            {new Product("Хинкали", 300, "Очень вкусные пельмени")},
-            {new Product("Долма", 250, "Рулетики из виноградных листьев с фаршем внутри")},
-            {new Product("Чак-чак", 200, "Традиционный татарский десерт")},
-            {new Product("Самса", 90, "Узбекский пирожок")},
-            {new Product("Нэмы", 300, "Вьетнамские фаршированные рулетики")},
-            {new Product("Чахохбили", 400, "Рагу из птицы, тушенной с овощами, зеленью и специями")},
-            {new Product("Суп «Харчо»", 350, "Вкусный, ароматный, острый")},
-            {new Product("Чихиртма", 250, "Густой грузинский суп")},
-            {new Product("Кюфта", 230, "Армянские тефтели")},
-            {new Product("Хаш", 450, "Горячий, очень сытный и жирный суп из говяжьих ног")}
+            {new Product("Эчпочмак", 90, "Очень вкусная булочка", "/images/products/eachpochmak.jpg")},
+            {new Product("Хачапури", 125, "Очень вкусная лепёшка", "/images/products/hachapury.jpg")},
+            {new Product("Хинкали", 300, "Очень вкусные пельмени", "/images/products/khinkali.jpg")},
+            {new Product("Долма", 250, "Рулетики из виноградных листьев с фаршем внутри", "/images/products/dolma.jpg")},
+            {new Product("Чак-чак", 200, "Традиционный татарский десерт", "/images/products/chuck-chuck.jpg")},
+            {new Product("Самса", 90, "Узбекский пирожок", "/images/products/samsa.jpg")},
+            {new Product("Нэмы", 300, "Вьетнамские фаршированные рулетики", "/images/products/nams.jpeg")},
+            {new Product("Чахохбили", 400, "Рагу из птицы, тушенной с овощами, зеленью и специями", "/images/products/chahohbili.jpg")},
+            {new Product("Суп «Харчо»", 350, "Вкусный, ароматный, острый", "/images/products/soup_harcho.jpg")},
+            {new Product("Чихиртма", 250, "Густой грузинский суп", "/images/products/chihirtma.jpg")},
+            {new Product("Кюфта", 230, "Армянские тефтели", "/images/products/kufta.jpg")},
+            {new Product("Хаш", 450, "Горячий, очень сытный и жирный суп из говяжьих ног", "/images/products/hash.jpg")}
         };
 
         public static List<Product> GetAll() => Products;

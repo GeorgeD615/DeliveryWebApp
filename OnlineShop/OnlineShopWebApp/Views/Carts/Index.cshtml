@@ -3,22 +3,44 @@
 
 @if (Model != null && Model.Items.Any())
 {
-    foreach(var item in Model.Items)
-    {
-        <div class="row">
-            <div class="col-2">
-                <img class="img-fluid" src="~/khinkali.jpg" alt="Изображение товара" />
-            </div>
-            <div class="col-10">
-                <h5>@item.Product.Name</h5>
-                <h5>@item.Product.Cost руб.</h5>
-                <h5>Количество товара в позиции: @item.Amount</h5>
+    <div class="row">
+        <div class="col-8">
+            @foreach(var item in Model.Items)
+            {
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="@item.Product.ImagePath" class="img-fluid rounded-start" alt="@item.Product.Name">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h3 class="card-title">@item.Product.Name</h3>
+                                        <p>x <b>@item.Amount</b> шт.</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p>Стоимость:</p>
+                                        <p><b>@item.Cost</b> руб.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Оплата</h2>
+                    <p class="card-text">Итого: @Model.Cost руб.</p>
+                    <a class="btn btn-outline-dark" href="#" role="button">Оформить заказ</a>
+                    <a asp-controller="carts" asp-action="clearcart" asp-route-userId="1" class="btn btn-outline-danger" role="button">Очистить корзину</a>
+                </div>
             </div>
         </div>
-    }
-    <p>Итоговая сумма: @Model.Cost руб.</p>
-    <a class="btn btn-dark" href="#" role="button">Оформить заказ</a>
-    <a class="btn btn-dark" href="/carts/ClearCart?userId=1" role="button">Очистить корзину</a>
+    </div>
 }
 else
 {

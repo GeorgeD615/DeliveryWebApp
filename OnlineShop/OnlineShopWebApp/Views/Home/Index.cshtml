@@ -3,19 +3,25 @@
 
 @if(Model != null)
 {
-    <h2 class="text-center">Товары</h2>
 
-    <div class="row">
+    <div class="row justify-content-start">
         @foreach(var product in Model)
         {
-            <div class="col-3 card shadow">
-                <img class="card-img-top" src="~/khinkali.jpg"></img>
+            <div class="col-2 card shadow m-3">
+                <a asp-controller="product" asp-action="index" asp-route-id="@product.Id">
+                    <img class="card-img-top" height="125" src="@product.ImagePath">
+                </a>
                 <div class="card-body">
-                    <a style="color:black" href="/product/index/@product.Id">
-                        <h5>@product.Name</h5>
-                    </a>
-                    <h5 >@product.Cost руб.</h5>
-                    <a class="btn btn-dark" href="/carts/AddProduct?userId=1&productId=@product.Id" role="button">Добавить в корзину</a>
+                    <div class="row">
+                        <div class="col-8 align-content-lg-start">
+                            <p><b>@product.Name</b><br>@product.Cost руб.</p>
+                        </div>
+                        <div class="col-1 justify-content-lg-end">
+                            <a asp-controller="carts" asp-action="AddProduct" asp-route-userId="1" asp-route-productId="@product.Id" class="btn btn-outline-dark" role="button">
+                                <img src="/images/ui/cart_add_icon.png" width="25" alt="Иконка добавления в корзину"/>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
