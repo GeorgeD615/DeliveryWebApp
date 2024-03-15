@@ -2,7 +2,7 @@
 {
     public static class ProductsRepository
     {
-        private static List<Product> Products { get; set; } = new()
+        private static List<Product> products { get; set; } = new()
         {
             {new Product("Эчпочмак", 90, "Очень вкусная булочка", "/images/products/eachpochmak.jpg")},
             {new Product("Хачапури", 125, "Очень вкусная лепёшка", "/images/products/hachapury.jpg")},
@@ -18,14 +18,13 @@
             {new Product("Хаш", 450, "Горячий, очень сытный и жирный суп из говяжьих ног", "/images/products/hash.jpg")}
         };
 
-        public static List<Product> GetAll() => Products;
-        public static int GetCount() => Products.Count;
-        public static Product? TryGetById(int id) => Products.FirstOrDefault(p => p.Id == id);
-        public static List<Product> GetPageOfProducts(int size, int count, int pages)
+        public static List<Product> GetAll() => products;
+        public static int GetCount() => products.Count;
+        public static Product? TryGetById(int productId) => products.FirstOrDefault(p => p.Id == productId);
+        public static List<Product> GetPageOfProducts(int numOfProdPerPage, int pageNum, int amountOfPages)
         {
-            return count < pages ?
-                Products.GetRange((count - 1) * size, size) :
-                Products.GetRange((count - 1) * size, Products.Count - size * (count - 1));
+            int lastIndex = pageNum < amountOfPages ? numOfProdPerPage : products.Count - numOfProdPerPage * (pageNum - 1);
+            return products.GetRange((pageNum - 1) * numOfProdPerPage, lastIndex);
         }
     }
 }

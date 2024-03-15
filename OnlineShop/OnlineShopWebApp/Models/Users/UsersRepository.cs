@@ -7,7 +7,5 @@
         {
             users.Add(new User("Георгий"));
         }
-        public static List<User> GetAll() => users;
-        public static User? TryGetById(int id) => users.FirstOrDefault(u => u.Id == id);
     }
 }

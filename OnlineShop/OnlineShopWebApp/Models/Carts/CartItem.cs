@@ -8,7 +8,6 @@ namespace OnlineShopWebApp.Models.Carts
         public Product Product { get; set; }
         public int Amount { get; set; }
         public decimal Cost { get => Product.Cost * Amount; }
-
         public CartItem(Product product, int amount = 1)
         {
             Id = Guid.NewGuid();

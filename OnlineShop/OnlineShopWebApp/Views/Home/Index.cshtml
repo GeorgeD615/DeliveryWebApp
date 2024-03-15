@@ -7,7 +7,7 @@
         @foreach(var product in Model)
         {
             <div class="col-2 card shadow m-3">
-                <a asp-controller="product" asp-action="index" asp-route-id="@product.Id">
+                <a asp-controller="product" asp-action="index" asp-route-productId="@product.Id">
                     <img class="card-img-top" height="125" src="@product.ImagePath">
                 </a>
                 <div class="card-body">

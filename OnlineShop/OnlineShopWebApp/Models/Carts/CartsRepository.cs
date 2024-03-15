@@ -6,28 +6,35 @@ namespace OnlineShopWebApp.Models.Carts
     public static class CartsRepository
     {
         private static List<Cart> carts = new();
-
-        static CartsRepository()
+        public static Cart GetByUserId(int userId)
         {
-            foreach(var user in UsersRepository.GetAll())
+            var cart = carts.FirstOrDefault(cart => cart.UserId == userId);
+
+            if (cart == null)
             {
-                carts.Add(new Cart(user.Id));
+                cart = new Cart(userId);
+                carts.Add(cart);
             }
+
+            return cart;
         }
-        public static void CreateCart(int userId) => carts.Add(new Cart(userId));
-        public static Cart TryGetByUserId(int id) => carts.FirstOrDefault(cart => cart.UserId == id);
         public static void AddProduct(Product product, int userId)
         {
-            var cart = TryGetByUserId(userId);
-            if (!cart.Items.Any(item => item.Product == product))
+            var cart = carts.FirstOrDefault(cart => cart.UserId == userId);
+            
+            if(cart == null)
             {
-                cart.Items.Add(new CartItem(product));
-                return;
+                cart = new Cart(userId);
+                carts.Add(cart);
             }
 
-            cart.Items.First(item => item.Product == product).Amount += 1;
+            var itemInCart = cart.Items.FirstOrDefault(item => item.Product == product);
+
+            if (itemInCart == null)
+                cart.Items.Add(new CartItem(product));
+            else
+                itemInCart.Amount += 1;
         }
-        public static int GetCartSize(int userId) => TryGetByUserId(userId).Items.Sum(item => item.Amount);
-        public static void ClearCart(int userId) => TryGetByUserId(userId).Items.Clear();
+        public static void ClearCart(int userId) => GetByUserId(userId).Items.Clear();
     }
 }

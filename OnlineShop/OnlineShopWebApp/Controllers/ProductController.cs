@@ -5,40 +5,41 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult Index(int id) => View(ProductsRepository.TryGetById(id));
+        public IActionResult Index(int productId) => View(ProductsRepository.TryGetById(productId));
 
-        public IActionResult Page(int size, int count)
+        public IActionResult Page(int numOfProdPerPage, int pageNum)
         {
-            if (size <= 0)
+            if (numOfProdPerPage <= 0 || pageNum <= 0)
                 return View(null);
 
-            if (count <= 0)
+            int amountOfPages = ProductsRepository.GetCount() / numOfProdPerPage +
+                ((ProductsRepository.GetCount() % numOfProdPerPage) == 0 ? 0 : 1);
+
+            if (pageNum > amountOfPages)
                 return View(null);
 
-            int pages = ProductsRepository.GetCount() / size + 
-                ((ProductsRepository.GetCount() % size) == 0 ? 0 : 1);
+            var productsPage = new ProductsPage()
+            {
+                AmountOfPages = amountOfPages,
+                NumOfProdPerPage = numOfProdPerPage
+            };
 
-            if (count > pages)
-                return View(null);
-
-            ViewData["pages"] = pages;
-            ViewData["size"] = size;
-            switch (size)
+            switch (numOfProdPerPage)
             {
                 case 3:
-                    ViewData["cardSize"] = 3;
-                    ViewData["imageSize"] = 200;
+                    productsPage.CardSize = 3;
+                    productsPage.ImageHeight = 200;
                     break;
                 case 5:
                 case 10:
-                    ViewData["imageSize"] = 125;
-                    ViewData["cardSize"] = 2;
+                    productsPage.CardSize = 2;
+                    productsPage.ImageHeight = 125;
                     break;
-            } 
+            }
 
-            var pageOfProducts = ProductsRepository.GetPageOfProducts(size, count, pages);
+            productsPage.Products = ProductsRepository.GetPageOfProducts(numOfProdPerPage, pageNum, amountOfPages);
 
-            return View(pageOfProducts);
+            return View(productsPage);
         }
     }
 }
