@@ -1,0 +1,55 @@
+﻿@using OnlineShopWebApp.Models.Products
+@model List<Product>
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-9 align-content-lg-start">
+
+        </div>
+        <div class="col-3 percount">
+            <span class="gray">Показать:</span>
+            <a title="3" asp-controller="product" asp-action="page" asp-route-size="3" asp-route-count="1" class="gray link">3</a>
+            <a title="5" asp-controller="product" asp-action="page" asp-route-size="5" asp-route-count="1" class="gray link">5</a>
+            <a title="10" asp-controller="product" asp-action="page" asp-route-size="10" asp-route-count="1" class="gray link">10</a>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        @foreach (var product in Model)
+        {
+            <div class="col-@ViewData["cardSize"] card shadow m-3">
+                <a asp-controller="product" asp-action="index" asp-route-id="@product.Id">
+                    <img class="card-img-top" height="@ViewData["imageSize"]" src="@product.ImagePath">
+                </a>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8 align-content-lg-start">
+                            <p><b>@product.Name</b><br>@product.Cost руб.</p>
+                        </div>
+                        <div class="col-1 justify-content-lg-end">
+                            <a asp-controller="carts" asp-action="AddProduct" asp-route-userId="1" asp-route-productId="@product.Id" class="btn btn-outline-dark" role="button">
+                                <img src="/images/ui/cart_add_icon.png" width="25" alt="Иконка добавления в корзину" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= (int)ViewData["pages"]; ++i)
+            {
+                <li class="page-item" style="color: black;"><a class="page-link" asp-controller="product" asp-action="page" asp-route-size="@ViewData["size"]" asp-route-count="@i">@i</a></li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <h2>Упс..., что-то пошло не так</h2>
+}
+
+
+
+

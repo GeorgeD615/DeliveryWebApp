@@ -27,3 +27,19 @@ body {
     padding: 40px 40px 40px 35px;
     position: relative;
 }
+
+.percount {
+    float: right;
+    padding-top: 10px;
+}
+.gray{
+    margin: 0 0 0 6px;
+}
+
+a.gray {
+    color: #999;
+}
+
+.link {
+    text-decoration: none;
+}

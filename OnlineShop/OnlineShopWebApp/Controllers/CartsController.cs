@@ -15,13 +15,13 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult AddProduct(int userId, int productId)
         {
             CartsRepository.AddProduct(ProductsRepository.TryGetById(productId), userId);
-            return RedirectToAction("Index", new { userId = userId });
+            return RedirectToAction("Index", new { userId });
         }
 
         public IActionResult ClearCart(int userId)
         {
             CartsRepository.ClearCart(userId);
-            return RedirectToAction("Index", new {userId = userId});
+            return RedirectToAction("Index", new { userId });
         }
     }
 }
