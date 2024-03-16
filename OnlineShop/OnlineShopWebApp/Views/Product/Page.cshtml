@@ -9,9 +9,9 @@
         </div>
         <div class="col-3 percount">
             <span class="gray">Показать:</span>
-            <a title="3" asp-controller="product" asp-action="page" asp-route-numOfProdPerPage="3" asp-route-pageNum="1" class="gray link">3</a>
-            <a title="5" asp-controller="product" asp-action="page" asp-route-numOfProdPerPage="5" asp-route-pageNum="1" class="gray link">5</a>
-            <a title="10" asp-controller="product" asp-action="page" asp-route-numOfProdPerPage="10" asp-route-pageNum="1" class="gray link">10</a>
+            <a title="3" asp-controller="product" asp-action="page" asp-route-numberOfProductsPerPage="3" asp-route-pageNumber="1" class="gray link">3</a>
+            <a title="5" asp-controller="product" asp-action="page" asp-route-numberOfProductsPerPage="5" asp-route-pageNumber="1" class="gray link">5</a>
+            <a title="10" asp-controller="product" asp-action="page" asp-route-numberOfProductsPerPage="10" asp-route-pageNumber="1" class="gray link">10</a>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -40,7 +40,7 @@
         <ul class="pagination justify-content-center">
             @for (int i = 1; i <= Model.AmountOfPages; ++i)
             {
-                <li class="page-item"><a class="page-link" asp-controller="product" asp-action="page" asp-route-numOfProdPerPage="@Model.NumOfProdPerPage" asp-route-pageNum="@i">@i</a></li>
+                <li class="page-item"><a class="page-link" asp-controller="product" asp-action="page" asp-route-numberOfProductsPerPage="@Model.NumOfProdPerPage" asp-route-pageNumber="@i">@i</a></li>
             }
         </ul>
     </nav>

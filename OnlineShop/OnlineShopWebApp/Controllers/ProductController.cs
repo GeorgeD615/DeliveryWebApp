@@ -7,24 +7,24 @@ namespace OnlineShopWebApp.Controllers
     {
         public IActionResult Index(int productId) => View(ProductsRepository.TryGetById(productId));
 
-        public IActionResult Page(int numOfProdPerPage, int pageNum)
+        public IActionResult Page(int numberOfProductsPerPage, int pageNumber)
         {
-            if (numOfProdPerPage <= 0 || pageNum <= 0)
+            if (numberOfProductsPerPage <= 0 || pageNumber <= 0)
                 return View(null);
 
-            int amountOfPages = ProductsRepository.GetCount() / numOfProdPerPage +
-                ((ProductsRepository.GetCount() % numOfProdPerPage) == 0 ? 0 : 1);
+            int amountOfPages = ProductsRepository.GetCount() / numberOfProductsPerPage +
+                ((ProductsRepository.GetCount() % numberOfProductsPerPage) == 0 ? 0 : 1);
 
-            if (pageNum > amountOfPages)
+            if (pageNumber > amountOfPages)
                 return View(null);
 
             var productsPage = new ProductsPage()
             {
                 AmountOfPages = amountOfPages,
-                NumOfProdPerPage = numOfProdPerPage
+                NumOfProdPerPage = numberOfProductsPerPage
             };
 
-            switch (numOfProdPerPage)
+            switch (numberOfProductsPerPage)
             {
                 case 3:
                     productsPage.CardSize = 3;
@@ -37,7 +37,7 @@ namespace OnlineShopWebApp.Controllers
                     break;
             }
 
-            productsPage.Products = ProductsRepository.GetPageOfProducts(numOfProdPerPage, pageNum, amountOfPages);
+            productsPage.Products = ProductsRepository.GetPageOfProducts(numberOfProductsPerPage, pageNumber, amountOfPages);
 
             return View(productsPage);
         }
