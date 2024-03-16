@@ -1,8 +1,8 @@
 ﻿namespace OnlineShopWebApp.Models.Products
 {
-    public static class ProductsRepository
+    public class ProductsRepository : IProductsRepository
     {
-        private static List<Product> products { get; set; } = new()
+        private List<Product> products { get; set; } = new()
         {
             {new Product("Эчпочмак", 90, "Очень вкусная булочка", "/images/products/eachpochmak.jpg")},
             {new Product("Хачапури", 125, "Очень вкусная лепёшка", "/images/products/hachapury.jpg")},
@@ -18,13 +18,13 @@
             {new Product("Хаш", 450, "Горячий, очень сытный и жирный суп из говяжьих ног", "/images/products/hash.jpg")}
         };
 
-        public static List<Product> GetAll() => products;
-        public static int GetCount() => products.Count;
-        public static Product? TryGetById(int productId) => products.FirstOrDefault(p => p.Id == productId);
-        public static List<Product> GetPageOfProducts(int numOfProdPerPage, int pageNum, int amountOfPages)
+        public List<Product> GetAll() => products;
+        public int GetCount() => products.Count;
+        public Product? TryGetById(int productId) => products.FirstOrDefault(p => p.Id == productId);
+        public List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages)
         {
-            int lastIndex = pageNum < amountOfPages ? numOfProdPerPage : products.Count - numOfProdPerPage * (pageNum - 1);
-            return products.GetRange((pageNum - 1) * numOfProdPerPage, lastIndex);
+            int lastIndex = pageNumber < amountOfPages ? numberOfProductsPerPage : products.Count - numberOfProductsPerPage * (pageNumber - 1);
+            return products.GetRange((pageNumber - 1) * numberOfProductsPerPage, lastIndex);
         }
     }
 }

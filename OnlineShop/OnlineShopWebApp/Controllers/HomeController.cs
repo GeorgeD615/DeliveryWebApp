@@ -5,6 +5,13 @@ namespace OnlineShopWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index() => View(ProductsRepository.GetAll());
+        private readonly IProductsRepository productsRepository;
+
+        public HomeController(IProductsRepository productsRepository)
+        {
+            this.productsRepository = productsRepository;
+        }
+
+        public IActionResult Index() => View(productsRepository.GetAll());
     }
 }

@@ -3,10 +3,10 @@ using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Models.Carts
 {
-    public static class CartsRepository
+    public class CartsRepository : ICartsRepository
     {
-        private static List<Cart> carts = new();
-        public static Cart GetByUserId(int userId)
+        private List<Cart> carts = new();
+        public Cart GetByUserId(int userId)
         {
             var cart = carts.FirstOrDefault(cart => cart.UserId == userId);
 
@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Models.Carts
 
             return cart;
         }
-        public static void AddProduct(Product product, int userId)
+        public void AddProduct(Product product, int userId)
         {
             var cart = carts.FirstOrDefault(cart => cart.UserId == userId);
             
@@ -35,6 +35,6 @@ namespace OnlineShopWebApp.Models.Carts
             else
                 itemInCart.Amount += 1;
         }
-        public static void ClearCart(int userId) => GetByUserId(userId).Items.Clear();
+        public void ClearCart(int userId) => GetByUserId(userId).Items.Clear();
     }
 }

@@ -5,15 +5,22 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult Index(int productId) => View(ProductsRepository.TryGetById(productId));
+        private readonly IProductsRepository productsRepository;
+
+        public ProductController(IProductsRepository productsRepository)
+        {
+            this.productsRepository = productsRepository;
+        }
+
+        public IActionResult Index(int productId) => View(productsRepository.TryGetById(productId));
 
         public IActionResult Page(int numberOfProductsPerPage, int pageNumber)
         {
             if (numberOfProductsPerPage <= 0 || pageNumber <= 0)
                 return View(null);
 
-            int amountOfPages = ProductsRepository.GetCount() / numberOfProductsPerPage +
-                ((ProductsRepository.GetCount() % numberOfProductsPerPage) == 0 ? 0 : 1);
+            int amountOfPages = productsRepository.GetCount() / numberOfProductsPerPage +
+                ((productsRepository.GetCount() % numberOfProductsPerPage) == 0 ? 0 : 1);
 
             if (pageNumber > amountOfPages)
                 return View(null);
@@ -37,7 +44,7 @@ namespace OnlineShopWebApp.Controllers
                     break;
             }
 
-            productsPage.Products = ProductsRepository.GetPageOfProducts(numberOfProductsPerPage, pageNumber, amountOfPages);
+            productsPage.Products = productsRepository.GetPageOfProducts(numberOfProductsPerPage, pageNumber, amountOfPages);
 
             return View(productsPage);
         }

@@ -1,9 +1,9 @@
 ﻿namespace OnlineShopWebApp.Models.Users
 {
-    public static class UsersRepository
+    public class UsersRepository : IUserRepository
     {
-        private static List<User> users = new();
-        static UsersRepository()
+        private List<User> users = new();
+        public UsersRepository()
         {
             users.Add(new User("Георгий"));
         }
