@@ -4,8 +4,8 @@ namespace OnlineShopWebApp.Models.Carts
 {
     public interface ICartsRepository
     {
-        public Cart GetByUserId(int userId);
-        public void AddProduct(Product product, int userId);
-        public void ClearCart(int userId);
+        Cart GetByUserId(int userId);
+        void AddProduct(Product product, int userId);
+        void ClearCart(int userId);
     }
 }

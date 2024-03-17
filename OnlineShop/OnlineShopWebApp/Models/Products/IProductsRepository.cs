@@ -2,10 +2,9 @@
 {
     public interface IProductsRepository
     {
-        public List<Product> GetAll();
-        public int GetCount();
-        public Product? TryGetById(int productId);
-        public List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages);
-
+        List<Product> GetAll();
+        int GetCount();
+        Product? TryGetById(int productId);
+        List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages);
     }
 }
