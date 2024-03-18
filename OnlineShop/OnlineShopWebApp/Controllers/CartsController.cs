@@ -17,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index(int userId)
         {
-            var cart = cartsRepository.GetByUserId(userId);
+            var cart = cartsRepository.TryGetByUserId(userId);
             return View(cart);
         }
 
@@ -31,6 +31,12 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult ClearCart(int userId)
         {
             cartsRepository.ClearCart(userId);
+            return RedirectToAction("Index", new { userId });
+        }
+
+        public IActionResult ChangeProductAmount(int userId, string cartItemId, int difference)
+        {
+            cartsRepository.ChangeProductAmount(userId, new Guid(cartItemId), difference);
             return RedirectToAction("Index", new { userId });
         }
     }

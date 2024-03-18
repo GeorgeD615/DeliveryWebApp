@@ -43,3 +43,14 @@ a.gray {
 .link {
     text-decoration: none;
 }
+
+.btn-outline-cartChangeAmount {
+    color: #000000;
+    border-color: #000000;
+}
+
+.btn-outline-cartChangeAmount:hover {
+    color: #ffffff;
+    background-color: #D86328;
+    border-color: #000000;
+}

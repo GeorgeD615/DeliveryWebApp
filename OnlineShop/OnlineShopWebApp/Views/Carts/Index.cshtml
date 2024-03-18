@@ -17,7 +17,17 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <h3 class="card-title">@item.Product.Name</h3>
-                                        <p>x <b>@item.Amount</b> шт.</p>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <a class="btn btn-outline-cartChangeAmount" asp-controller="carts" asp-action="ChangeProductAmount" asp-route-userId="@Model.UserId" asp-route-cartItemId="@item.Id.ToString()" asp-route-difference="-1" role="button">-</a>
+                                            </div>
+                                            <div class="col-2 pt-2">
+                                                <p>x <b>@item.Amount</b></p>
+                                            </div>
+                                            <div class="col-2">
+                                                <a class="btn btn-outline-cartChangeAmount" asp-controller="carts" asp-action="ChangeProductAmount" asp-route-userId="@Model.UserId" asp-route-cartItemId="@item.Id.ToString()" asp-route-difference="1" role="button">+</a>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-4">
                                         <p>Стоимость:</p>
