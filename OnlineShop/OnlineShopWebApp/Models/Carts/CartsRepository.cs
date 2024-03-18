@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models.Products;
-using OnlineShopWebApp.Models.Users;
+﻿using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Models.Carts
 {
     public class CartsRepository : ICartsRepository
     {
         private List<Cart> carts = new();
-        public Cart? TryGetById(int cartId) => carts.FirstOrDefault(cart => cart.Id == cartId);
         public Cart? TryGetByUserId(int userId) => carts.FirstOrDefault(cart => cart.UserId == userId);
         public void AddProduct(Product product, int userId)
         {
