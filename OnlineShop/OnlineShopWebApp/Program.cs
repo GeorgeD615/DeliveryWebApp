@@ -1,4 +1,5 @@
 using OnlineShopWebApp.Models.Carts;
+using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
 using OnlineShopWebApp.Models.Users;
 
@@ -9,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<ICartsRepository, CartsRepository>();
 builder.Services.AddSingleton<IProductsRepository, ProductsRepository>();
 builder.Services.AddSingleton<IUserRepository, UsersRepository>();
+builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
 
 var app = builder.Build();
 

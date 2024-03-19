@@ -2,7 +2,7 @@
 {
     public class ProductsRepository : IProductsRepository
     {
-        private List<Product> products { get; set; } = new()
+        private List<Product> products = new()
         {
             {new Product("Эчпочмак", 90, "Очень вкусная булочка", "/images/products/eachpochmak.jpg")},
             {new Product("Хачапури", 125, "Очень вкусная лепёшка", "/images/products/hachapury.jpg")},
