@@ -6,7 +6,7 @@ namespace OnlineShopWebApp.Models.Carts
     {
         Cart? TryGetByUserId(int userId);
         void AddProduct(Product product, int userId);
-        void ChangeProductAmount(int cartId, Guid cartItemId, int difference);
+        void ChangeProductAmount(int cartId, int cartItemId, int difference);
         void ClearCart(int userId);
     }
 }

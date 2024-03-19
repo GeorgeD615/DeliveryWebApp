@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Models.Carts
             else
                 itemInCart.Amount += 1;
         }
-        public void ChangeProductAmount(int userId, Guid cartItemId, int difference)
+        public void ChangeProductAmount(int userId, int cartItemId, int difference)
         {
             var cart = TryGetByUserId(userId);
             var cartItem = cart?.Items.FirstOrDefault(x => x.Id == cartItemId);
@@ -45,6 +45,5 @@ namespace OnlineShopWebApp.Models.Carts
                 carts.Remove(cart);
         }
         public void ClearCart(int userId) => carts.RemoveAll(cart => cart.UserId == userId);
-
     }
 }

@@ -34,9 +34,9 @@ namespace OnlineShopWebApp.Controllers
             return RedirectToAction("Index", new { userId });
         }
 
-        public IActionResult ChangeProductAmount(int userId, string cartItemId, int difference)
+        public IActionResult ChangeProductAmount(int userId, int cartItemId, int difference)
         {
-            cartsRepository.ChangeProductAmount(userId, new Guid(cartItemId), difference);
+            cartsRepository.ChangeProductAmount(userId, cartItemId, difference);
             return RedirectToAction("Index", new { userId });
         }
     }

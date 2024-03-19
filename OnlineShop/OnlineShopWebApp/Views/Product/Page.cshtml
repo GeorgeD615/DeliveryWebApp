@@ -27,7 +27,7 @@
                             <p><b>@product.Name</b><br>@product.Cost руб.</p>
                         </div>
                         <div class="col-1 justify-content-lg-end">
-                            <a asp-controller="carts" asp-action="AddProduct" asp-route-userId="1" asp-route-productId="@product.Id" class="btn btn-outline-dark" role="button">
+                            <a asp-controller="carts" asp-action="addProduct" asp-route-userId="1" asp-route-productId="@product.Id" class="btn btn-outline-dark" role="button">
                                 <img src="/images/ui/cart_add_icon.png" width="25" alt="Иконка добавления в корзину" />
                             </a>
                         </div>
