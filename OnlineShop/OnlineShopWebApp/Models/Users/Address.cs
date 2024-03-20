@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace OnlineShopWebApp.Models.Users
+﻿namespace OnlineShopWebApp.Models.Users
 {
     public class Address
     {
@@ -13,6 +11,7 @@ namespace OnlineShopWebApp.Models.Users
 
         public Address(string city, string street, string house, string flat)
         {
+            Id = ++nextId;
             City = city;
             Street = street;
             House = house;

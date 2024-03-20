@@ -1,6 +1,4 @@
-﻿using System.Runtime.ExceptionServices;
-
-namespace OnlineShopWebApp.Models.Orders
+﻿namespace OnlineShopWebApp.Models.Orders
 {
     public class OrdersRepository : IOrdersRepository
     {
