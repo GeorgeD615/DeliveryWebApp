@@ -7,6 +7,5 @@
         {
             users.Add(new User("Георгий"));
         }
-        public void AddCard(int userId, string cardNumber) => users.FirstOrDefault(user => user.Id == userId)?.Cards.Add(cardNumber);
     }
 }

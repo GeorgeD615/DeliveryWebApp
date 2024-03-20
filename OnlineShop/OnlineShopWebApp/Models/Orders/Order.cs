@@ -1,4 +1,5 @@
 ﻿using OnlineShopWebApp.Models.Carts;
+using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Models.Orders
 {
@@ -6,19 +7,20 @@ namespace OnlineShopWebApp.Models.Orders
     {
         public static int nextId = 0;
         public int Id { get; }
-        public string Address { get; set; }
-        public string CardNumber { get; set; }
-        public bool IsDelevered { get; set; }
-        public string Message { get; set; }
         public Cart Cart { get; set; }
-        public Order(string address, string cardNumber, Cart cart, string message)
+        public Address Address { get; set; }
+        public string CommentsToCourier { get; set; }
+        public StateOfOrder StateOfOrder { get; set; }
+
+        public DateTime TimeOfOrder { get; }
+        public Order(Cart cart, Address address, string commentsToCourier)
         {
             Id = ++nextId;
-            Address = address;
-            CardNumber = cardNumber;
-            IsDelevered = false;
             Cart = cart;
-            Message = message;
+            Address = address;
+            CommentsToCourier = commentsToCourier;
+            StateOfOrder = StateOfOrder.InProcessing;
+            TimeOfOrder = DateTime.Now;
         }
     }
 }

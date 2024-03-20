@@ -22,12 +22,15 @@ namespace OnlineShopWebApp.Controllers
             return View(cart);
         }
 
-        public IActionResult CreateOrder(int userId)
+        [HttpPost]
+        public IActionResult CreateOrder(int userId, string city, string street, string house, string flat, string commentsToCourier)
         {
             var cart = cartsRepository.TryGetByUserId(userId);
-            ordersRepository.AddOrder(new Order(string.Empty, string.Empty, cart, string.Empty));
+            var address = new Address(city, street, house, flat);
+            var newOrder = new Order(cart, address, commentsToCourier);
+            ordersRepository.AddOrder(newOrder);
             cartsRepository.ClearCart(userId);
-            return View("OrderCreated");
+            return View("OrderCreated", newOrder);
         }
     }
 }
