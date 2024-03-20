@@ -54,3 +54,35 @@ a.gray {
     background-color: #D86328;
     border-color: #000000;
 }
+
+.btn-outline-addFavorite {
+    color: #fe3d06;
+    border-color: #fe3d06;
+}
+
+.btn-outline-addFavorite:hover {
+    color: white;
+    background-color: #fe3d06;
+    border-color: #fe3d06;
+}
+
+.btn-outline-addToCart {
+    background-color: white;
+    border-color: black;
+}
+
+.btn-outline-addToCart:hover {
+    background-color: black;
+    border-color: black;
+}
+
+.btn-outline-removeFavorite {
+    color: #999;
+    border-color: #999;
+}
+
+.btn-outline-removeFavorite:hover {
+    color: white;
+    background-color: #999;
+    border-color: #999;
+}

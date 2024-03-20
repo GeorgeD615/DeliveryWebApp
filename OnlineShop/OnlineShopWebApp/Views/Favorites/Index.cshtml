@@ -1,0 +1,37 @@
+﻿@using OnlineShopWebApp.Models.Products
+@model List<Product> 
+
+@if(Model != null && Model.Any())
+{
+<div class="row justify-content-start">
+    @foreach (var product in Model)
+    {
+        <div class="col-2 card shadow m-3">
+            <a asp-controller="product" asp-action="index" asp-route-productId="@product.Id">
+                <img class="card-img-top" height="125" src="@product.ImagePath">
+            </a>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-8 align-content-lg-start pt-2">
+                        <p><b>@product.Name</b><br>@product.Cost руб.</p>
+                    </div>
+                    <div class="col-1 justify-content-lg-end">
+                        <a asp-controller="carts" asp-action="addProduct" asp-route-userId="1" asp-route-productId="@product.Id" class="btn btn-outline-dark" role="button">
+                            <img src="/images/ui/cart_add_icon.png" width="25" alt="Иконка добавления в корзину" />
+                        </a>
+                        <a asp-controller="favorites" asp-action="removeFavorite" asp-route-userId="1" asp-route-productId="@product.Id" class="btn btn-outline-removeFavorite mt-1" role="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+}
+else
+{
+    <h2>Список избранного пуст</h2>
+}
