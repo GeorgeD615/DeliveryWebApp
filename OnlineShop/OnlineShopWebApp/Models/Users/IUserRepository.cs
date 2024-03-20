@@ -6,7 +6,7 @@ namespace OnlineShopWebApp.Models.Users
     {
         User? TryGetById(int userId);
         List<Product> GetFavorites(int userId);
-        void AddFavorite(int userId, Product favoriteProduct);
-        void RemoveFavorite(int userId, Product favoriteProduct);
+        void AddFavorite(int userId, Product product);
+        void RemoveFavorite(int userId, Product product);
     } 
 }

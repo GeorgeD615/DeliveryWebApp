@@ -11,13 +11,13 @@ namespace OnlineShopWebApp.Models.Users
         }
         public User? TryGetById(int userId) => users.FirstOrDefault(user => user.Id == userId);
         public List<Product> GetFavorites(int userId) => TryGetById(userId)?.Favorites;
-        public void AddFavorite(int userId, Product favoriteProduct) {
+        public void AddFavorite(int userId, Product product) {
             var user = TryGetById(userId);
-            if (user == null || user.Favorites.Contains(favoriteProduct))
+            if (user == null || user.Favorites.Contains(product))
                 return;
-            user.Favorites.Add(favoriteProduct);
+            user.Favorites.Add(product);
         }
 
-        public void RemoveFavorite(int userId, Product favoriteProduct) => TryGetById(userId)?.Favorites.Remove(favoriteProduct);
+        public void RemoveFavorite(int userId, Product product) => TryGetById(userId)?.Favorites.Remove(product);
     }
 }
