@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models.Carts;
+using OnlineShopWebApp.Models.ContainersForView;
 using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Users;
 
@@ -9,24 +10,28 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IOrdersRepository ordersRepository;
         private readonly ICartsRepository cartsRepository;
+        private readonly IUserRepository userRepository;
 
-        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository)
+        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, IUserRepository userRepository)
         {
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;
+            this.userRepository = userRepository;
         }
 
         public IActionResult Index(int userId)
         {
+            var user = userRepository.TryGetById(userId);
             var cart = cartsRepository.TryGetByUserId(userId);
-            return View(cart);
+            return View(new UserCart(user, cart));
         }
 
         [HttpPost]
-        public IActionResult CreateOrder(int userId, string city, string street, string house, string flat, string commentsToCourier)
+        public IActionResult CreateOrder(int userId, int addressId, string commentsToCourier)
         {
             var cart = cartsRepository.TryGetByUserId(userId);
-            var address = new Address(city, street, house, flat);
+            var address = userRepository.TryGetAddress(userId, addressId);
+            userRepository.SetLastAddress(userId, address);
             var newOrder = new Order(cart, address, commentsToCourier);
             ordersRepository.AddOrder(newOrder);
             cartsRepository.ClearCart(userId);

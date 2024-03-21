@@ -1,5 +1,5 @@
-﻿@using OnlineShopWebApp.Models.Carts
-@model Cart
+﻿@using OnlineShopWebApp.Models.ContainersForView
+@model UserCart
 
 @if(Model != null)
 {
@@ -10,35 +10,46 @@
                 <div class="card-body">
                     <h3 class="card-title text-center">Адрес и оплата</h3>
                     <form method="post">
-                        <div class="row">
-                            <div class="mb-3 col-6">
-                                <label for="inputCity" class="form-label">Город</label>
-                                <input type="text" name="city" class="form-control" id="inputCity" aria-describedby="cityHelp">
+                        @if (Model.User.Addresses.Any())
+                        {
+                            <label for="inputAddress" class="form-label">Адрес доставки</label>
+                            <select name="addressId" class="form-select mb-3" aria-label="Default select example">
+                                <option value="@Model.User.LastAddress.Id" selected>@Model.User.LastAddress.ToString()</option>
+                                @foreach(var address in Model.User.Addresses)
+                                {
+                                    if(Model.User.LastAddress == address)
+                                    {
+                                        continue;
+                                    }
+                                    <option value="@address.Id">@address.ToString()</option>
+                                }
+                            </select>
+                        }
+                        else
+                        {
+                            <div class="pt-2">
+                                <p>Нет доступных адресов</p>
                             </div>
-                            <div class="mb-3 col-6">
-                                <label for="inputStreet" class="form-label">Улица/Проспект</label>
-                                <input type="text" name="street" class="form-control" id="inputStreet" aria-describedby="streetHelp">
+                        }
+                        <div class="row">
+                            <div class="col-8">
+                                
+                            </div>
+                            <div class="col-4">
+                                <a asp-controller="addresses" asp-action="index" class="btn btn-outline-success"> Добавить адрес </a>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="mb-3 col-6">
-                                <label for="inputHouse" class="form-label">Дом</label>
-                                <input type="text" name="house" class="form-control" id="inputHouse" aria-describedby="houseHelp">
-                            </div>
-                            <div class="mb-3 col-6">
-                                <label for="inputFlat" class="form-label">Квартира</label>
-                                <input type="text" name="flat" class="form-control" id="inputFlat" aria-describedby="flatHelp">
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="mb-3 col-12">
                                 <label for="inputMessage" class="form-label">Сообщение курьеру</label>
                                 <textarea name="commentsToCourier" class="form-control" aria-label="With textarea"></textarea>
                             </div>
                         </div>
+
                         <div class="row justify-content-center">
                             <div class="col-4">
-                                <button class="btn btn-outline-cartChangeAmount" type="submit" asp-controller="orders" asp-action="createOrder" asp-route-userId="@Model.UserId">
+                                <button asp-controller="orders" asp-action="createOrder" asp-route-userId="1" type="submit" class="btn btn-outline-cartChangeAmount">
                                     Оформить заказ
                                 </button>
                             </div>
