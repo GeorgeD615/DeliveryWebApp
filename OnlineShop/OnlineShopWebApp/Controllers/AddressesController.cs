@@ -17,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult AddAddress(int userId, string city, string street, string house, string flat)
         {
-            var address = new Address(city, street, house, flat);
+            var address = new Address(userId, city, street, house, flat);
             userRepository.AddAddress(userId, address);
             return RedirectToAction("Index", "Orders", new { userId });
         }

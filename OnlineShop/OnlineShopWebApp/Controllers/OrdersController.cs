@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = userRepository.TryGetById(userId);
             var cart = cartsRepository.TryGetByUserId(userId);
-            return View(new UserCart(user, cart));
+            return View(new OrderViewModel(user.Addresses, user.LastAddress, cart));
         }
 
         [HttpPost]
@@ -32,10 +32,10 @@ namespace OnlineShopWebApp.Controllers
             var cart = cartsRepository.TryGetByUserId(userId);
             var address = userRepository.TryGetAddress(userId, addressId);
             userRepository.SetLastAddress(userId, address);
-            var newOrder = new Order(cart, address, commentsToCourier);
-            ordersRepository.AddOrder(newOrder);
+            var order = new Order(cart, address, commentsToCourier);
+            ordersRepository.AddOrder(order);
             cartsRepository.ClearCart(userId);
-            return View("OrderCreated", newOrder);
+            return View("OrderCreated", order);
         }
     }
 }

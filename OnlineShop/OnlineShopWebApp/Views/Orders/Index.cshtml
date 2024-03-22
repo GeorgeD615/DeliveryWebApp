@@ -1,5 +1,5 @@
 ﻿@using OnlineShopWebApp.Models.ContainersForView
-@model UserCart
+@model OrderViewModel
 
 @if(Model != null)
 {
@@ -10,14 +10,14 @@
                 <div class="card-body">
                     <h3 class="card-title text-center">Адрес и оплата</h3>
                     <form method="post">
-                        @if (Model.User.Addresses.Any())
+                        @if (Model.Addresses.Any())
                         {
                             <label for="inputAddress" class="form-label">Адрес доставки</label>
                             <select name="addressId" class="form-select mb-3" aria-label="Default select example">
-                                <option value="@Model.User.LastAddress.Id" selected>@Model.User.LastAddress.ToString()</option>
-                                @foreach(var address in Model.User.Addresses)
+                                <option value="@Model.LastAddress.Id" selected>@Model.LastAddress.ToString()</option>
+                                @foreach(var address in Model.Addresses)
                                 {
-                                    if(Model.User.LastAddress == address)
+                                    if(Model.LastAddress == address)
                                     {
                                         continue;
                                     }
