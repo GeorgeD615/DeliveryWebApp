@@ -3,11 +3,11 @@ using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Controllers
 {
-    public class AddressesController : Controller
+    public class ProfileController : Controller
     {
         private readonly IUserRepository userRepository;
 
-        public AddressesController(IUserRepository userRepository)
+        public ProfileController(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
         }
