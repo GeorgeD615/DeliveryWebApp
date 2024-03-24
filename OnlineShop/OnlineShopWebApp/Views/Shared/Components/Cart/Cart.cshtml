@@ -1,0 +1,9 @@
+﻿@model int
+
+<a asp-controller="carts" asp-action="index" asp-route-userId="1" class="btn btn-outline-dark" role="button">
+    <img src="/images/ui/cart_icon.png" width="25" height="25" alt="Иконка корзины">
+    @if(Model != 0)
+    {
+        @Model
+    }
+</a>
