@@ -1,0 +1,49 @@
+﻿<div class="row">
+    <div class="col-3">
+
+    </div>
+    <div class="col-6 align-content-center">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">Вход</h3>
+                <form method="post" class="row g-4">
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <i class="bi bi-person-fill">
+                                <img src="/images/ui/profile_icon.png" width="20" height="20" alt="Иконка профиля">
+                            </i>
+                        </div>
+                        <input name="login" type="text" class="form-control" placeholder="Enter Username">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <i class="bi bi-lock-fill">
+                                <img src="/images/ui/password_icon.png" width="20" height="20" alt="Иконка пароля">
+                            </i>
+                        </div>
+                        <input name="password" type="password" class="form-control" placeholder="Enter Password">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-check">
+                            <input name="rememberMe" class="form-check-input" type="checkbox" id="inlineFormCheck">
+                            <label class="form-check-label" for="inlineFormCheck">Запомнить меня</label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <a href="#" class="float-end link-color">Нет аккаунта?</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" asp-controller="logIn" asp-action="logIn" class="btn btn-outline-cartChangeAmount">Войти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
