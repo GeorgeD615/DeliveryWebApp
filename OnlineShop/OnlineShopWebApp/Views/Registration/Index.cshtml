@@ -1,0 +1,45 @@
+﻿<div class="row">
+    <div class="col-4">
+    </div>
+    <div class="col-4 align-content-center">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">Регистрация</h3>
+                <form method="post" class="row g-4">
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <i class="bi bi-person-fill">
+                                <img src="/images/ui/profile_icon.png" width="20" height="20" alt="Иконка профиля">
+                            </i>
+                        </div>
+                        <input name="Login" type="text" class="form-control" placeholder="Введите логин">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <i class="bi bi-lock-fill">
+                                <img src="/images/ui/password_icon.png" width="20" height="20" alt="Иконка пароля">
+                            </i>
+                        </div>
+                        <input name="Password" type="password" class="form-control" placeholder="Введите пароль">
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <i class="bi bi-lock-fill">
+                                <img src="/images/ui/password_icon.png" width="20" height="20" alt="Иконка пароля">
+                            </i>
+                        </div>
+                        <input name="PasswordConfirm" type="password" class="form-control" placeholder="Подтвердите пароль">
+                    </div>
+                    <div class="row m-4">
+                        <div class="col-2">
+                        </div>
+                        <div class="col-5">
+                            <button type="submit" asp-controller="registration" asp-action="register" class="btn btn-outline-cartChangeAmount">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
