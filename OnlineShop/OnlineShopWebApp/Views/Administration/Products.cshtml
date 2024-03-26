@@ -1,4 +1,6 @@
-﻿<div class="row">
+﻿@using OnlineShopWebApp.Models.Products
+@model List<Product>
+<div class="row">
     <div class="col-5">
         @await Html.PartialAsync("AdministratorMenu")
     </div>
@@ -6,3 +8,55 @@
         <h2>Продукты</h2>
     </div>
 </div>
+
+<div class="text-end">
+    <a class="btn btn-outline-cartChangeAmount" asp-controller="administration" asp-action="addProduct">Добавить товар</a>
+</div>
+@if (Model != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Фото</th>
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Описание</th>
+                <th class="text-center" scope="col">Редактировать</th>
+                <th class="text-center" scope="col">Удалить</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <th scope="row">@product.Id</th>
+                    <td>
+                        <img width="200" src="@product.ImagePath">
+                    </td>
+                    <td>
+                        <a class="link-color" asp-controller="product" asp-action="index" asp-route-productId="@product.Id">
+                            @product.Name
+                        </a>
+                    </td>
+                    <td>@product.Cost</td>
+                    <td>@product.Description</td>
+                    <td class="text-center">
+                        <a asp-controller="administration" asp-action="editProduct" asp-route-productId="@product.Id">
+                            <img width="25" src="~/images/ui/pencil_icon.png">
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-controller="administration" asp-action="deleteProduct" asp-route-productId="@product.Id">
+                            <img width="25" src="~/images/ui/delete_icon.png">
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>В вашем магазине пока нет товаров</h2>
+}
