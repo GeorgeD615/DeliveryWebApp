@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Models.ViewModels;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -7,7 +8,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public IActionResult LogIn(string login, string password, string rememberMe)
+        public IActionResult LogIn(LogInViewModel logInViewModel)
         {
             return RedirectToAction("Index");
         }
