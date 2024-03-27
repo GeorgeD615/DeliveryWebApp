@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Controllers
@@ -28,30 +29,23 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult EditProduct(int productId)
         {
             var product = productsRepository.TryGetById(productId);
-            var productEditModel = new ProductViewModel()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Cost = product.Cost,
-                Description = product.Description,
-                ImagePath = product.ImagePath,
-            };
+            var productEditModel = ModelConverter.ConvertToProductViewModel(product);
             return View(productEditModel);
         }
 
         [HttpPost]
-        public IActionResult EditProduct(ProductViewModel productEditModel)
+        public IActionResult EditProduct(ProductViewModel product)
         {
-            productsRepository.EditProduct(productEditModel);
+            productsRepository.EditProduct(product);
             return RedirectToAction("Products");
         }
 
         public IActionResult AddProduct() => View();
 
         [HttpPost]
-        public IActionResult AddProduct(ProductViewModel productCreateModel)
+        public IActionResult AddProduct(ProductViewModel product)
         {
-            productsRepository.AddProduct(productCreateModel);
+            productsRepository.AddProduct(product);
             return RedirectToAction("Products");
         }
     }
