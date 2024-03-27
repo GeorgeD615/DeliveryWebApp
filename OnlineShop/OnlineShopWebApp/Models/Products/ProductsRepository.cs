@@ -26,5 +26,19 @@
             int lastIndex = pageNumber < amountOfPages ? numberOfProductsPerPage : products.Count - numberOfProductsPerPage * (pageNumber - 1);
             return products.GetRange((pageNumber - 1) * numberOfProductsPerPage, lastIndex);
         }
+        public void DeleteProduct(int productId) => products.RemoveAll(p => p.Id == productId);
+
+        public void EditProduct(ProductViewModel productEditModel)
+        {
+            var product = TryGetById(productEditModel.Id);
+            product.Name = productEditModel.Name;
+            product.Cost = productEditModel.Cost;
+            product.Description = productEditModel.Description;
+        }
+        public void AddProduct(ProductViewModel productCreateModel)
+        {
+            var product = new Product(productCreateModel.Name, productCreateModel.Cost, productCreateModel.Description, "/images/products/eachpochmak.jpg");
+            products.Add(product);
+        }
     }
 }
