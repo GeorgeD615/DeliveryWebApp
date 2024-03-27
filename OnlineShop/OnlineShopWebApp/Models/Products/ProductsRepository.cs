@@ -40,5 +40,8 @@
             var product = new Product(productCreateModel.Name, productCreateModel.Cost, productCreateModel.Description, "/images/products/eachpochmak.jpg");
             products.Add(product);
         }
+
+        public List<Product> GetByName(string name) 
+            => products.FindAll(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
     }
 }

@@ -9,5 +9,6 @@
         public void DeleteProduct(int productId);
         public void EditProduct(ProductViewModel productEditModel);
         public void AddProduct(ProductViewModel productCreateModel);
+        List<Product> GetByName(string name);
     }
 }

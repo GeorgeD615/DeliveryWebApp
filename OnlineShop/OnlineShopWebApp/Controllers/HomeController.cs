@@ -12,6 +12,10 @@ namespace OnlineShopWebApp.Controllers
             this.productsRepository = productsRepository;
         }
 
-        public IActionResult Index() => View(productsRepository.GetAll());
+        public IActionResult Index(string name) {
+            if (name == null)
+                return View(productsRepository.GetAll());
+            return View(productsRepository.GetByName(name));
+        }
     }
 }
