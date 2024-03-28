@@ -1,7 +1,7 @@
 ﻿@using OnlineShopWebApp.Models.Products
 @model List<Product> 
 
-@if(Model != null)
+@if(Model.Any())
 {
     <div class="row justify-content-start">
         @foreach(var product in Model)
@@ -31,6 +31,6 @@
 }
 else
 {
-    <h2>Упс..., что-то пошло не так</h2>
+    <h2>Товары по вашему запросу не найдены</h2>
 }
 
