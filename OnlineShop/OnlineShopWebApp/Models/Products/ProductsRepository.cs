@@ -41,7 +41,7 @@
             products.Add(product);
         }
 
-        public List<Product> GetByName(string name) 
+        public List<Product> SearchByName(string name) 
             => products.FindAll(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
     }
 }
