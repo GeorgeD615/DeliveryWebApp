@@ -28,7 +28,8 @@ namespace OnlineShopWebApp.Controllers
             var productsPage = new ProductsPage()
             {
                 AmountOfPages = amountOfPages,
-                NumOfProdPerPage = numberOfProductsPerPage
+                NumOfProdPerPage = numberOfProductsPerPage,
+                PageNumber = pageNumber
             };
 
             switch (numberOfProductsPerPage)

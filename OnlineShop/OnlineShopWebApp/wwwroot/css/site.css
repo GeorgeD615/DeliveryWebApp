@@ -33,11 +33,15 @@ body {
     padding-top: 10px;
 }
 .gray{
-    margin: 0 0 0 6px;
+    
 }
 
 a.gray {
     color: #999;
+}
+
+a.gray:hover {
+    color: black;
 }
 
 .link {
@@ -45,14 +49,14 @@ a.gray {
 }
 
 .btn-outline-cartChangeAmount {
-    color: #000000;
-    border-color: #000000;
+    color: #D86328;
+    border-color: #D86328;
 }
 
 .btn-outline-cartChangeAmount:hover {
-    color: #ffffff;
+    color: black;
     background-color: #D86328;
-    border-color: #000000;
+    border-color: #D86328;
 }
 
 .btn-outline-addFavorite {

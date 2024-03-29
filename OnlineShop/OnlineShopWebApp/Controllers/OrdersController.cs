@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = userRepository.TryGetById(userId);
             var cart = cartsRepository.TryGetByUserId(userId);
-            return View(new OrderViewModel(user.Addresses, user.LastAddress, cart));
+            return View(new OrderFormViewModel(user.Addresses, user.LastAddress, cart));
         }
 
         [HttpPost]

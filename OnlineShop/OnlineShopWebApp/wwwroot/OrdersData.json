@@ -1,0 +1,104 @@
+[
+  {
+    "Id": 1,
+    "Cart": {
+      "Id": 2,
+      "UserId": 1,
+      "Items": [
+        {
+          "Id": 2,
+          "Product": {
+            "Id": 13,
+            "Name": "Хачапури",
+            "Cost": 125.0,
+            "Description": "Очень вкусная лепёшка",
+            "ImagePath": "/images/products/hachapury.jpg"
+          },
+          "Amount": 2,
+          "Cost": 250.0
+        }
+      ],
+      "Cost": "250",
+      "Amount": 2
+    },
+    "Address": {
+      "Id": 1,
+      "UserId": 1,
+      "City": "Казань",
+      "Street": "Баумана",
+      "House": "24к2",
+      "Flat": "ewf"
+    },
+    "CommentsToCourier": "11223123",
+    "StateOfOrder": 0,
+    "TimeOfOrder": "2024-03-29T13:51:17.406622+03:00"
+  },
+  {
+    "Id": 2,
+    "Cart": {
+      "Id": 3,
+      "UserId": 1,
+      "Items": [
+        {
+          "Id": 3,
+          "Product": {
+            "Id": 14,
+            "Name": "Хачапури",
+            "Cost": 125.0,
+            "Description": "Очень вкусная лепёшка",
+            "ImagePath": "/images/products/hachapury.jpg"
+          },
+          "Amount": 4,
+          "Cost": 500.0
+        }
+      ],
+      "Cost": "500",
+      "Amount": 4
+    },
+    "Address": {
+      "Id": 2,
+      "UserId": 1,
+      "City": "Санкт-Петербург",
+      "Street": "Ботаническая",
+      "House": "64к3",
+      "Flat": "914"
+    },
+    "CommentsToCourier": "jhbjhb",
+    "StateOfOrder": 0,
+    "TimeOfOrder": "2024-03-29T13:51:26.9463352+03:00"
+  },
+  {
+    "Id": 3,
+    "Cart": {
+      "Id": 1,
+      "UserId": 1,
+      "Items": [
+        {
+          "Id": 1,
+          "Product": {
+            "Id": 2,
+            "Name": "Хачапури",
+            "Cost": 125.0,
+            "Description": "Очень вкусная лепёшка",
+            "ImagePath": "/images/products/hachapury.jpg"
+          },
+          "Amount": 3,
+          "Cost": 375.0
+        }
+      ],
+      "Cost": "375",
+      "Amount": 3
+    },
+    "Address": {
+      "Id": 3,
+      "UserId": 1,
+      "City": "Казань",
+      "Street": "Баумана",
+      "House": "24к2",
+      "Flat": "913"
+    },
+    "CommentsToCourier": "weqrwre",
+    "StateOfOrder": 0,
+    "TimeOfOrder": "2024-03-29T13:52:03.6060868+03:00"
+  }
+]

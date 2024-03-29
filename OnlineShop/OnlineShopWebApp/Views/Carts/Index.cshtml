@@ -45,7 +45,7 @@
                 <div class="card-body">
                     <h2 class="card-title">Оплата</h2>
                     <p class="card-text">Итого: @Model.Cost руб.</p>
-                    <a asp-controller="orders" asp-action="index" asp-route-userId="@Model.UserId" class="btn btn-outline-cartChangeAmount" role="button">Продолжить</a>
+                    <a asp-controller="orders" asp-action="index" asp-route-userId="@Model.UserId" class="btn btn-outline-dark" role="button">Продолжить</a>
                     <a asp-controller="carts" asp-action="clearCart" asp-route-userId="1" class="btn btn-outline-danger" role="button">Очистить корзину</a>
                 </div>
             </div>

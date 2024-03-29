@@ -11,7 +11,6 @@ namespace OnlineShopWebApp.Models.Orders
         public Address Address { get; set; }
         public string CommentsToCourier { get; set; }
         public StateOfOrder StateOfOrder { get; set; }
-
         public DateTime TimeOfOrder { get; }
         public Order(Cart cart, Address address, string commentsToCourier)
         {
