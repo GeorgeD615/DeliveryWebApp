@@ -49,12 +49,12 @@ a.gray:hover {
 }
 
 .btn-outline-cartChangeAmount {
-    color: #D86328;
-    border-color: #D86328;
+    color: black;
+    border-color: black;
 }
 
 .btn-outline-cartChangeAmount:hover {
-    color: black;
+    color: white;
     background-color: #D86328;
     border-color: #D86328;
 }
