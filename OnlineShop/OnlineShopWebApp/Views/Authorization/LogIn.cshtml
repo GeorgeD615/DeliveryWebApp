@@ -16,16 +16,18 @@
                                 <img src="/images/ui/profile_icon.png" width="20" height="20" alt="Иконка профиля">
                             </i>
                         </div>
-                        <input name="Login" type="text" class="form-control" placeholder="Enter Username">
+                        <input asp-for="Login" class="form-control" placeholder="Enter Username">
                     </div>
+                    <span class="validation-error" asp-validation-for="Login"></span>
                     <div class="input-group">
                         <div class="input-group-text">
                             <i class="bi bi-lock-fill">
                                 <img src="/images/ui/password_icon.png" width="20" height="20" alt="Иконка пароля">
                             </i>
                         </div>
-                        <input name="Password" type="password" class="form-control" placeholder="Enter Password">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter Password">
                     </div>
+                    <span class="validation-error" asp-validation-for="Password"></span>
 
                     <div class="col-sm-6">
                         <div class="form-check">
@@ -45,8 +47,10 @@
                             <button type="submit" asp-controller="authorization" asp-action="logIn" class="btn btn-outline-cartChangeAmount">Войти</button>
                         </div>
                     </div>
+                    <div class="validation-error" asp-validation-summary="All"></div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+

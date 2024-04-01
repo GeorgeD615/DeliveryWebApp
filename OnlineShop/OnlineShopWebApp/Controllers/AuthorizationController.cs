@@ -10,6 +10,9 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult LogIn(LogInViewModel logInViewModel)
         {
+            if(!ModelState.IsValid)
+                return View(logInViewModel);
+
             return RedirectToAction("LogIn");
         }
 
@@ -18,6 +21,12 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Register(RegistrationViewModel registrationViewModel)
         {
+            if (registrationViewModel.Password == registrationViewModel.Login)
+                ModelState.AddModelError("", "Логин и пароль не должны совпадать");
+
+            if(!ModelState.IsValid)
+                return View(registrationViewModel);
+
             return RedirectToAction("Register");
         }
     }

@@ -111,3 +111,10 @@ a.gray:hover {
 .bg-color {
     background-color: #D86328;
 }
+
+.validation-error{
+    color : red;
+    font-size : 13px;
+    padding-top : 1px;
+    margin-top : 1px;
+}
