@@ -8,27 +8,31 @@
                 <form method="post">
                     <div class="row">
                         <div class="mb-3 col-6">
-                            <label for="inputName" class="form-label">Название</label>
-                            <input type="text" name="Name" class="form-control" id="inputName" aria-describedby="nameHelp">
+                            <label asp-for="Name" class="form-label">Название</label>
+                            <input asp-for="Name" class="form-control" id="inputName" aria-describedby="nameHelp">
+                            <span class="validation-error" asp-validation-for="Name"></span>
                         </div>
                         <div class="mb-3 col-6">
-                            <label for="inputCost" class="form-label">Цена</label>
-                            <input type="number" name="Cost" class="form-control" id="inputCost" aria-describedby="costHelp">
+                            <label asp-for="Cost" class="form-label">Цена</label>
+                            <input asp-for="Cost" class="form-control" id="inputCost" aria-describedby="costHelp">
+                            <span class="validation-error" asp-validation-for="Cost"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-12">
-                            <label for="" class="form-label">Описание</label>
-                            <textarea name="Description" class="form-control" aria-label="With textarea"></textarea>
+                            <label asp-for="Description" class="form-label">Описание</label>
+                            <textarea asp-for="Description" class="form-control" aria-label="With textarea"></textarea>
+                            <span class="validation-error" asp-validation-for="Description"></span>
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <button class="btn btn-outline-success" type="submit" asp-controller="administration" asp-action="addProduct">
+                            <button class="btn btn-outline-success" type="submit" asp-controller="administration" asp-action="addProduct" asp-route-ImagePath="default">
                                 Добавить товар
                             </button>
                         </div>
                     </div>
+                    <div class="validation-error" asp-validation-summary="All"></div>
                 </form>
             </div>
         </div>
