@@ -10,7 +10,10 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult LogIn(LogInViewModel logInViewModel)
         {
-            if(!ModelState.IsValid)
+            if (logInViewModel.Password == logInViewModel.Login)
+                ModelState.AddModelError("", "Логин и пароль не должны совпадать");
+
+            if (!ModelState.IsValid)
                 return View(logInViewModel);
 
             return RedirectToAction("LogIn");

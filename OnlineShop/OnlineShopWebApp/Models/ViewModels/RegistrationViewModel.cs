@@ -3,12 +3,14 @@ namespace OnlineShopWebApp.Models.ViewModels
 {
     public class RegistrationViewModel
     {
-        [Required(ErrorMessage = "Укажите login")]
-        [StringLength(25, MinimumLength = 5, ErrorMessage = "Длина логина должна быть от 5 до 25 символов")]
+        [Required(ErrorMessage = "Укажите логин")]
+        [RegularExpression(@"[a-zA-Z0-9]{5,25}", 
+            ErrorMessage = "Логин должен иметь длину от 5 до 25 и состоять из символов латинского алфавита (a-z A-Z) и цифр(0-9)")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Укажите пароль")]
-        [StringLength(30, MinimumLength = 5, ErrorMessage = "Длина пароля должна быть от 5 до 30 символов")]
+        [RegularExpression(@"[a-zA-Z0-9/?#@<>.,!]{5,30}", 
+            ErrorMessage = "Пароль должен иметь длину от 5 до 30 и состоять из символов латинского алфавита (a-z A-Z) и цифр(0-9) или символов / ? # @ < > . , !")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Подтвердите пароль")]
