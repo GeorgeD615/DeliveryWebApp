@@ -46,14 +46,16 @@
                                 <textarea name="commentsToCourier" class="form-control" aria-label="With textarea"></textarea>
                             </div>
                         </div>
-
-                        <div class="row justify-content-center">
-                            <div class="col-4">
-                                <button asp-controller="orders" asp-action="createOrder" asp-route-userId="1" type="submit" class="btn btn-outline-cartChangeAmount">
-                                    Оформить заказ
-                                </button>
+                        @if (Model.Addresses.Any())
+                        {
+                            <div class="row justify-content-center">
+                                <div class="col-4">
+                                    <button asp-controller="orders" asp-action="createOrder" asp-route-userId="1" type="submit" class="btn btn-outline-cartChangeAmount">
+                                        Оформить заказ
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </form>
                 </div>
             </div>

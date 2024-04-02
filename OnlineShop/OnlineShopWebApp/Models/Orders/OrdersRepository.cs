@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Models.Orders
 {

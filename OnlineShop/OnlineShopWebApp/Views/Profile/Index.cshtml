@@ -1,4 +1,6 @@
-﻿<div class="row justify-content-center">
+﻿@using OnlineShopWebApp.Models.Users
+@model Address
+<div class="row justify-content-center">
     <div class="col-5">
         <div class="card mb-3">
             <img src="~/images/address_add_image.jpg" height="210" width="400" class="card-img-top" alt="Фото заказа">
@@ -7,24 +9,29 @@
                 <form method="post">
                     <div class="row">
                         <div class="mb-3 col-6">
-                            <label for="inputCity" class="form-label">Город</label>
-                            <input type="text" name="city" class="form-control" id="inputCity" aria-describedby="cityHelp">
+                            <label asp-for="City" class="form-label">Город</label>
+                            <input asp-for="City" class="form-control" id="inputCity" aria-describedby="cityHelp">
+                            <span class="validation-error" asp-validation-for="City"></span>
                         </div>
                         <div class="mb-3 col-6">
-                            <label for="inputStreet" class="form-label">Улица/Проспект</label>
-                            <input type="text" name="street" class="form-control" id="inputStreet" aria-describedby="streetHelp">
+                            <label asp-for="Street" class="form-label">Улица/Проспект</label>
+                            <input asp-for="Street" class="form-control" id="inputStreet" aria-describedby="streetHelp">
+                            <span asp-validation-for="Street" class="validation-error"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-6">
-                            <label for="inputHouse" class="form-label">Дом</label>
-                            <input type="text" name="house" class="form-control" id="inputHouse" aria-describedby="houseHelp">
+                            <label asp-for="House" class="form-label">Дом</label>
+                            <input asp-for="House" class="form-control" id="inputHouse" aria-describedby="houseHelp">
+                            <span asp-validation-for="House" class="validation-error"></span>
                         </div>
                         <div class="mb-3 col-6">
-                            <label for="inputFlat" class="form-label">Квартира</label>
-                            <input type="text" name="flat" class="form-control" id="inputFlat" aria-describedby="flatHelp">
+                            <label asp-for="Flat" class="form-label">Квартира</label>
+                            <input asp-for="Flat" class="form-control" id="inputFlat" aria-describedby="flatHelp">
+                            <span asp-validation-for="Flat" class="validation-error"></span>
                         </div>
                     </div>
+                    <div class="validation-error" asp-validation-summary="All"></div>
                     <div class="row justify-content-center">
                         <div class="col-4">
                             <button class="btn btn-outline-success" type="submit" asp-controller="profile" asp-action="addAddress" asp-route-userId="1">
