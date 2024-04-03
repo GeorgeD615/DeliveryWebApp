@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-center">Адрес и оплата</h3>
                     <form method="post">
-                        @if (Model.Addresses.Any())
+                        @if (Model?.Addresses?.Any() ?? false)
                         {
                             <label for="inputAddress" class="form-label">Адрес доставки</label>
                             <select name="addressId" class="form-select mb-3" aria-label="Default select example">
@@ -46,7 +46,7 @@
                                 <textarea name="commentsToCourier" class="form-control" aria-label="With textarea"></textarea>
                             </div>
                         </div>
-                        @if (Model.Addresses.Any())
+                        @if (Model?.Addresses?.Any() ?? false)
                         {
                             <div class="row justify-content-center">
                                 <div class="col-4">
