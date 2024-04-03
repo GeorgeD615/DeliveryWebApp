@@ -17,6 +17,9 @@ namespace OnlineShopWebApp.Models.Orders
             orders.Add(order);
             SaveOrdersIntoJson();
         }
+
+        public List<Order> GetAll() => orders;
+
         public Order? TryGetOrder(int orderId) => orders.FirstOrDefault(order => order.Id == orderId);
         private void SaveOrdersIntoJson()
         {

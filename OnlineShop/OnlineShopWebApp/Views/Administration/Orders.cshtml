@@ -1,8 +1,39 @@
-﻿<div class="row">
+﻿@using OnlineShopWebApp.Models.Orders
+@model List<Order>
+<div class="row">
     <div class="col-5">
         @await Html.PartialAsync("AdministratorMenu")
     </div>
     <div class="col-4">
         <h2>Список заказов</h2>
     </div>
+    @if (Model != null)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Сумма</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Пользователь(логин)</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Время</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    
+                        <tr>
+                            <td scope="row">@order.Id</td>
+                            <td>@order.Cart.Cost руб.</td>
+                            <td>@EnumHelper.GetDisplayName(order.StateOfOrder)</td>
+                            <td>@order.User.Login</td>
+                            <td>@order.TimeOfOrder.Date.ToString().Substring(0, 10)</td>
+                            <td>@order.TimeOfOrder.TimeOfDay.ToString().Substring(0,5)</td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>

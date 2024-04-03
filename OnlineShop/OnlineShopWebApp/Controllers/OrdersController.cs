@@ -32,7 +32,8 @@ namespace OnlineShopWebApp.Controllers
             var cart = cartsRepository.TryGetByUserId(userId);
             var address = userRepository.TryGetAddress(userId, addressId);
             userRepository.SetLastAddress(userId, address);
-            var order = new Order(cart, address, commentsToCourier);
+            var user = userRepository.TryGetById(userId);
+            var order = new Order(cart, address, commentsToCourier, user);
             ordersRepository.AddOrder(order);
             cartsRepository.ClearCart(userId);
             return View("OrderCreated", order);

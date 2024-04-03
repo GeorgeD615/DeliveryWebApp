@@ -5,7 +5,7 @@
 {
     <div class="row justify-content-center">
         <div class="col-11">
-            <div class="card mb-3" style="max-width: 15000px;">
+            <div class="card mb-3" style="max-width: 1500px;">
                 <div class="row">
                     <div class="col-md-6">
                         <img src="~/images/delivery.gif"  class="img-fluid rounded-start" alt="Анимация приготовления заказа">
@@ -50,8 +50,7 @@
 
                                 </div>
                                 <div class="col-6">
-                                    <p class="align-content-lg-end">Стоимость заказа : <b>@Model.Cart.Cost руб.</b></p>
-                                    <p class="align-content-lg-end">Время офрмления @Model.TimeOfOrder.Hour:@Model.TimeOfOrder.Minute</p>
+                                    <p class="align-content-lg-end">Стоимость заказа : <b>@Model.Cart.Cost руб.</b> <br>Время офрмления @Model.TimeOfOrder.TimeOfDay.ToString().Substring(0,5)</p>
                                 </div>
                             </div>
                         </div>

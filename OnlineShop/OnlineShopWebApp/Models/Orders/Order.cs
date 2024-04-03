@@ -9,10 +9,11 @@ namespace OnlineShopWebApp.Models.Orders
         public int Id { get; }
         public Cart Cart { get; set; }
         public Address Address { get; set; }
+        public User User { get; set; }
         public string CommentsToCourier { get; set; }
         public StateOfOrder StateOfOrder { get; set; }
         public DateTime TimeOfOrder { get; }
-        public Order(Cart cart, Address address, string commentsToCourier)
+        public Order(Cart cart, Address address, string commentsToCourier, User user)
         {
             Id = ++nextId;
             Cart = cart;
@@ -20,6 +21,7 @@ namespace OnlineShopWebApp.Models.Orders
             CommentsToCourier = commentsToCourier;
             StateOfOrder = StateOfOrder.InProcessing;
             TimeOfOrder = DateTime.Now;
+            User = user;
         }
     }
 }

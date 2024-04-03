@@ -7,7 +7,7 @@ namespace OnlineShopWebApp.Models.Users
         private List<User> users = new();
         public UsersRepository()
         {
-            users.Add(new User("Георгий"));
+            users.Add(new User("Георгий", "George"));
         }
         public User? TryGetById(int userId) => users.FirstOrDefault(user => user.Id == userId);
         public List<Product> GetFavorites(int userId) => TryGetById(userId)?.Favorites;

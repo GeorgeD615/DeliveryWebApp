@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models;
+using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Controllers
@@ -7,17 +8,23 @@ namespace OnlineShopWebApp.Controllers
     public class AdministrationController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        public AdministrationController(IProductsRepository productsRepository)
+        private readonly IOrdersRepository ordersRepository;
+        public AdministrationController(IProductsRepository productsRepository, IOrdersRepository ordersRepository)
         {
             this.productsRepository = productsRepository;
+            this.ordersRepository = ordersRepository;
         }
 
-        public IActionResult Products() 
+        public IActionResult Products()
         {
             var products = productsRepository.GetAll();
             return View(products);
         }
-        public IActionResult Orders() => View();
+        public IActionResult Orders()
+        {
+            var orders = ordersRepository.GetAll();
+            return View(orders);
+        } 
         public IActionResult Users() => View();
         public IActionResult Roles() => View();
         public IActionResult DeleteProduct(int productId)
