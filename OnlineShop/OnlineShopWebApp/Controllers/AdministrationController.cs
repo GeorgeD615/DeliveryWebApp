@@ -36,6 +36,9 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductViewModel product)
         {
+            if (product.Name == product.Description)
+                ModelState.AddModelError("", "Название и описание блюда не должны совпадать");
+
             if(!ModelState.IsValid)
                 return View(product);
 
@@ -48,7 +51,10 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult AddProduct(ProductViewModel product)
         {
-            if(!ModelState.IsValid)
+            if (product.Name == product.Description)
+                ModelState.AddModelError("", "Название и описание блюда не должны совпадать");
+
+            if (!ModelState.IsValid)
                 return View(product);
 
             productsRepository.AddProduct(product);
