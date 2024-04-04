@@ -1,0 +1,98 @@
+﻿@using OnlineShopWebApp.Models.Orders
+@model Order
+
+@await Html.PartialAsync("AdministratorMenu")
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">Номер заказа:</div>
+                    <div class="col-6">@Model.Id</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Пользователь(логин):</div>
+                    <div class="col-6">@Model.User.Login</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Имя пользователя:</div>
+                    <div class="col-6">@Model.User.Name</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Адрес:</div>
+                    <div class="col-6">@Model.Address.ToString()</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Заказ:</div>
+                    <div class="col-6">
+                        <div class="overflow-auto" style="height : 160px">
+                            <div class="row m-0">
+                                <div class="col-4">
+                                    <b>Название</b>
+                                </div>
+                                <div class="col-3">
+                                    <b>Кол-во</b>
+                                </div>
+                                <div class="col-3">
+                                    <b>Стоимость</b>
+                                </div>
+                            </div>
+                            <hr>
+                            @foreach (var item in Model.Cart.Items)
+                            {
+                                <div class="row">
+                                    <div class="col-4">
+                                        @item.Product.Name
+                                    </div>
+                                    <div class="col-3">
+                                        x @item.Amount
+                                    </div>
+                                    <div class="col-3">
+                                        @item.Cost руб.
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Стоимость заказа:</div>
+                    <div class="col-6">@Model.Cart.Cost</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Дата оформления:</div>
+                    <div class="col-6">@Model.TimeOfOrder.Date.ToString().Substring(0,10)</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Время оформления:</div>
+                    <div class="col-6">@Model.TimeOfOrder.TimeOfDay.ToString().Substring(0,5);</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Статус заказа:</div>
+                    <div class="col-6">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                @EnumHelper.GetDisplayName(Model.StateOfOrder)
+                            </button>
+                            <ul class="dropdown-menu">
+                                @foreach (var state in EnumHelper.GetStatetsOfOrderList())
+                                {
+                                    @if(Model.StateOfOrder != state)
+                                    {
+                                        <li><a asp-controller="administration" asp-action="EditOrderStatus" asp-route-orderId="@Model.Id" asp-route-status="@state" class="dropdown-item">@EnumHelper.GetDisplayName(state)</a></li>
+                                    }
+                                }
+                                <li><a class="dropdown-item">Другое действие</a></li>
+                                <li><a class="dropdown-item">Что-то еще здесь</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

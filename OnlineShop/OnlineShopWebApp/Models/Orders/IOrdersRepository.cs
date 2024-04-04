@@ -5,5 +5,6 @@
         List<Order> GetAll();
         void AddOrder (Order order);
         Order? TryGetOrder(int orderId);
+        void EditStatus(int orderId, StateOfOrder status);
     }
 }

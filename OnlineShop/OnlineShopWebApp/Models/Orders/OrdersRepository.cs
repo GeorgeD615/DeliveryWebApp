@@ -18,6 +18,13 @@ namespace OnlineShopWebApp.Models.Orders
             SaveOrdersIntoJson();
         }
 
+        public void EditStatus(int orderId, StateOfOrder status)
+        {
+            var order = TryGetOrder(orderId);
+            order.StateOfOrder = status;
+            SaveOrdersIntoJson();
+        }
+
         public List<Order> GetAll() => orders;
 
         public Order? TryGetOrder(int orderId) => orders.FirstOrDefault(order => order.Id == orderId);

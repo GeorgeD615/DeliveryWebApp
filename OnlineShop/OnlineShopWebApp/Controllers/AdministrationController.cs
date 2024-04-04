@@ -67,5 +67,17 @@ namespace OnlineShopWebApp.Controllers
             productsRepository.AddProduct(product);
             return RedirectToAction("Products");
         }
+
+        public IActionResult ShowOrderInfo(int orderId)
+        {
+            var order = ordersRepository.TryGetOrder(orderId);
+            return View(order);
+        }
+
+        public IActionResult EditOrderStatus(int orderId, StateOfOrder status)
+        {
+            ordersRepository.EditStatus(orderId, status);
+            return RedirectToAction("ShowOrderInfo", new { orderId });
+        }
     }
 }

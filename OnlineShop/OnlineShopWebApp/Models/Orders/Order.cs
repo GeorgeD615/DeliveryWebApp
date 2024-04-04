@@ -1,4 +1,5 @@
-﻿using OnlineShopWebApp.Models.Carts;
+﻿using Newtonsoft.Json;
+using OnlineShopWebApp.Models.Carts;
 using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Models.Orders
@@ -22,6 +23,14 @@ namespace OnlineShopWebApp.Models.Orders
             StateOfOrder = StateOfOrder.InProcessing;
             TimeOfOrder = DateTime.Now;
             User = user;
+        }
+
+        [JsonConstructor]
+        public Order(Cart cart, Address address, User user, string commentsToCourier, StateOfOrder stateOfOrder, DateTime timeOfOrder)
+            : this(cart, address, commentsToCourier, user)
+        {
+            StateOfOrder = stateOfOrder;
+            TimeOfOrder = timeOfOrder;
         }
     }
 }

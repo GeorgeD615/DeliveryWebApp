@@ -14,5 +14,7 @@ namespace OnlineShopWebApp.Models
                 .GetCustomAttribute<DisplayAttribute>()
                 .GetName();
         }
+
+        public static List<StateOfOrder> GetStatetsOfOrderList() => Enum.GetValues(typeof(StateOfOrder)).Cast<StateOfOrder>().ToList();
     }
 }

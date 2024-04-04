@@ -18,6 +18,7 @@
                     <th scope="col">Пользователь(логин)</th>
                     <th scope="col">Дата</th>
                     <th scope="col">Время</th>
+                    <th scope="col">Подробнее...</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,9 @@
                             <td>@order.User.Login</td>
                             <td>@order.TimeOfOrder.Date.ToString().Substring(0, 10)</td>
                             <td>@order.TimeOfOrder.TimeOfDay.ToString().Substring(0,5)</td>
+                            <td>
+                                <a class="btn btn-outline-info" asp-controller="administration" asp-action="showOrderInfo" asp-route-orderId="@order.Id">Подробнее</a>
+                            </td>
                         </tr>
                 }
             </tbody>
