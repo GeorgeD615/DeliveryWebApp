@@ -6,10 +6,10 @@ namespace OnlineShopWebApp.Models
 {
     public static class EnumHelper
     {
-        public static string GetDisplayName(Enum enumValue)
+        public static string GetDisplayName(Enum value)
         {
-            return enumValue.GetType()
-                .GetMember(enumValue.ToString())
+            return value.GetType()
+                .GetMember(value.ToString())
                 .First()
                 .GetCustomAttribute<DisplayAttribute>()
                 .GetName();

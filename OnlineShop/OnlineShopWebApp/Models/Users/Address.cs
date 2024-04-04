@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Models.Users
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "Укажите название города")]
-        [RegularExpression(@"[а-яА-я- ]{2,30}", 
+        [RegularExpression(@"[а-яА-я- ]{2,30}",
             ErrorMessage = "Название города должно иметь длину от 2 до 30 и состоять из символов кириллицы (а-я А-Я) и символа \"-\"")]
         public string City { get; set; }
 
@@ -19,8 +19,8 @@ namespace OnlineShopWebApp.Models.Users
         public string Street { get; set; }
 
         [Required(ErrorMessage = "Укажите номер дома")]
-        [RegularExpression(@"[0-9а-яА-Я/]{1,7}",
-            ErrorMessage = "Номер дома должен состоять из цифр, символов кириллицы (а-я А-Я) или символа / ")]
+        [RegularExpression(@"([0-9]+[0-9а-яА-Я/]*){1,7}",
+            ErrorMessage = "Номер дома должен начинаться с цифр состоять из цифр, символов кириллицы (а-я А-Я) или символа / ")]
         public string House { get; set; }
 
 
