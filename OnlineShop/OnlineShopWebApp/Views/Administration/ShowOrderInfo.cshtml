@@ -1,7 +1,5 @@
 ﻿@using OnlineShopWebApp.Models.Orders
 @model Order
-
-@await Html.PartialAsync("AdministratorMenu")
 <div class="row">
     <div class="col-2">
 
@@ -9,25 +7,25 @@
     <div class="col-8">
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-6">Номер заказа:</div>
-                    <div class="col-6">@Model.Id</div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Номер заказа:</div>
+                    <div class="col-8">@Model.Id</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Пользователь(логин):</div>
-                    <div class="col-6">@Model.User.Login</div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Пользователь(логин):</div>
+                    <div class="col-8">@Model.User.Login</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Имя пользователя:</div>
-                    <div class="col-6">@Model.User.Name</div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Имя пользователя:</div>
+                    <div class="col-8">@Model.User.Name</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Адрес:</div>
-                    <div class="col-6">@Model.Address.ToString()</div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Адрес:</div>
+                    <div class="col-8">@Model.Address.ToString()</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Заказ:</div>
-                    <div class="col-6">
+                <div class="row m-2">
+                    <div class="col-4 gray">Заказ:</div>
+                    <div class="col-8">
                         <div class="overflow-auto" style="height : 160px">
                             <div class="row m-0">
                                 <div class="col-4">
@@ -58,21 +56,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Стоимость заказа:</div>
-                    <div class="col-6">@Model.Cart.Cost</div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Стоимость заказа:</div>
+                    <div class="col-8">@Model.Cart.Cost руб.</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Дата оформления:</div>
-                    <div class="col-6">@Model.TimeOfOrder.Date.ToString().Substring(0,10)</div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Дата оформления:</div>
+                    <div class="col-8">@Model.TimeOfOrder.Date.ToString().Substring(0,10)</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Время оформления:</div>
-                    <div class="col-6">@Model.TimeOfOrder.TimeOfDay.ToString().Substring(0,5);</div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Время оформления:</div>
+                    <div class="col-8">@Model.TimeOfOrder.TimeOfDay.ToString().Substring(0,5)</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">Статус заказа:</div>
-                    <div class="col-6">
+                <div class="row m-2">
+                    <div class="col-4 gray">Комментарий к заказу:</div>
+                    <div class="col-8">@Model.CommentsToCourier</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Статус заказа:</div>
+                    <div class="col-8">
                         <div class="btn-group">
                             <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 @EnumHelper.GetDisplayName(Model.StateOfOrder)
@@ -91,7 +93,10 @@
                         </div>
                     </div>
                 </div>
-
+                <br>
+                <div class="m-4">
+                    <a asp-controller="administration" asp-action="orders" class="btn btn-dark">Вернуться к заказам</a>
+                </div>
             </div>
         </div>
     </div>

@@ -1,30 +1,41 @@
 ﻿@using OnlineShopWebApp.Models.Orders
 @model List<Order>
-<div class="row">
-    <div class="col-5">
-        @await Html.PartialAsync("AdministratorMenu")
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true">Заказы</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="administration" asp-action="products" class="nav-link">Товары</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="administration" asp-action="users" class="nav-link">Пользователи</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="administration" asp-action="roles" class="nav-link">Роли</a>
+            </li>
+        </ul>
     </div>
-    <div class="col-4">
-        <h2>Список заказов</h2>
-    </div>
-    @if (Model != null)
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Сумма</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Пользователь(логин)</th>
-                    <th scope="col">Дата</th>
-                    <th scope="col">Время</th>
-                    <th scope="col">Подробнее...</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var order in Model)
-                {
-                    
+    <div class="card-body">
+        @if (Model != null)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Сумма</th>
+                        <th scope="col">Статус</th>
+                        <th scope="col">Пользователь(логин)</th>
+                        <th scope="col">Дата</th>
+                        <th scope="col">Время</th>
+                        <th scope="col">Подробнее...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
                         <tr>
                             <td scope="row">@order.Id</td>
                             <td>@order.Cart.Cost руб.</td>
@@ -36,8 +47,9 @@
                                 <a class="btn btn-outline-info" asp-controller="administration" asp-action="showOrderInfo" asp-route-orderId="@order.Id">Подробнее</a>
                             </td>
                         </tr>
-                }
-            </tbody>
-        </table>
-    }
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
 </div>

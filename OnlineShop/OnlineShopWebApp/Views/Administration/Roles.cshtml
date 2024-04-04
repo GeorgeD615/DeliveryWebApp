@@ -1,8 +1,21 @@
-﻿<div class="row">
-    <div class="col-5">
-        @await Html.PartialAsync("AdministratorMenu")
+﻿<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a asp-controller="administration" asp-action="orders" class="nav-link">Заказы</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="administration" asp-action="products" class="nav-link">Товары</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="administration" asp-action="users" class="nav-link">Пользователи</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true">Роли</a>
+            </li>
+        </ul>
     </div>
-    <div class="col-4">
-        <h2>Роли</h2>
+    <div class="card-body">
+        <h2>Пока нет ролей</h2>
     </div>
 </div>
