@@ -7,6 +7,6 @@ namespace OnlineShopWebApp.Models.Roles
         List<Role> GetAll();
         void AddRole(Role role);
         bool IsExisting(string name);
-        void RemoveRole(int id);
+        void RemoveById(int id);
     }
 }

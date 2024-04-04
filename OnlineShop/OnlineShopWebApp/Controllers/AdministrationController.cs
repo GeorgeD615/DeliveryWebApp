@@ -31,20 +31,20 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Users() => View();
         public IActionResult Roles()
         {
-            var roleFormModel = new RoleCreateFormViewModel();
-            roleFormModel.roles = rolesRepository.GetAll();
-            return View(roleFormModel);
+            var role = new RoleViewModel();
+            role.Roles = rolesRepository.GetAll();
+            return View(role);
         }
 
         [HttpPost]
-        public IActionResult Roles(RoleCreateFormViewModel roleCreateFormViewModel)
+        public IActionResult Roles(RoleViewModel roleViewModel)
         {
-            var roleName = roleCreateFormViewModel.Name;
+            var roleName = roleViewModel.Name.Trim().ToLower();
             if (rolesRepository.IsExisting(roleName))
                 ModelState.AddModelError("", "Такая роль уже существует");
 
             if (!ModelState.IsValid)
-                return View(new RoleCreateFormViewModel() { roles = rolesRepository.GetAll() });
+                return View(new RoleViewModel() { Roles = rolesRepository.GetAll() });
 
             rolesRepository.AddRole(new Role(roleName));
 
@@ -53,7 +53,7 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult RemoveRole(int roleId)
         {
-            rolesRepository.RemoveRole(roleId);
+            rolesRepository.RemoveById(roleId);
             return RedirectToAction("Roles");
         }
 

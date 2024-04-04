@@ -2,8 +2,8 @@
 {
     public class Role
     {
-        private int nextId = 0;
-        public int Id { get; set; }
+        private static int nextId = 0;
+        public int Id { get; }
         public string Name { get; set; }
 
         public Role(string name)
