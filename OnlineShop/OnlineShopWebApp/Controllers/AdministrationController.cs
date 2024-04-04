@@ -2,6 +2,7 @@
 using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
+using OnlineShopWebApp.Models.Roles;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -9,10 +10,12 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IProductsRepository productsRepository;
         private readonly IOrdersRepository ordersRepository;
-        public AdministrationController(IProductsRepository productsRepository, IOrdersRepository ordersRepository)
+        private readonly IRolesRepository rolesRepository;
+        public AdministrationController(IProductsRepository productsRepository, IOrdersRepository ordersRepository, IRolesRepository rolesRepository)
         {
             this.productsRepository = productsRepository;
             this.ordersRepository = ordersRepository;
+            this.rolesRepository = rolesRepository;
         }
 
         public IActionResult Products()
@@ -26,7 +29,34 @@ namespace OnlineShopWebApp.Controllers
             return View(orders);
         } 
         public IActionResult Users() => View();
-        public IActionResult Roles() => View();
+        public IActionResult Roles()
+        {
+            var roleFormModel = new RoleCreateFormViewModel();
+            roleFormModel.roles = rolesRepository.GetAll();
+            return View(roleFormModel);
+        }
+
+        [HttpPost]
+        public IActionResult Roles(RoleCreateFormViewModel roleCreateFormViewModel)
+        {
+            var roleName = roleCreateFormViewModel.Name;
+            if (rolesRepository.IsExisting(roleName))
+                ModelState.AddModelError("", "Такая роль уже существует");
+
+            if (!ModelState.IsValid)
+                return View(new RoleCreateFormViewModel() { roles = rolesRepository.GetAll() });
+
+            rolesRepository.AddRole(new Role(roleName));
+
+            return RedirectToAction("Roles");
+        }
+
+        public IActionResult RemoveRole(int roleId)
+        {
+            rolesRepository.RemoveRole(roleId);
+            return RedirectToAction("Roles");
+        }
+
         public IActionResult DeleteProduct(int productId)
         {
             productsRepository.DeleteProduct(productId);
