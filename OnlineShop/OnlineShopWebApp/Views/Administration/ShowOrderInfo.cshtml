@@ -62,11 +62,11 @@
                 </div>
                 <div class="row m-2">
                     <div class="col-4 gray">Дата оформления:</div>
-                    <div class="col-8">@Model.TimeOfOrder.Date.ToString().Substring(0,10)</div>
+                    <div class="col-8">@Model.TimeOfOrder.ToString("d")</div>
                 </div>
                 <div class="row m-2">
                     <div class="col-4 gray">Время оформления:</div>
-                    <div class="col-8">@Model.TimeOfOrder.TimeOfDay.ToString().Substring(0,5)</div>
+                    <div class="col-8">@Model.TimeOfOrder.ToString("t")</div>
                 </div>
                 <div class="row m-2">
                     <div class="col-4 gray">Комментарий к заказу:</div>

@@ -17,6 +17,10 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult AddAddress(int userId, Address address)
         {
+            address.City = address.City.Trim();
+            address.Street = address.Street.Trim();
+            address.House = address.House.Trim();
+
             if (!ModelState.IsValid)
                 return View("Index", address);
             userRepository.AddAddress(userId, address);

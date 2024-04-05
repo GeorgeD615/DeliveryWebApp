@@ -10,6 +10,9 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult LogIn(LogInViewModel logInViewModel)
         {
+            logInViewModel.Login = logInViewModel.Login.Trim();
+            logInViewModel.Password = logInViewModel.Password.Trim();
+
             if (logInViewModel.Password == logInViewModel.Login)
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
 
@@ -24,6 +27,10 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult Register(RegistrationViewModel registrationViewModel)
         {
+            registrationViewModel.Login = registrationViewModel.Login.Trim();
+            registrationViewModel.Password = registrationViewModel.Password.Trim();
+            registrationViewModel.PasswordConfirm = registrationViewModel.PasswordConfirm.Trim();
+
             if (registrationViewModel.Password == registrationViewModel.Login)
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
 

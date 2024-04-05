@@ -2,11 +2,11 @@
   {
     "Id": 1,
     "Cart": {
-      "Id": 1,
+      "Id": 2,
       "UserId": 1,
       "Items": [
         {
-          "Id": 1,
+          "Id": 2,
           "Product": {
             "Id": 13,
             "Name": "Долма",
@@ -60,13 +60,13 @@
   {
     "Id": 2,
     "Cart": {
-      "Id": 2,
+      "Id": 3,
       "UserId": 1,
       "Items": [
         {
-          "Id": 2,
+          "Id": 3,
           "Product": {
-            "Id": 2,
+            "Id": 14,
             "Name": "Хачапури",
             "Cost": 125.0,
             "Description": "Очень вкусная лепёшка",
@@ -88,13 +88,13 @@
       "Flat": 125
     },
     "User": {
-      "Id": 1,
+      "Id": 3,
       "Name": "Георгий",
       "Login": "George",
       "Favorites": [],
       "Addresses": [
         {
-          "Id": 4,
+          "Id": 5,
           "UserId": 1,
           "City": "Казань",
           "Street": "Баумана",
@@ -103,7 +103,7 @@
         }
       ],
       "LastAddress": {
-        "Id": 4,
+        "Id": 6,
         "UserId": 1,
         "City": "Казань",
         "Street": "Баумана",
@@ -118,13 +118,13 @@
   {
     "Id": 3,
     "Cart": {
-      "Id": 3,
+      "Id": 4,
       "UserId": 1,
       "Items": [
         {
-          "Id": 3,
+          "Id": 4,
           "Product": {
-            "Id": 2,
+            "Id": 15,
             "Name": "Хачапури",
             "Cost": 125.0,
             "Description": "Очень вкусная лепёшка",
@@ -138,7 +138,7 @@
       "Amount": 3
     },
     "Address": {
-      "Id": 4,
+      "Id": 7,
       "UserId": 1,
       "City": "Казань",
       "Street": "Баумана",
@@ -146,13 +146,13 @@
       "Flat": 125
     },
     "User": {
-      "Id": 1,
+      "Id": 4,
       "Name": "Георгий",
       "Login": "George",
       "Favorites": [],
       "Addresses": [
         {
-          "Id": 4,
+          "Id": 8,
           "UserId": 1,
           "City": "Казань",
           "Street": "Баумана",
@@ -161,7 +161,7 @@
         }
       ],
       "LastAddress": {
-        "Id": 4,
+        "Id": 9,
         "UserId": 1,
         "City": "Казань",
         "Street": "Баумана",
@@ -172,5 +172,63 @@
     "CommentsToCourier": "сообщение3",
     "StateOfOrder": 0,
     "TimeOfOrder": "2024-04-04T13:44:37.8013693+03:00"
+  },
+  {
+    "Id": 4,
+    "Cart": {
+      "Id": 1,
+      "UserId": 1,
+      "Items": [
+        {
+          "Id": 1,
+          "Product": {
+            "Id": 3,
+            "Name": "Хинкали",
+            "Cost": 300.0,
+            "Description": "Очень вкусные пельмени",
+            "ImagePath": "/images/products/khinkali.jpg"
+          },
+          "Amount": 2,
+          "Cost": 600.0
+        }
+      ],
+      "Cost": "600",
+      "Amount": 2
+    },
+    "Address": {
+      "Id": 10,
+      "UserId": 1,
+      "City": "Рязань",
+      "Street": "Большевиков",
+      "House": "123а",
+      "Flat": 12
+    },
+    "User": {
+      "Id": 1,
+      "Name": "Георгий",
+      "Login": "George",
+      "Favorites": [],
+      "Addresses": [
+        {
+          "Id": 10,
+          "UserId": 1,
+          "City": "Рязань",
+          "Street": "Большевиков",
+          "House": "123а",
+          "Flat": 12
+        }
+      ],
+      "LastAddress": {
+        "Id": 10,
+        "UserId": 1,
+        "City": "Рязань",
+        "Street": "Большевиков",
+        "House": "123а",
+        "Flat": 12
+      }
+    },
+    "CommentsToCourier": "проверка Trim",
+    "StateOfOrder": 1,
+    "TimeOfOrder": "2024-04-05T13:07:00.6673519+03:00"
   }
 ]

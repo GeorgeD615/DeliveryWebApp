@@ -41,8 +41,8 @@
                             <td>@order.Cart.Cost руб.</td>
                             <td>@EnumHelper.GetDisplayName(order.StateOfOrder)</td>
                             <td>@order.User.Login</td>
-                            <td>@order.TimeOfOrder.Date.ToString().Substring(0, 10)</td>
-                            <td>@order.TimeOfOrder.TimeOfDay.ToString().Substring(0,5)</td>
+                            <td>@order.TimeOfOrder.ToString("d")</td>
+                            <td>@order.TimeOfOrder.ToString("t")</td>
                             <td>
                                 <a class="btn btn-outline-info" asp-controller="administration" asp-action="showOrderInfo" asp-route-orderId="@order.Id">Подробнее</a>
                             </td>

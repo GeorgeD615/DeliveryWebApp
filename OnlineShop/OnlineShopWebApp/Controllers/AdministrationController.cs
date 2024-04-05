@@ -40,11 +40,12 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Roles(RoleViewModel roleViewModel)
         {
             var roleName = roleViewModel.Name.Trim().ToLower();
+
             if (rolesRepository.IsExisting(roleName))
                 ModelState.AddModelError("", "Такая роль уже существует");
 
             if (!ModelState.IsValid)
-                return View(new RoleViewModel() { Roles = rolesRepository.GetAll() });
+                return View(new RoleViewModel() { Roles = rolesRepository.GetAll()});
 
             rolesRepository.AddRole(new Role(roleName));
 
@@ -73,6 +74,9 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductViewModel product)
         {
+            product.Name = product.Name.Trim();
+            product.Description = product.Description.Trim();
+
             if (product.Name == product.Description)
                 ModelState.AddModelError("", "Название и описание блюда не должны совпадать");
 
@@ -88,6 +92,9 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult AddProduct(ProductViewModel product)
         {
+            product.Name = product.Name.Trim();
+            product.Description = product.Description.Trim();
+
             if (product.Name == product.Description)
                 ModelState.AddModelError("", "Название и описание блюда не должны совпадать");
 
