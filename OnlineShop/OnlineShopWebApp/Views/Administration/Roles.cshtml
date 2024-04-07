@@ -1,5 +1,5 @@
 ﻿@using OnlineShopWebApp.Models.Roles
-@model RoleViewModel
+@model RolesPageViewModel
 <div class="card">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
@@ -35,16 +35,16 @@
         <form method="post">
             <div class="row">
                 <div class="col-10 mb-3">
-                    <label asp-for="Name" class="form-label">Название роли</label>
+                    <label asp-for="RoleViewModel.Name" class="form-label">Название роли</label>
                     <div class="row">
                         <div class="col-5">
-                            <input asp-for="Name" class="form-control" id="inputName" aria-describedby="nameHelp">
+                            <input asp-for="RoleViewModel.Name" class="form-control" id="inputName" aria-describedby="nameHelp">
                         </div>
                         <div class="col-3 m-0">
-                            <button asp-controller="administration" asp-action="roles" type="submit" class="btn btn-outline-success">Добавить</button>
+                            <button asp-controller="administration" asp-action="roles" asp-route-roles="@Model.Roles" type="submit" class="btn btn-outline-success">Добавить</button>
                         </div>
                     </div>
-                    <span asp-validation-for="Name" class="validation-error"></span>
+                    <span asp-validation-for="RoleViewModel.Name" class="validation-error"></span>
                 </div>
             </div>
             <div asp-validation-summary="ModelOnly" class="validation-error"></div>

@@ -31,21 +31,22 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Users() => View();
         public IActionResult Roles()
         {
-            var role = new RoleViewModel();
-            role.Roles = rolesRepository.GetAll();
-            return View(role);
+            var rolesPage = new RolesPageViewModel();
+            rolesPage.Roles = rolesRepository.GetAll();
+            rolesPage.RoleViewModel = new RoleViewModel();
+            return View(rolesPage);
         }
 
         [HttpPost]
-        public IActionResult Roles(RoleViewModel roleViewModel)
+        public IActionResult Roles(RolesPageViewModel rolesPageViewModel)
         {
-            var roleName = roleViewModel.Name.Trim().ToLower();
+            var roleName = rolesPageViewModel.RoleViewModel.Name.Trim().ToLower();
 
             if (rolesRepository.IsExisting(roleName))
                 ModelState.AddModelError("", "Такая роль уже существует");
 
             if (!ModelState.IsValid)
-                return View(new RoleViewModel() { Roles = rolesRepository.GetAll()});
+                return View(new RolesPageViewModel() { Roles = rolesRepository.GetAll()});
 
             rolesRepository.AddRole(new Role(roleName));
 
