@@ -13,10 +13,11 @@
                         </div>
                     </td>
                     <td>
-                        @if (role.Id != 1)
+                        @if (role.Name != "admin")
                         {
                             <a asp-controller="administration" asp-action="removeRole" asp-route-roleId="@role.Id" class="btn btn-outline-danger">Удалить</a>
-                        }else
+                        }
+                        else
                         {
                             <a asp-controller="administration" asp-action="removeRole" asp-route-roleId="@role.Id" class="btn btn-outline-danger disabled">Удалить</a>
                         }
