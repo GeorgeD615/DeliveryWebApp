@@ -29,24 +29,18 @@ namespace OnlineShopWebApp.Controllers
             return View(orders);
         } 
         public IActionResult Users() => View();
-        public IActionResult Roles()
-        {
-            var rolesPage = new RolesPageViewModel();
-            rolesPage.Roles = rolesRepository.GetAll();
-            rolesPage.RoleViewModel = new RoleViewModel();
-            return View(rolesPage);
-        }
+        public IActionResult Roles() => View();
 
         [HttpPost]
-        public IActionResult Roles(RolesPageViewModel rolesPageViewModel)
+        public IActionResult Roles(RoleViewModel role)
         {
-            var roleName = rolesPageViewModel.RoleViewModel.Name.Trim().ToLower();
+            var roleName = role.Name.Trim().ToLower();
 
             if (rolesRepository.IsExisting(roleName))
                 ModelState.AddModelError("", "Такая роль уже существует");
 
             if (!ModelState.IsValid)
-                return View(new RolesPageViewModel() { Roles = rolesRepository.GetAll()});
+                return View(role);
 
             rolesRepository.AddRole(new Role(roleName));
 
