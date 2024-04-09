@@ -4,9 +4,18 @@ using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
 using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
+using Serilog;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+{
+    loggerConfiguration
+        .ReadFrom.Configuration(hostingContext.Configuration)
+        .Enrich.FromLogContext()
+        .Enrich.WithProperty("ApplicationName", "OnlineShop");
+
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -38,6 +47,9 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseSerilogRequestLogging();
+
 app.UseStaticFiles();
 
 app.UseRouting();
