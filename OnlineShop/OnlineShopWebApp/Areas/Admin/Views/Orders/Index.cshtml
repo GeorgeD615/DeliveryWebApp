@@ -8,13 +8,13 @@
                 <a class="nav-link active" aria-current="true">Заказы</a>
             </li>
             <li class="nav-item">
-                <a asp-controller="administration" asp-action="products" class="nav-link">Товары</a>
+                <a asp-area="admin" asp-controller="products" asp-action="index" class="nav-link">Товары</a>
             </li>
             <li class="nav-item">
-                <a asp-controller="administration" asp-action="users" class="nav-link">Пользователи</a>
+                <a asp-area="admin" asp-controller="users" asp-action="index" class="nav-link">Пользователи</a>
             </li>
             <li class="nav-item">
-                <a asp-controller="administration" asp-action="roles" class="nav-link">Роли</a>
+                <a asp-area="admin" asp-controller="roles" asp-action="index" class="nav-link">Роли</a>
             </li>
         </ul>
     </div>
@@ -44,7 +44,7 @@
                             <td>@order.TimeOfOrder.ToString("d")</td>
                             <td>@order.TimeOfOrder.ToString("t")</td>
                             <td>
-                                <a class="btn btn-outline-info" asp-controller="administration" asp-action="showOrderInfo" asp-route-orderId="@order.Id">Подробнее</a>
+                                <a asp-area="admin" asp-controller="orders" asp-action="showInfo" asp-route-orderId="@order.Id" class="btn btn-outline-info">Подробнее</a>
                             </td>
                         </tr>
                     }

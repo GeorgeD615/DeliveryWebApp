@@ -28,7 +28,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <button class="btn btn-outline-success" type="submit" asp-controller="administration" asp-action="editProduct" asp-route-id="@Model.Id" asp-route-ImagePath="/images/products/eachpochmak.jpg">
+                            <button class="btn btn-outline-success" type="submit" asp-area="admin" asp-controller="products" asp-action="edit" asp-route-id="@Model.Id" asp-route-ImagePath="/images/products/eachpochmak.jpg">
                                 Сохранить изменения
                             </button>
                         </div>

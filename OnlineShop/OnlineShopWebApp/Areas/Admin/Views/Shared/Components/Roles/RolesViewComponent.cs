@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopWebApp.Models.Roles;
 
-namespace OnlineShopWebApp.Views.Shared.Components.Roles
+namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles
 {
     public class RolesViewComponent : ViewComponent
     {

@@ -84,7 +84,7 @@
                                 {
                                     @if(Model.StateOfOrder != state)
                                     {
-                                        <li><a asp-controller="administration" asp-action="EditOrderStatus" asp-route-orderId="@Model.Id" asp-route-status="@state" class="dropdown-item">@EnumHelper.GetDisplayName(state)</a></li>
+                                        <li><a asp-area="admin" asp-controller="orders" asp-action="editStatus" asp-route-orderId="@Model.Id" asp-route-status="@state" class="dropdown-item">@EnumHelper.GetDisplayName(state)</a></li>
                                     }
                                 }
                             </ul>
@@ -93,7 +93,7 @@
                 </div>
                 <br>
                 <div class="m-4">
-                    <a asp-controller="administration" asp-action="orders" class="btn btn-dark">Вернуться к заказам</a>
+                    <a asp-area="admin" asp-controller="orders" asp-action="index" class="btn btn-dark">Вернуться к заказам</a>
                 </div>
             </div>
         </div>

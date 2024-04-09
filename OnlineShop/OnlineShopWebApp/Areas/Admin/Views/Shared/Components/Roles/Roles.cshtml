@@ -15,11 +15,11 @@
                     <td>
                         @if (role.Name != "admin")
                         {
-                            <a asp-controller="administration" asp-action="removeRole" asp-route-roleId="@role.Id" class="btn btn-outline-danger">Удалить</a>
+                            <a asp-area="admin" asp-controller="roles" asp-action="removeById" asp-route-roleId="@role.Id" class="btn btn-outline-danger">Удалить</a>
                         }
                         else
                         {
-                            <a asp-controller="administration" asp-action="removeRole" asp-route-roleId="@role.Id" class="btn btn-outline-danger disabled">Удалить</a>
+                            <a asp-area="admin" asp-controller="roles" asp-action="removeById" asp-route-roleId="@role.Id" class="btn btn-outline-danger disabled">Удалить</a>
                         }
                     </td>
                 </tr>

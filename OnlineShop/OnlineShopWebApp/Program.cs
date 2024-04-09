@@ -59,6 +59,10 @@ app.UseAuthorization();
 app.UseRequestLocalization();
 
 app.MapControllerRoute(
+    name: "MyArea",
+    pattern: "{area:exists}/{controller=Orders}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Product}/{action=Page}/{numberOfProductsPerPage=10}/{pageNumber=1}");
 

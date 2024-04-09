@@ -4,13 +4,13 @@
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a asp-controller="administration" asp-action="orders" class="nav-link">Заказы</a>
+                <a asp-area="admin" asp-controller="orders" asp-action="index" class="nav-link">Заказы</a>
             </li>
             <li class="nav-item">
-                <a asp-controller="administration" asp-action="products" class="nav-link">Товары</a>
+                <a asp-area="admin" asp-controller="products" asp-action="index" class="nav-link">Товары</a>
             </li>
             <li class="nav-item">
-                <a asp-controller="administration" asp-action="users" class="nav-link">Пользователи</a>
+                <a asp-area="admin" asp-controller="users" asp-action="index" class="nav-link">Пользователи</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="true">Роли</a>
@@ -28,7 +28,7 @@
                             <input asp-for="Name" class="form-control" id="inputName" aria-describedby="nameHelp">
                         </div>
                         <div class="col-3 m-0">
-                            <button asp-controller="administration" asp-action="roles" type="submit" class="btn btn-outline-success">Добавить</button>
+                            <button asp-area="admin" asp-controller="roles" asp-action="index" type="submit" class="btn btn-outline-success">Добавить</button>
                         </div>
                     </div>
                     <span asp-validation-for="Name" class="validation-error"></span>
