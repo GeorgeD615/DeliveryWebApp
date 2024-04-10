@@ -15,23 +15,22 @@ namespace OnlineShopWebApp.Controllers
             this.userRepository = userRepository;
         }
 
-        public IActionResult Index(int userId)
+        public IActionResult Index(Guid userId)
         {
             var favorites = userRepository.GetFavorites(userId);
             return View(favorites);
         }
 
-        public IActionResult AddFavorite(int userId, int productId) 
+        public IActionResult AddFavorite(Guid userId, Guid productId) 
         { 
             var favoriteProduct = productsRepository.TryGetById(productId);
             userRepository.AddFavorite(userId, favoriteProduct);
             return RedirectToAction("Index", new { userId });
         }
 
-        public IActionResult RemoveFavorite(int userId, int productId)
+        public IActionResult RemoveFavorite(Guid userId, Guid productId)
         {
-            var favoriteProduct = productsRepository.TryGetById(productId);
-            userRepository.RemoveFavorite(userId, favoriteProduct);
+            userRepository.RemoveFavoriteById(userId, productId);
             return RedirectToAction("Index", new { userId });
         }
     }

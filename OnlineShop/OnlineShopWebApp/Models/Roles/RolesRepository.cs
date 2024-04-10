@@ -1,18 +1,27 @@
-﻿namespace OnlineShopWebApp.Models.Roles
+﻿using Newtonsoft.Json;
+using OnlineShopWebApp.Models.Users;
+
+namespace OnlineShopWebApp.Models.Roles
 {
     public class RolesRepository : IRolesRepository
     {
+        private static readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Data\\Roles.json";
         private List<Role> roles;
         public RolesRepository()
         {
-            roles = new List<Role>() { new Role("admin"), new Role("user") };
+            using var reader = new StreamReader(dataJsonFilePath);
+            roles = JsonConvert.DeserializeObject<List<Role>>(reader.ReadToEnd());
         }
         public List<Role> GetAll() => roles;
 
-        public Role? TryGetById(int id) => roles.FirstOrDefault(roles => roles.Id == id);
+        public Role? TryGetById(Guid id) => roles.FirstOrDefault(roles => roles.Id == id);
         public bool IsExisting(string name) => roles.Any(role => role.Name == name);
-        public void AddRole(Role role) => roles.Add(role);
-        public void RemoveById(int id)
+        public void AddRole(Role role)
+        {
+            roles.Add(role);
+            SaveRolesIntoJson();
+        }
+        public void RemoveById(Guid id)
         {
             var role = TryGetById(id);
 
@@ -20,6 +29,15 @@
                 return;
             
             roles.Remove(role);
+            SaveRolesIntoJson();
+        }
+
+        public Role? TryGetByName(string name) => roles.FirstOrDefault(role => role.Name == name);
+
+        private void SaveRolesIntoJson()
+        {
+            using var writer = new StreamWriter(dataJsonFilePath, false);
+            writer.Write(JsonConvert.SerializeObject(roles, Formatting.Indented));
         }
     }
 }

@@ -4,7 +4,7 @@ namespace OnlineShopWebApp.Models.Products
 {
     public class ProductViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Укажите название блюда")]
         [StringLength(30, MinimumLength = 2, ErrorMessage = "Название блюда должно иметь длину от 2 до 30")]

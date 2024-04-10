@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace OnlineShopWebApp.Models.Users
 {
     public class Address
     {
-        private static int nextId = 0;
-        public int Id { get; }
-        public int UserId { get; set; }
+        public Guid Id { get; }
+        public Guid UserId { get; set; }
 
         [Required(ErrorMessage = "Укажите название города")]
         [RegularExpression(@"[а-яА-я- ]{2,30}",
@@ -30,7 +30,18 @@ namespace OnlineShopWebApp.Models.Users
 
         public Address()
         {
-            Id = ++nextId;
+            Id = Guid.NewGuid();
+        }
+
+        [JsonConstructor]
+        public Address(Guid id, Guid userId, string city, string street, string house, int flat)
+        {
+            Id = id;
+            UserId = userId;
+            City = city;
+            Street = street;
+            House = house;
+            Flat = flat;
         }
 
         public override string ToString() => $"г. {City}, ул. {Street}, д. {House}, кв. {Flat}";

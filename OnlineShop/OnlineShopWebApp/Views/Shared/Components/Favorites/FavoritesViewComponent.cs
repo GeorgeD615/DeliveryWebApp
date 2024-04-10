@@ -14,7 +14,7 @@ namespace OnlineShopWebApp.Views.Shared.Components.Favorites
         
         public IViewComponentResult Invoke()
         {
-            var favorites = userRepository.GetFavorites(Constatnts.UserId);
+            var favorites = userRepository.GetFavorites(CommonData.currentUserId);
             var favoritesCount = favorites?.Count ?? 0;
             return View("Favorites", favoritesCount);
         }

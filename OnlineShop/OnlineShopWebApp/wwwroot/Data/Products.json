@@ -1,0 +1,86 @@
+[
+  {
+    "Id": "b1747d04-5529-4b07-bd2f-de95656d6a48",
+    "Name": "Хачапури",
+    "Cost": 125.0,
+    "Description": "Очень вкусная лепёшка ver2.0",
+    "ImagePath": "/images/products/hachapury.jpg"
+  },
+  {
+    "Id": "2ad860b1-90b1-41ba-b703-350a4af09585",
+    "Name": "Хинкали",
+    "Cost": 300.0,
+    "Description": "Очень вкусные пельмени",
+    "ImagePath": "/images/products/khinkali.jpg"
+  },
+  {
+    "Id": "1ee09a09-d3fa-464d-a81c-28907cbae5e0",
+    "Name": "Долма",
+    "Cost": 250.0,
+    "Description": "Рулетики из виноградных листьев с фаршем внутри",
+    "ImagePath": "/images/products/dolma.jpg"
+  },
+  {
+    "Id": "6844a9af-cf36-42c8-9ab6-694e2d91fbf1",
+    "Name": "Чак-чак",
+    "Cost": 200.0,
+    "Description": "Традиционный татарский десерт",
+    "ImagePath": "/images/products/chuck-chuck.jpg"
+  },
+  {
+    "Id": "31b3b010-a18a-4f10-b334-ff29e6376fc4",
+    "Name": "Самса",
+    "Cost": 90.0,
+    "Description": "Узбекский пирожок",
+    "ImagePath": "/images/products/samsa.jpg"
+  },
+  {
+    "Id": "50d4c0c8-247b-4725-9dcc-4b7d40d200d9",
+    "Name": "Нэмы",
+    "Cost": 300.0,
+    "Description": "Вьетнамские фаршированные рулетики",
+    "ImagePath": "/images/products/nams.jpeg"
+  },
+  {
+    "Id": "c04c74b4-25ee-483c-b63c-e7c62ddfb2f4",
+    "Name": "Чахохбили",
+    "Cost": 400.0,
+    "Description": "Рагу из птицы, тушенной с овощами, зеленью и специями",
+    "ImagePath": "/images/products/chahohbili.jpg"
+  },
+  {
+    "Id": "df650d29-4749-430f-b5ae-9a464b402cd8",
+    "Name": "Суп «Харчо»",
+    "Cost": 350.0,
+    "Description": "Вкусный, ароматный, острый",
+    "ImagePath": "/images/products/soup_harcho.jpg"
+  },
+  {
+    "Id": "9a8e4885-d9e9-4a27-bc0e-444d034b7276",
+    "Name": "Чихиртма",
+    "Cost": 250.0,
+    "Description": "Густой грузинский суп",
+    "ImagePath": "/images/products/chihirtma.jpg"
+  },
+  {
+    "Id": "2ee38d36-d843-4540-a6c1-e76c4c7337f1",
+    "Name": "Кюфта",
+    "Cost": 230.0,
+    "Description": "Армянские тефтели",
+    "ImagePath": "/images/products/kufta.jpg"
+  },
+  {
+    "Id": "a8126b52-7a71-4604-8b51-8ed1e78fe115",
+    "Name": "Хаш",
+    "Cost": 450.0,
+    "Description": "Горячий, очень сытный и жирный суп из говяжьих ног",
+    "ImagePath": "/images/products/hash.jpg"
+  },
+  {
+    "Id": "455ef917-bb65-44bc-856e-36a45f788e26",
+    "Name": "Эчпочмак",
+    "Cost": 90.0,
+    "Description": "Очень вкусная булочка ver2.0",
+    "ImagePath": "/images/products/eachpochmak.jpg"
+  }
+]

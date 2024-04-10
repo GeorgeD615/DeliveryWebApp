@@ -4,14 +4,16 @@ namespace OnlineShopWebApp.Models.Users
 {
     public interface IUserRepository 
     {
-        User? TryGetById(int userId);
-        List<Product> GetFavorites(int userId);
-        void AddFavorite(int userId, Product product);
-        void RemoveFavorite(int userId, Product product);
-        List<Address> GetAddresses(int userId);
-        Address TryGetAddress(int userId, int addressId);
-        void AddAddress(int userId, Address address);
-        void RemoveAddress(int userId, int addressId);
-        void SetLastAddress(int userId, Address address);
+        User? TryGetById(Guid userId);
+        User? TryGetByLogin(string login);
+        List<Product> GetFavorites(Guid userId);
+        void AddFavorite(Guid userId, Product product);
+        void RemoveFavoriteById(Guid userId, Guid productId);
+        List<Address> GetAddresses(Guid userId);
+        Address TryGetAddress(Guid userId, Guid addressId);
+        void AddAddress(Guid userId, Address address);
+        void RemoveAddress(Guid userId, Guid addressId);
+        void SetLastAddress(Guid userId, Address address);
+        void Add(User user);
     } 
 }

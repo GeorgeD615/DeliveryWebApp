@@ -4,7 +4,7 @@ namespace OnlineShopWebApp.Models.Orders
 {
     public class OrdersRepository : IOrdersRepository
     {
-        private static readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\OrdersData.json";
+        private readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Data\\Orders.json";
 
         private List<Order> orders;
         public OrdersRepository() 
@@ -13,21 +13,21 @@ namespace OnlineShopWebApp.Models.Orders
             orders = JsonConvert.DeserializeObject<List<Order>>(reader.ReadToEnd());
         }
 
-        public void AddOrder(Order order) {
+        public void Add(Order order) {
             orders.Add(order);
             SaveOrdersIntoJson();
         }
 
-        public void EditStatus(int orderId, StateOfOrder status)
+        public void EditStatus(Guid orderId, StateOfOrder status)
         {
-            var order = TryGetOrder(orderId);
+            var order = TryGetById(orderId);
             order.StateOfOrder = status;
             SaveOrdersIntoJson();
         }
 
         public List<Order> GetAll() => orders;
 
-        public Order? TryGetOrder(int orderId) => orders.FirstOrDefault(order => order.Id == orderId);
+        public Order? TryGetById(Guid orderId) => orders.FirstOrDefault(order => order.Id == orderId);
         private void SaveOrdersIntoJson()
         {
             using var writer = new StreamWriter(dataJsonFilePath, false);

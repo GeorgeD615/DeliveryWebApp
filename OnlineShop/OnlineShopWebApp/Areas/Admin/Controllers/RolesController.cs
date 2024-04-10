@@ -31,7 +31,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult RemoveById(int roleId)
+        public IActionResult RemoveById(Guid roleId)
         {
             rolesRepository.RemoveById(roleId);
             return RedirectToAction("Index");

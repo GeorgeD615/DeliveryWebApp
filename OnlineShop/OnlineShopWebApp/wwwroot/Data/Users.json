@@ -1,0 +1,98 @@
+[
+  {
+    "Id": "186ac130-d279-4385-8d22-1954eaec2680",
+    "Login": "George",
+    "Password": "123456",
+    "Favorites": [
+      {
+        "Id": "68f0682c-d245-4e01-80dc-501dbe17d82d",
+        "Name": "Эчпочмак",
+        "Cost": 90.0,
+        "Description": "Очень вкусная булочка",
+        "ImagePath": "/images/products/eachpochmak.jpg"
+      },
+      {
+        "Id": "2ad860b1-90b1-41ba-b703-350a4af09585",
+        "Name": "Хинкали",
+        "Cost": 300.0,
+        "Description": "Очень вкусные пельмени",
+        "ImagePath": "/images/products/khinkali.jpg"
+      }
+    ],
+    "Addresses": [
+      {
+        "Id": "d7714024-d87b-4b16-a1df-ccfff056b483",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Казань",
+        "Street": "Баумана",
+        "House": "24к2",
+        "Flat": 12
+      },
+      {
+        "Id": "be4bed8f-b28a-4202-8636-53512715b77a",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Санкт-Петербург",
+        "Street": "Ботаническая",
+        "House": "64к3",
+        "Flat": 35
+      }
+    ],
+    "LastAddress": {
+      "Id": "947f8e0b-9ac3-4079-a773-2dd43ef53b96",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "City": "Санкт-Петербург",
+      "Street": "Ботаническая",
+      "House": "64к3",
+      "Flat": 35
+    },
+    "RoleId": "48420721-eb3a-48dd-80bf-e41ae5964850"
+  },
+  {
+    "Id": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+    "Login": "George2",
+    "Password": "123456789",
+    "Favorites": [
+      {
+        "Id": "c04c74b4-25ee-483c-b63c-e7c62ddfb2f4",
+        "Name": "Чахохбили",
+        "Cost": 400.0,
+        "Description": "Рагу из птицы, тушенной с овощами, зеленью и специями",
+        "ImagePath": "/images/products/chahohbili.jpg"
+      },
+      {
+        "Id": "9a8e4885-d9e9-4a27-bc0e-444d034b7276",
+        "Name": "Чихиртма",
+        "Cost": 250.0,
+        "Description": "Густой грузинский суп",
+        "ImagePath": "/images/products/chihirtma.jpg"
+      }
+    ],
+    "Addresses": [
+      {
+        "Id": "07b9f121-d45b-4b54-a9b6-2d4580e9e645",
+        "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+        "City": "Ковров",
+        "Street": "Еловая",
+        "House": "88/1",
+        "Flat": 24
+      },
+      {
+        "Id": "124d1e59-e5c1-42e5-96e5-d5d0a2dd1b29",
+        "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+        "City": "Казань",
+        "Street": "Баумана",
+        "House": "24к2",
+        "Flat": 45
+      }
+    ],
+    "LastAddress": {
+      "Id": "124d1e59-e5c1-42e5-96e5-d5d0a2dd1b29",
+      "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+      "City": "Казань",
+      "Street": "Баумана",
+      "House": "24к2",
+      "Flat": 45
+    },
+    "RoleId": "492acbaa-5b43-4d86-b7fa-915be0499978"
+  }
+]

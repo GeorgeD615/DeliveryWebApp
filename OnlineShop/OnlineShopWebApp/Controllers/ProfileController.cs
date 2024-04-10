@@ -15,7 +15,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index() => View(); 
 
         [HttpPost]
-        public IActionResult AddAddress(int userId, Address address)
+        public IActionResult AddAddress(Guid userId, Address address)
         {
             address.City = address.City.Trim();
             address.Street = address.Street.Trim();
@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult RemoveAddress(int userId, int addressId)
+        public IActionResult RemoveAddress(Guid userId, Guid addressId)
         {
             userRepository.RemoveAddress(userId, addressId);
             return RedirectToAction("Index", "Orders", new { userId });

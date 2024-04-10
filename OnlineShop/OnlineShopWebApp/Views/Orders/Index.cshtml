@@ -50,7 +50,7 @@
                         {
                             <div class="row justify-content-center">
                                 <div class="col-4">
-                                    <button asp-controller="orders" asp-action="createOrder" asp-route-userId="1" type="submit" class="btn btn-outline-cartChangeAmount">
+                                    <button asp-controller="orders" asp-action="createOrder" asp-route-userId="@CommonData.currentUserId" type="submit" class="btn btn-outline-cartChangeAmount">
                                         Оформить заказ
                                     </button>
                                 </div>

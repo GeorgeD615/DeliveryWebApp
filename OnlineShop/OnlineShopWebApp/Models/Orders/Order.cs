@@ -6,8 +6,7 @@ namespace OnlineShopWebApp.Models.Orders
 {
     public class Order
     {
-        public static int nextId = 0;
-        public int Id { get; }
+        public Guid Id { get; }
         public Cart Cart { get; set; }
         public Address Address { get; set; }
         public User User { get; set; }
@@ -16,7 +15,7 @@ namespace OnlineShopWebApp.Models.Orders
         public DateTime TimeOfOrder { get; }
         public Order(Cart cart, Address address, string commentsToCourier, User user)
         {
-            Id = ++nextId;
+            Id = Guid.NewGuid();
             Cart = cart;
             Address = address;
             CommentsToCourier = commentsToCourier;
@@ -26,11 +25,15 @@ namespace OnlineShopWebApp.Models.Orders
         }
 
         [JsonConstructor]
-        public Order(Cart cart, Address address, User user, string commentsToCourier, StateOfOrder stateOfOrder, DateTime timeOfOrder)
-            : this(cart, address, commentsToCourier, user)
+        public Order(Guid id, Cart cart, Address address, User user, string commentsToCourier, StateOfOrder stateOfOrder, DateTime timeOfOrder)
         {
+            Id = id;
+            Cart = cart;
+            Address = address;
+            CommentsToCourier = commentsToCourier;
             StateOfOrder = stateOfOrder;
             TimeOfOrder = timeOfOrder;
+            User = user;
         }
     }
 }

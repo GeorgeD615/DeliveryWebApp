@@ -3,8 +3,8 @@
     public interface IOrdersRepository
     {
         List<Order> GetAll();
-        void AddOrder (Order order);
-        Order? TryGetOrder(int orderId);
-        void EditStatus(int orderId, StateOfOrder status);
+        void Add(Order order);
+        Order? TryGetById(Guid orderId);
+        void EditStatus(Guid orderId, StateOfOrder status);
     }
 }

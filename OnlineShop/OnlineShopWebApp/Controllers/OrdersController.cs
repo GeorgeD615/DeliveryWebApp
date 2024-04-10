@@ -19,7 +19,7 @@ namespace OnlineShopWebApp.Controllers
             this.userRepository = userRepository;
         }
 
-        public IActionResult Index(int userId)
+        public IActionResult Index(Guid userId)
         {
             var user = userRepository.TryGetById(userId);
             var cart = cartsRepository.TryGetByUserId(userId);
@@ -27,14 +27,14 @@ namespace OnlineShopWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateOrder(int userId, int addressId, string commentsToCourier)
+        public IActionResult CreateOrder(Guid userId, Guid addressId, string commentsToCourier)
         {
             var cart = cartsRepository.TryGetByUserId(userId);
             var address = userRepository.TryGetAddress(userId, addressId);
             userRepository.SetLastAddress(userId, address);
             var user = userRepository.TryGetById(userId);
             var order = new Order(cart, address, commentsToCourier.Trim(), user);
-            ordersRepository.AddOrder(order);
+            ordersRepository.Add(order);
             cartsRepository.ClearCart(userId);
             return View("OrderCreated", order);
         }

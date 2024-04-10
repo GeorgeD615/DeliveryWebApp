@@ -2,13 +2,12 @@
 {
     public class Role
     {
-        private static int nextId = 0;
-        public int Id { get; }
+        public Guid Id { get; }
         public string Name { get; set; }
 
         public Role(string name)
         {
-            Id = ++nextId;
+            Id = Guid.NewGuid();
             Name = name;
         }
     }

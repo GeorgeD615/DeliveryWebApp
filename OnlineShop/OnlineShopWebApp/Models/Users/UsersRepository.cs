@@ -1,28 +1,38 @@
-﻿using OnlineShopWebApp.Models.Products;
+﻿using Newtonsoft.Json;
+using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Models.Users
 {
     public class UsersRepository : IUserRepository
     {
-        private List<User> users = new();
+        private static readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Data\\Users.json";
+        
+        private List<User> users;
+
         public UsersRepository()
         {
-            users.Add(new User("Георгий", "George"));
+            using var reader = new StreamReader(dataJsonFilePath);
+            users = JsonConvert.DeserializeObject<List<User>>(reader.ReadToEnd());
         }
-        public User? TryGetById(int userId) => users.FirstOrDefault(user => user.Id == userId);
-        public List<Product> GetFavorites(int userId) => TryGetById(userId)?.Favorites;
-        public void AddFavorite(int userId, Product product) {
+        public User? TryGetById(Guid userId) => users.FirstOrDefault(user => user.Id == userId);
+        public List<Product> GetFavorites(Guid userId) => TryGetById(userId)?.Favorites;
+        public void AddFavorite(Guid userId, Product product) {
             var user = TryGetById(userId);
             if (user == null || user.Favorites.Contains(product))
                 return;
             user.Favorites.Add(product);
+            SaveUsersIntoJson();
         }
 
-        public void RemoveFavorite(int userId, Product product) => TryGetById(userId)?.Favorites.Remove(product);
+        public void RemoveFavoriteById(Guid userId, Guid productId)
+        {
+            TryGetById(userId)?.Favorites.RemoveAll(product => product.Id == productId);
+            SaveUsersIntoJson();
+        }
 
-        public List<Address> GetAddresses(int userId) => TryGetById(userId)?.Addresses;
-        public Address TryGetAddress(int userId, int addressId) => GetAddresses(userId).FirstOrDefault(address => address.Id == addressId);
-        public void AddAddress(int userId, Address address)
+        public List<Address> GetAddresses(Guid userId) => TryGetById(userId)?.Addresses;
+        public Address TryGetAddress(Guid userId, Guid addressId) => GetAddresses(userId).FirstOrDefault(address => address.Id == addressId);
+        public void AddAddress(Guid userId, Address address)
         {
             var user = TryGetById(userId);
             if (user == null || user.Addresses.Any(oldAddress => oldAddress.City == address.City &&
@@ -32,9 +42,11 @@ namespace OnlineShopWebApp.Models.Users
                 return;
             user.Addresses.Add(address);
             user.LastAddress = address;
+
+            SaveUsersIntoJson();
         }
 
-        public void RemoveAddress(int userId, int addressId)
+        public void RemoveAddress(Guid userId, Guid addressId)
         {
             var user = TryGetById(userId);
             var address = user?.Addresses.FirstOrDefault(address => address.Id == addressId);
@@ -43,8 +55,28 @@ namespace OnlineShopWebApp.Models.Users
                 user.LastAddress = user.Addresses.Count > 1 ? user.Addresses[0] : null;
 
             user?.Addresses.Remove(address);
+
+            SaveUsersIntoJson();
         }
 
-        public void SetLastAddress(int userId, Address address) => TryGetById(userId).LastAddress = address;
+        public void SetLastAddress(Guid userId, Address address)
+        {
+            TryGetById(userId).LastAddress = address;
+            SaveUsersIntoJson();
+        }
+
+        private void SaveUsersIntoJson()
+        {
+            using var writer = new StreamWriter(dataJsonFilePath, false);
+            writer.Write(JsonConvert.SerializeObject(users, Formatting.Indented));
+        }
+
+        public void Add(User user)
+        {
+            users.Add(user);
+            SaveUsersIntoJson();
+        }
+
+        public User? TryGetByLogin(string login) => users.FirstOrDefault(user => user.Login == login);
     }
 }

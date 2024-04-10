@@ -1,0 +1,54 @@
+[
+  {
+    "Id": "288ffcc7-13d5-4335-bd37-d0145f70e6ae",
+    "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+    "Items": [
+      {
+        "Id": "c993ddb0-5175-4833-bd7e-6dd06479c0d6",
+        "Product": {
+          "Id": "2ad860b1-90b1-41ba-b703-350a4af09585",
+          "Name": "Хинкали",
+          "Cost": 300.0,
+          "Description": "Очень вкусные пельмени",
+          "ImagePath": "/images/products/khinkali.jpg"
+        },
+        "Amount": 3,
+        "Cost": 900.0
+      }
+    ],
+    "Cost": "900",
+    "Amount": 3
+  },
+  {
+    "Id": "8f6b5aec-31f4-44ac-bb17-da0e4016195d",
+    "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+    "Items": [
+      {
+        "Id": "5c9d81d8-12e7-422b-b164-0d0dfe1b6bc4",
+        "Product": {
+          "Id": "9a8e4885-d9e9-4a27-bc0e-444d034b7276",
+          "Name": "Чихиртма",
+          "Cost": 250.0,
+          "Description": "Густой грузинский суп",
+          "ImagePath": "/images/products/chihirtma.jpg"
+        },
+        "Amount": 4,
+        "Cost": 1000.0
+      },
+      {
+        "Id": "8600fdce-5b2f-4707-90c7-660c9c3c1d20",
+        "Product": {
+          "Id": "31b3b010-a18a-4f10-b334-ff29e6376fc4",
+          "Name": "Самса",
+          "Cost": 90.0,
+          "Description": "Узбекский пирожок",
+          "ImagePath": "/images/products/samsa.jpg"
+        },
+        "Amount": 4,
+        "Cost": 360.0
+      }
+    ],
+    "Cost": "1 360",
+    "Amount": 8
+  }
+]

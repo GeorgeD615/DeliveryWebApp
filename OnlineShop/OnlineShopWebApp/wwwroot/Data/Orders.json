@@ -1,0 +1,241 @@
+[
+  {
+    "Id": "014bb736-97b7-4ead-b2e4-2bf9af968490",
+    "Cart": {
+      "Id": "65f622f7-f3df-4c3e-8334-3d84151fba68",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Items": [
+        {
+          "Id": "874b5f5b-69c9-4a5b-aae4-9bae01d648ea",
+          "Product": {
+            "Id": "1ee09a09-d3fa-464d-a81c-28907cbae5e0",
+            "Name": "Долма",
+            "Cost": 250.0,
+            "Description": "Рулетики из виноградных листьев с фаршем внутри",
+            "ImagePath": "/images/products/dolma.jpg"
+          },
+          "Amount": 2,
+          "Cost": 500.0
+        },
+        {
+          "Id": "67ac4863-190d-41ce-a632-289ec2d86e1e",
+          "Product": {
+            "Id": "9a8e4885-d9e9-4a27-bc0e-444d034b7276",
+            "Name": "Чихиртма",
+            "Cost": 250.0,
+            "Description": "Густой грузинский суп",
+            "ImagePath": "/images/products/chihirtma.jpg"
+          },
+          "Amount": 1,
+          "Cost": 250.0
+        }
+      ],
+      "Cost": "750",
+      "Amount": 3
+    },
+    "Address": {
+      "Id": "31e88550-173e-4c7d-8ea3-40c7948647d1",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "City": "Казань",
+      "Street": "Баумана",
+      "House": "24к2",
+      "Flat": 12
+    },
+    "User": {
+      "Id": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Login": "George",
+      "Password": "123456",
+      "Favorites": [],
+      "Addresses": [
+        {
+          "Id": "cd9d7bf2-e144-4d9e-837e-a35aa9970d95",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Казань",
+          "Street": "Баумана",
+          "House": "24к2",
+          "Flat": 12
+        }
+      ],
+      "LastAddress": {
+        "Id": "17be6599-ebb9-4e71-8805-316627dc9a4b",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Казань",
+        "Street": "Баумана",
+        "House": "24к2",
+        "Flat": 12
+      },
+      "RoleId": "48420721-eb3a-48dd-80bf-e41ae5964850"
+    },
+    "CommentsToCourier": "asdf",
+    "StateOfOrder": 1,
+    "TimeOfOrder": "2024-04-10T18:38:37.1152439+03:00"
+  },
+  {
+    "Id": "1bb5a35c-f8f4-44c3-8667-2419308a9855",
+    "Cart": {
+      "Id": "8e2ed840-fb71-452f-8c74-d8e226ce70bc",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Items": [
+        {
+          "Id": "1b5c1a88-0c44-4fff-9a0e-13c8f2ccf991",
+          "Product": {
+            "Id": "1ee09a09-d3fa-464d-a81c-28907cbae5e0",
+            "Name": "Долма",
+            "Cost": 250.0,
+            "Description": "Рулетики из виноградных листьев с фаршем внутри",
+            "ImagePath": "/images/products/dolma.jpg"
+          },
+          "Amount": 1,
+          "Cost": 250.0
+        },
+        {
+          "Id": "1e106ab2-e3f6-48ab-8d00-116e70760a56",
+          "Product": {
+            "Id": "6844a9af-cf36-42c8-9ab6-694e2d91fbf1",
+            "Name": "Чак-чак",
+            "Cost": 200.0,
+            "Description": "Традиционный татарский десерт",
+            "ImagePath": "/images/products/chuck-chuck.jpg"
+          },
+          "Amount": 1,
+          "Cost": 200.0
+        }
+      ],
+      "Cost": "450",
+      "Amount": 2
+    },
+    "Address": {
+      "Id": "3c55ecce-2f0c-4a30-b2e7-df73365b9819",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "City": "Санкт-Петербург",
+      "Street": "Ботаническая",
+      "House": "64к3",
+      "Flat": 35
+    },
+    "User": {
+      "Id": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Login": "George",
+      "Password": "123456",
+      "Favorites": [
+        {
+          "Id": "68f0682c-d245-4e01-80dc-501dbe17d82d",
+          "Name": "Эчпочмак",
+          "Cost": 90.0,
+          "Description": "Очень вкусная булочка",
+          "ImagePath": "/images/products/eachpochmak.jpg"
+        },
+        {
+          "Id": "2ad860b1-90b1-41ba-b703-350a4af09585",
+          "Name": "Хинкали",
+          "Cost": 300.0,
+          "Description": "Очень вкусные пельмени",
+          "ImagePath": "/images/products/khinkali.jpg"
+        }
+      ],
+      "Addresses": [
+        {
+          "Id": "07e836ce-ccce-464d-8bd2-c6baa1eecbba",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Казань",
+          "Street": "Баумана",
+          "House": "24к2",
+          "Flat": 12
+        },
+        {
+          "Id": "3c55ecce-2f0c-4a30-b2e7-df73365b9819",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Санкт-Петербург",
+          "Street": "Ботаническая",
+          "House": "64к3",
+          "Flat": 35
+        }
+      ],
+      "LastAddress": {
+        "Id": "3c55ecce-2f0c-4a30-b2e7-df73365b9819",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Санкт-Петербург",
+        "Street": "Ботаническая",
+        "House": "64к3",
+        "Flat": 35
+      },
+      "RoleId": "48420721-eb3a-48dd-80bf-e41ae5964850"
+    },
+    "CommentsToCourier": "asdf",
+    "StateOfOrder": 1,
+    "TimeOfOrder": "2024-04-10T19:27:49.4636675+03:00"
+  },
+  {
+    "Id": "10b20e0f-d9bc-49d1-8022-70598108818d",
+    "Cart": {
+      "Id": "b0731f57-3a62-4495-8ee2-77b3d25c52d9",
+      "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+      "Items": [
+        {
+          "Id": "5b02df31-60d2-48ac-b8ff-d37d2be273f0",
+          "Product": {
+            "Id": "6844a9af-cf36-42c8-9ab6-694e2d91fbf1",
+            "Name": "Чак-чак",
+            "Cost": 200.0,
+            "Description": "Традиционный татарский десерт",
+            "ImagePath": "/images/products/chuck-chuck.jpg"
+          },
+          "Amount": 4,
+          "Cost": 800.0
+        }
+      ],
+      "Cost": "800",
+      "Amount": 4
+    },
+    "Address": {
+      "Id": "7c80bcb1-4995-40ab-97e8-33a4f66d88d0",
+      "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+      "City": "Ковров",
+      "Street": "Еловая",
+      "House": "88/1",
+      "Flat": 24
+    },
+    "User": {
+      "Id": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+      "Login": "George2",
+      "Password": "123456789",
+      "Favorites": [
+        {
+          "Id": "c04c74b4-25ee-483c-b63c-e7c62ddfb2f4",
+          "Name": "Чахохбили",
+          "Cost": 400.0,
+          "Description": "Рагу из птицы, тушенной с овощами, зеленью и специями",
+          "ImagePath": "/images/products/chahohbili.jpg"
+        },
+        {
+          "Id": "9a8e4885-d9e9-4a27-bc0e-444d034b7276",
+          "Name": "Чихиртма",
+          "Cost": 250.0,
+          "Description": "Густой грузинский суп",
+          "ImagePath": "/images/products/chihirtma.jpg"
+        }
+      ],
+      "Addresses": [
+        {
+          "Id": "7c80bcb1-4995-40ab-97e8-33a4f66d88d0",
+          "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+          "City": "Ковров",
+          "Street": "Еловая",
+          "House": "88/1",
+          "Flat": 24
+        }
+      ],
+      "LastAddress": {
+        "Id": "7c80bcb1-4995-40ab-97e8-33a4f66d88d0",
+        "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
+        "City": "Ковров",
+        "Street": "Еловая",
+        "House": "88/1",
+        "Flat": 24
+      },
+      "RoleId": "492acbaa-5b43-4d86-b7fa-915be0499978"
+    },
+    "CommentsToCourier": "asfdgfhj",
+    "StateOfOrder": 1,
+    "TimeOfOrder": "2024-04-10T19:29:19.5008245+03:00"
+  }
+]

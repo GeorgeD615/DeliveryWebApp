@@ -1,12 +1,22 @@
-﻿using OnlineShopWebApp.Models.Products;
+﻿using Newtonsoft.Json;
+using OnlineShopWebApp.Models.Orders;
+using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Models.Carts
 {
     public class CartsRepository : ICartsRepository
     {
-        private List<Cart> carts = new();
-        public Cart? TryGetByUserId(int userId) => carts.FirstOrDefault(cart => cart.UserId == userId);
-        public void AddProduct(Product product, int userId)
+        private static readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Data\\Carts.json";
+
+        private List<Cart> carts;
+
+        public CartsRepository() 
+        {
+            using var reader = new StreamReader(dataJsonFilePath);
+            carts = JsonConvert.DeserializeObject<List<Cart>>(reader.ReadToEnd());
+        }
+        public Cart? TryGetByUserId(Guid userId) => carts.FirstOrDefault(cart => cart.UserId == userId);
+        public void AddProduct(Product product, Guid userId)
         {
             var cart = carts.FirstOrDefault(cart => cart.UserId == userId);
             
@@ -22,15 +32,16 @@ namespace OnlineShopWebApp.Models.Carts
                 cart.Items.Add(new CartItem(product));
             else
                 itemInCart.Amount += 1;
+
+            SaveCartsIntoJson();
         }
-        public void ChangeProductAmount(int userId, int cartItemId, int difference)
+        public void ChangeProductAmount(Guid userId, Guid cartItemId, int difference)
         {
             var cart = TryGetByUserId(userId);
             var cartItem = cart?.Items.FirstOrDefault(x => x.Id == cartItemId);
 
             if(cartItem == null)
             {
-                //залогировать ошибку : карточка товара не найдена
                 return;
             }
 
@@ -43,7 +54,19 @@ namespace OnlineShopWebApp.Models.Carts
 
             if(cart?.Items.Count == 0)
                 carts.Remove(cart);
+
+            SaveCartsIntoJson();
         }
-        public void ClearCart(int userId) => carts.RemoveAll(cart => cart.UserId == userId);
+        public void ClearCart(Guid userId)
+        {
+            carts.RemoveAll(cart => cart.UserId == userId);
+            SaveCartsIntoJson();
+        }
+
+        private void SaveCartsIntoJson()
+        {
+            using var writer = new StreamWriter(dataJsonFilePath, false);
+            writer.Write(JsonConvert.SerializeObject(carts, Formatting.Indented));
+        }
     }
 }

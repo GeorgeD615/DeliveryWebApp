@@ -1,17 +1,25 @@
 ﻿using OnlineShopWebApp.Models.Products;
+using Newtonsoft.Json;
 
 namespace OnlineShopWebApp.Models.Carts
 {
     public class CartItem
     {
-        private static int nextId = 0;
-        public int Id { get; }
+        public Guid Id { get; }
         public Product Product { get; set; }
         public int Amount { get; set; }
         public decimal Cost { get => Product.Cost * Amount; }
         public CartItem(Product product, int amount = 1)
         {
-            Id = ++nextId;
+            Id = Guid.NewGuid();
+            Product = product;
+            Amount = amount;
+        }
+
+        [JsonConstructor]
+        public CartItem(Guid id, Product product, int amount)
+        {
+            Id = id;
             Product = product;
             Amount = amount;
         }

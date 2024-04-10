@@ -1,47 +1,57 @@
-﻿namespace OnlineShopWebApp.Models.Products
+﻿using Newtonsoft.Json;
+using OnlineShopWebApp.Models.Orders;
+using OnlineShopWebApp.Models.Users;
+
+namespace OnlineShopWebApp.Models.Products
 {
     public class ProductsRepository : IProductsRepository
     {
-        private List<Product> products = new()
+        private readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Data\\Products.json";
+
+        private List<Product> products;
+
+        public ProductsRepository()
         {
-            {new Product("Эчпочмак", 90, "Очень вкусная булочка", "/images/products/eachpochmak.jpg")},
-            {new Product("Хачапури", 125, "Очень вкусная лепёшка", "/images/products/hachapury.jpg")},
-            {new Product("Хинкали", 300, "Очень вкусные пельмени", "/images/products/khinkali.jpg")},
-            {new Product("Долма", 250, "Рулетики из виноградных листьев с фаршем внутри", "/images/products/dolma.jpg")},
-            {new Product("Чак-чак", 200, "Традиционный татарский десерт", "/images/products/chuck-chuck.jpg")},
-            {new Product("Самса", 90, "Узбекский пирожок", "/images/products/samsa.jpg")},
-            {new Product("Нэмы", 300, "Вьетнамские фаршированные рулетики", "/images/products/nams.jpeg")},
-            {new Product("Чахохбили", 400, "Рагу из птицы, тушенной с овощами, зеленью и специями", "/images/products/chahohbili.jpg")},
-            {new Product("Суп «Харчо»", 350, "Вкусный, ароматный, острый", "/images/products/soup_harcho.jpg")},
-            {new Product("Чихиртма", 250, "Густой грузинский суп", "/images/products/chihirtma.jpg")},
-            {new Product("Кюфта", 230, "Армянские тефтели", "/images/products/kufta.jpg")},
-            {new Product("Хаш", 450, "Горячий, очень сытный и жирный суп из говяжьих ног", "/images/products/hash.jpg")}
-        };
+            using var reader = new StreamReader(dataJsonFilePath);
+            products = JsonConvert.DeserializeObject<List<Product>>(reader.ReadToEnd());
+        }
 
         public List<Product> GetAll() => products;
         public int GetCount() => products.Count;
-        public Product? TryGetById(int productId) => products.FirstOrDefault(p => p.Id == productId);
+        public Product? TryGetById(Guid productId) => products.FirstOrDefault(p => p.Id == productId);
         public List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages)
         {
             int lastIndex = pageNumber < amountOfPages ? numberOfProductsPerPage : products.Count - numberOfProductsPerPage * (pageNumber - 1);
             return products.GetRange((pageNumber - 1) * numberOfProductsPerPage, lastIndex);
         }
-        public void DeleteProduct(int productId) => products.RemoveAll(p => p.Id == productId);
+        public void DeleteProduct(Guid productId)
+        {
+            products.RemoveAll(p => p.Id == productId);
+            SaveProductsIntoJson();
+        }
 
-        public void EditProduct(ProductViewModel productEditModel)
+        public void Edit(ProductViewModel productEditModel)
         {
             var product = TryGetById(productEditModel.Id);
             product.Name = productEditModel.Name;
             product.Cost = productEditModel.Cost;
             product.Description = productEditModel.Description;
+            SaveProductsIntoJson();
         }
-        public void AddProduct(ProductViewModel productCreateModel)
+        public void Add(ProductViewModel productCreateModel)
         {
             var product = new Product(productCreateModel.Name, productCreateModel.Cost, productCreateModel.Description, "/images/products/eachpochmak.jpg");
             products.Add(product);
+            SaveProductsIntoJson();
         }
 
         public List<Product> SearchByName(string name) 
             => products.FindAll(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+
+        private void SaveProductsIntoJson()
+        {
+            using var writer = new StreamWriter(dataJsonFilePath, false);
+            writer.Write(JsonConvert.SerializeObject(products, Formatting.Indented));
+        }
     }
 }
