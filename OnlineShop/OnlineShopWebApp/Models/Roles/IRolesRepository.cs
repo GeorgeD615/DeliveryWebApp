@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace OnlineShopWebApp.Models.Roles
+﻿namespace OnlineShopWebApp.Models.Roles
 {
     public interface IRolesRepository
     {

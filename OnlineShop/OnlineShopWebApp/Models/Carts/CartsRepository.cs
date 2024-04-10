@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Models.Carts
