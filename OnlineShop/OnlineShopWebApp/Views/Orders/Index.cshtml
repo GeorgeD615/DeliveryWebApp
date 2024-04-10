@@ -17,7 +17,7 @@
                                 <option value="@Model.LastAddress.Id" selected>@Model.LastAddress.ToString()</option>
                                 @foreach(var address in Model.Addresses)
                                 {
-                                    if(Model.LastAddress == address)
+                                    if(Model.LastAddress.Id == address.Id)
                                     {
                                         continue;
                                     }

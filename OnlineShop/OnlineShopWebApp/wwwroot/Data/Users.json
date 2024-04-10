@@ -28,7 +28,7 @@
     ],
     "Addresses": [
       {
-        "Id": "13766b57-ef0d-4e70-956d-0fc8cfa5723c",
+        "Id": "e934d7c8-c168-41e7-9deb-4836f185d00b",
         "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
         "City": "Казань",
         "Street": "Баумана",
@@ -36,21 +36,37 @@
         "Flat": 12
       },
       {
-        "Id": "f86b6165-b6bf-4116-ac2e-c929ca5b98f4",
+        "Id": "4b081624-3858-4cf3-b57b-d2da422cd6c9",
         "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
         "City": "Санкт-Петербург",
         "Street": "Ботаническая",
         "House": "64к3",
         "Flat": 35
+      },
+      {
+        "Id": "eee33e89-61f5-4fba-a430-615f46e01eea",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Ковров",
+        "Street": "Еловая",
+        "House": "88/1",
+        "Flat": 235
+      },
+      {
+        "Id": "58af2882-3b0a-4a17-aa3d-23b587d1e9e8",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Казань",
+        "Street": "Баумана",
+        "House": "24к2",
+        "Flat": 456
       }
     ],
     "LastAddress": {
-      "Id": "85ae62a3-f25d-44f1-8bba-8287e8d4aa8e",
+      "Id": "58af2882-3b0a-4a17-aa3d-23b587d1e9e8",
       "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
-      "City": "Санкт-Петербург",
-      "Street": "Ботаническая",
-      "House": "64к3",
-      "Flat": 35
+      "City": "Казань",
+      "Street": "Баумана",
+      "House": "24к2",
+      "Flat": 456
     },
     "RoleId": "48420721-eb3a-48dd-80bf-e41ae5964850"
   },
@@ -76,7 +92,7 @@
     ],
     "Addresses": [
       {
-        "Id": "4dee8963-e005-4cae-a7db-76249eade0e3",
+        "Id": "14d91b47-a46b-4191-aeca-9ece586edc4c",
         "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
         "City": "Ковров",
         "Street": "Еловая",
@@ -84,7 +100,7 @@
         "Flat": 24
       },
       {
-        "Id": "9b9fb5f0-ecb4-43d3-a47d-4e755e257fb7",
+        "Id": "9ad72760-17cf-4b7b-b51c-2dc3bcd0e708",
         "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
         "City": "Казань",
         "Street": "Баумана",
@@ -93,7 +109,7 @@
       }
     ],
     "LastAddress": {
-      "Id": "13913f15-7d73-4eec-afef-2efa082397a0",
+      "Id": "6ea337dd-860e-4608-82db-ba4e44626314",
       "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
       "City": "Казань",
       "Street": "Баумана",

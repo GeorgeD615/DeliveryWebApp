@@ -1,25 +1,5 @@
 [
   {
-    "Id": "288ffcc7-13d5-4335-bd37-d0145f70e6ae",
-    "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
-    "Items": [
-      {
-        "Id": "c993ddb0-5175-4833-bd7e-6dd06479c0d6",
-        "Product": {
-          "Id": "2ad860b1-90b1-41ba-b703-350a4af09585",
-          "Name": "Хинкали",
-          "Cost": 300.0,
-          "Description": "Очень вкусные пельмени",
-          "ImagePath": "/images/products/khinkali.jpg"
-        },
-        "Amount": 4,
-        "Cost": 1200.0
-      }
-    ],
-    "Cost": "1 200",
-    "Amount": 4
-  },
-  {
     "Id": "8f6b5aec-31f4-44ac-bb17-da0e4016195d",
     "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
     "Items": [
@@ -50,5 +30,25 @@
     ],
     "Cost": "1 450",
     "Amount": 9
+  },
+  {
+    "Id": "ba48c85e-a661-49bf-8ae2-65d4da513bf0",
+    "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+    "Items": [
+      {
+        "Id": "4219f379-f141-4640-a96a-37f3ecf0c930",
+        "Product": {
+          "Id": "6844a9af-cf36-42c8-9ab6-694e2d91fbf1",
+          "Name": "Чак-чак",
+          "Cost": 200.0,
+          "Description": "Традиционный татарский десерт",
+          "ImagePath": "/images/products/chuck-chuck.jpg"
+        },
+        "Amount": 2,
+        "Cost": 400.0
+      }
+    ],
+    "Cost": "400",
+    "Amount": 2
   }
 ]
