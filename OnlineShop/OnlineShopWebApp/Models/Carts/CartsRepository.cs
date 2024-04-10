@@ -26,7 +26,7 @@ namespace OnlineShopWebApp.Models.Carts
                 carts.Add(cart);
             }
 
-            var itemInCart = cart.Items.FirstOrDefault(item => item.Product == product);
+            var itemInCart = cart.Items.FirstOrDefault(item => item.Product.Id == product.Id);
 
             if (itemInCart == null)
                 cart.Items.Add(new CartItem(product));

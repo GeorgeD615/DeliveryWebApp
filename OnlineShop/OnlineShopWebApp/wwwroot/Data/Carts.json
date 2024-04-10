@@ -12,12 +12,12 @@
           "Description": "Очень вкусные пельмени",
           "ImagePath": "/images/products/khinkali.jpg"
         },
-        "Amount": 3,
-        "Cost": 900.0
+        "Amount": 4,
+        "Cost": 1200.0
       }
     ],
-    "Cost": "900",
-    "Amount": 3
+    "Cost": "1 200",
+    "Amount": 4
   },
   {
     "Id": "8f6b5aec-31f4-44ac-bb17-da0e4016195d",
@@ -44,11 +44,11 @@
           "Description": "Узбекский пирожок",
           "ImagePath": "/images/products/samsa.jpg"
         },
-        "Amount": 4,
-        "Cost": 360.0
+        "Amount": 5,
+        "Cost": 450.0
       }
     ],
-    "Cost": "1 360",
-    "Amount": 8
+    "Cost": "1 450",
+    "Amount": 9
   }
 ]

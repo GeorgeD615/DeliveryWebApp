@@ -5,23 +5,30 @@
     "Password": "123456",
     "Favorites": [
       {
-        "Id": "68f0682c-d245-4e01-80dc-501dbe17d82d",
-        "Name": "Эчпочмак",
-        "Cost": 90.0,
-        "Description": "Очень вкусная булочка",
-        "ImagePath": "/images/products/eachpochmak.jpg"
-      },
-      {
         "Id": "2ad860b1-90b1-41ba-b703-350a4af09585",
         "Name": "Хинкали",
         "Cost": 300.0,
         "Description": "Очень вкусные пельмени",
         "ImagePath": "/images/products/khinkali.jpg"
+      },
+      {
+        "Id": "455ef917-bb65-44bc-856e-36a45f788e26",
+        "Name": "Эчпочмак",
+        "Cost": 90.0,
+        "Description": "Очень вкусная булочка ver2.0",
+        "ImagePath": "/images/products/eachpochmak.jpg"
+      },
+      {
+        "Id": "1ee09a09-d3fa-464d-a81c-28907cbae5e0",
+        "Name": "Долма",
+        "Cost": 250.0,
+        "Description": "Рулетики из виноградных листьев с фаршем внутри",
+        "ImagePath": "/images/products/dolma.jpg"
       }
     ],
     "Addresses": [
       {
-        "Id": "d7714024-d87b-4b16-a1df-ccfff056b483",
+        "Id": "13766b57-ef0d-4e70-956d-0fc8cfa5723c",
         "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
         "City": "Казань",
         "Street": "Баумана",
@@ -29,7 +36,7 @@
         "Flat": 12
       },
       {
-        "Id": "be4bed8f-b28a-4202-8636-53512715b77a",
+        "Id": "f86b6165-b6bf-4116-ac2e-c929ca5b98f4",
         "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
         "City": "Санкт-Петербург",
         "Street": "Ботаническая",
@@ -38,7 +45,7 @@
       }
     ],
     "LastAddress": {
-      "Id": "947f8e0b-9ac3-4079-a773-2dd43ef53b96",
+      "Id": "85ae62a3-f25d-44f1-8bba-8287e8d4aa8e",
       "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
       "City": "Санкт-Петербург",
       "Street": "Ботаническая",
@@ -69,7 +76,7 @@
     ],
     "Addresses": [
       {
-        "Id": "07b9f121-d45b-4b54-a9b6-2d4580e9e645",
+        "Id": "4dee8963-e005-4cae-a7db-76249eade0e3",
         "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
         "City": "Ковров",
         "Street": "Еловая",
@@ -77,7 +84,7 @@
         "Flat": 24
       },
       {
-        "Id": "124d1e59-e5c1-42e5-96e5-d5d0a2dd1b29",
+        "Id": "9b9fb5f0-ecb4-43d3-a47d-4e755e257fb7",
         "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
         "City": "Казань",
         "Street": "Баумана",
@@ -86,7 +93,7 @@
       }
     ],
     "LastAddress": {
-      "Id": "124d1e59-e5c1-42e5-96e5-d5d0a2dd1b29",
+      "Id": "13913f15-7d73-4eec-afef-2efa082397a0",
       "UserId": "80573f2f-b652-48c1-9ce0-30cfc30e7f09",
       "City": "Казань",
       "Street": "Баумана",

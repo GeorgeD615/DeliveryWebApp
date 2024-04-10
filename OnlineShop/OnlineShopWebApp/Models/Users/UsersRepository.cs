@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Models.Users
         public List<Product> GetFavorites(Guid userId) => TryGetById(userId)?.Favorites;
         public void AddFavorite(Guid userId, Product product) {
             var user = TryGetById(userId);
-            if (user == null || user.Favorites.Contains(product))
+            if (user == null || user.Favorites.Any(favorite => favorite.Id == product.Id))
                 return;
             user.Favorites.Add(product);
             SaveUsersIntoJson();
