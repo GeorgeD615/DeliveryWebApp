@@ -30,25 +30,5 @@
     ],
     "Cost": "1 450",
     "Amount": 9
-  },
-  {
-    "Id": "ba48c85e-a661-49bf-8ae2-65d4da513bf0",
-    "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
-    "Items": [
-      {
-        "Id": "4219f379-f141-4640-a96a-37f3ecf0c930",
-        "Product": {
-          "Id": "6844a9af-cf36-42c8-9ab6-694e2d91fbf1",
-          "Name": "Чак-чак",
-          "Cost": 200.0,
-          "Description": "Традиционный татарский десерт",
-          "ImagePath": "/images/products/chuck-chuck.jpg"
-        },
-        "Amount": 2,
-        "Cost": 400.0
-      }
-    ],
-    "Cost": "400",
-    "Amount": 2
   }
 ]

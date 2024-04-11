@@ -24,7 +24,7 @@ namespace OnlineShopWebApp.Models.Roles
         {
             var role = TryGetById(id);
 
-            if (role == null || role?.Name.ToLower() == "admin")
+            if (role == null || role.Name.ToLower() == "admin")
                 return;
             
             roles.Remove(role);

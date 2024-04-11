@@ -3,24 +3,24 @@ using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Models.Users
 {
-    public class UsersRepository : IUserRepository
+    public class UsersRepository : IUsersRepository
     {
         private static readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Data\\Users.json";
         
-        private List<User> users;
+        private List<User>? users;
 
         public UsersRepository()
         {
             using var reader = new StreamReader(dataJsonFilePath);
             users = JsonConvert.DeserializeObject<List<User>>(reader.ReadToEnd());
         }
-        public User? TryGetById(Guid userId) => users.FirstOrDefault(user => user.Id == userId);
-        public List<Product> GetFavorites(Guid userId) => TryGetById(userId)?.Favorites;
+        public User? TryGetById(Guid userId) => users?.FirstOrDefault(user => user.Id == userId);
+        public List<Product>? TryGetFavorites(Guid userId) => TryGetById(userId)?.Favorites;
         public void AddFavorite(Guid userId, Product product) {
             var user = TryGetById(userId);
-            if (user == null || user.Favorites.Any(favorite => favorite.Id == product.Id))
+            if (user?.Favorites?.Any(favorite => favorite.Id == product.Id) ?? false)
                 return;
-            user.Favorites.Add(product);
+            user?.Favorites.Add(product);
             SaveUsersIntoJson();
         }
 
@@ -30,8 +30,8 @@ namespace OnlineShopWebApp.Models.Users
             SaveUsersIntoJson();
         }
 
-        public List<Address> GetAddresses(Guid userId) => TryGetById(userId)?.Addresses;
-        public Address TryGetAddress(Guid userId, Guid addressId) => GetAddresses(userId).FirstOrDefault(address => address.Id == addressId);
+        public List<Address>? TryGetAddresses(Guid userId) => TryGetById(userId)?.Addresses;
+        public Address? TryGetAddress(Guid userId, Guid addressId) => TryGetAddresses(userId)?.FirstOrDefault(address => address.Id == addressId);
         public void AddAddress(Guid userId, Address address)
         {
             var user = TryGetById(userId);
@@ -49,19 +49,23 @@ namespace OnlineShopWebApp.Models.Users
         public void RemoveAddress(Guid userId, Guid addressId)
         {
             var user = TryGetById(userId);
-            var address = user?.Addresses.FirstOrDefault(address => address.Id == addressId);
+            var address = user?.Addresses?.FirstOrDefault(address => address.Id == addressId);
 
-            if (user?.LastAddress == address)
+            if (user != null && user.LastAddress == address)
                 user.LastAddress = user.Addresses.Count > 1 ? user.Addresses[0] : null;
 
-            user?.Addresses.Remove(address);
+            if(address != null)
+                user?.Addresses.Remove(address);
 
             SaveUsersIntoJson();
         }
 
         public void SetLastAddress(Guid userId, Address address)
         {
-            TryGetById(userId).LastAddress = address;
+            var user = TryGetById(userId);
+            if (user == null)
+                return;
+            user.LastAddress = address;
             SaveUsersIntoJson();
         }
 
@@ -73,10 +77,10 @@ namespace OnlineShopWebApp.Models.Users
 
         public void Add(User user)
         {
-            users.Add(user);
+            users?.Add(user);
             SaveUsersIntoJson();
         }
 
-        public User? TryGetByLogin(string login) => users.FirstOrDefault(user => user.Login == login);
+        public User? TryGetByLogin(string login) => users?.FirstOrDefault(user => user.Login == login);
     }
 }

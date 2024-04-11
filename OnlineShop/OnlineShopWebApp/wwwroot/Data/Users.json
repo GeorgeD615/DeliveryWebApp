@@ -3,7 +3,22 @@
     "Id": "186ac130-d279-4385-8d22-1954eaec2680",
     "Login": "George",
     "Password": "123456",
-    "Favorites": [],
+    "Favorites": [
+      {
+        "Id": "31b3b010-a18a-4f10-b334-ff29e6376fc4",
+        "Name": "Самса",
+        "Cost": 90.0,
+        "Description": "Узбекский пирожок",
+        "ImagePath": "/images/products/samsa.jpg"
+      },
+      {
+        "Id": "50d4c0c8-247b-4725-9dcc-4b7d40d200d9",
+        "Name": "Нэмы",
+        "Cost": 300.0,
+        "Description": "Вьетнамские фаршированные рулетики",
+        "ImagePath": "/images/products/nams.jpeg"
+      }
+    ],
     "Addresses": [
       {
         "Id": "3fb6f11d-a5c4-4d2c-bbd1-f6a06b2d1b7a",

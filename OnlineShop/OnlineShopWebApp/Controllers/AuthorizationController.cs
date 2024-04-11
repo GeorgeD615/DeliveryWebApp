@@ -9,12 +9,12 @@ namespace OnlineShopWebApp.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUsersRepository usersRepository;
         private readonly IRolesRepository rolesRepository;
 
-        public AuthorizationController(IUserRepository userRepository, IRolesRepository rolesRepository)
+        public AuthorizationController(IUsersRepository usersRepository, IRolesRepository rolesRepository)
         {
-            this.userRepository = userRepository;
+            this.usersRepository = usersRepository;
             this.rolesRepository = rolesRepository;
         }
         public IActionResult LogIn() => View();
@@ -28,19 +28,22 @@ namespace OnlineShopWebApp.Controllers
             if (logInViewModel.Password == logInViewModel.Login)
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
 
-            var user = userRepository.TryGetByLogin(logInViewModel.Login);
+            var user = usersRepository.TryGetByLogin(logInViewModel.Login);
 
             if (user == null)
+            {
                 ModelState.AddModelError("", "Пользователя с таким логином не существует");
-
+                return View(logInViewModel);
+            }
+            
             if (user.Password != logInViewModel.Password)
                 ModelState.AddModelError("", "Неверный пароль");
 
             if (!ModelState.IsValid)
                 return View(logInViewModel);
 
-            CommonData.currentUserId = user.Id;
-            CommonData.currentUserRoleId = user.RoleId;
+            CommonData.CurrentUserId = user.Id;
+            CommonData.CurrentUserRoleId = user.RoleId;
 
             return RedirectToAction("Page", "Product", new { numberOfProductsPerPage = 10, pageNumber = 1 });
         }
@@ -57,22 +60,29 @@ namespace OnlineShopWebApp.Controllers
             if (registrationViewModel.Password == registrationViewModel.Login)
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
 
-            var exictingUser = userRepository.TryGetByLogin(registrationViewModel.Login);
+            var existingUser = usersRepository.TryGetByLogin(registrationViewModel.Login);
 
-            if (exictingUser != null)
+            if (existingUser != null)
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
 
             if(!ModelState.IsValid)
                 return View(registrationViewModel);
 
-            var userRoleId = rolesRepository.TryGetByName("user").Id;
+            var userRole = rolesRepository.TryGetByName("user");
 
-            var user = new User(registrationViewModel.Login, registrationViewModel.Password, userRoleId);
+            if (userRole == null)
+            {
+                userRole = new Role("user");
+                CommonData.UserRoleId = userRole.Id;
+                rolesRepository.AddRole(userRole);
+            }
 
-            userRepository.Add(user);
+            var user = new User(registrationViewModel.Login, registrationViewModel.Password, userRole.Id);
 
-            CommonData.currentUserId = user.Id;
-            CommonData.currentUserRoleId = CommonData.userRoleId;
+            usersRepository.Add(user);
+
+            CommonData.CurrentUserId = user.Id;
+            CommonData.CurrentUserRoleId = CommonData.UserRoleId;
 
             return RedirectToAction("Page", "Product", new { numberOfProductsPerPage = 10, pageNumber = 1 });
         }

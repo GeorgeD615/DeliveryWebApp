@@ -31,6 +31,10 @@ namespace OnlineShopWebApp.Models.Products
         public void Edit(ProductViewModel productEditModel)
         {
             var product = TryGetById(productEditModel.Id);
+
+            if (product == null)
+                return;
+
             product.Name = productEditModel.Name;
             product.Cost = productEditModel.Cost;
             product.Description = productEditModel.Description;

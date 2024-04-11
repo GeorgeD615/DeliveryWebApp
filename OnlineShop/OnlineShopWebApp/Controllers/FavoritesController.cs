@@ -7,9 +7,9 @@ namespace OnlineShopWebApp.Controllers
     public class FavoritesController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly IUserRepository userRepository;
+        private readonly IUsersRepository userRepository;
 
-        public FavoritesController(IProductsRepository productsRepository, IUserRepository userRepository)
+        public FavoritesController(IProductsRepository productsRepository, IUsersRepository userRepository)
         {
             this.productsRepository = productsRepository;
             this.userRepository = userRepository;
@@ -17,14 +17,17 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index(Guid userId)
         {
-            var favorites = userRepository.GetFavorites(userId);
+            var favorites = userRepository.TryGetFavorites(userId);
             return View(favorites);
         }
 
         public IActionResult AddFavorite(Guid userId, Guid productId) 
         { 
             var favoriteProduct = productsRepository.TryGetById(productId);
-            userRepository.AddFavorite(userId, favoriteProduct);
+
+            if(favoriteProduct != null)
+                userRepository.AddFavorite(userId, favoriteProduct);
+
             return RedirectToAction("Index", new { userId });
         }
 

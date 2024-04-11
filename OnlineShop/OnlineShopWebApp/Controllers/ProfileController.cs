@@ -5,9 +5,9 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUsersRepository userRepository;
 
-        public ProfileController(IUserRepository userRepository)
+        public ProfileController(IUsersRepository userRepository)
         {
             this.userRepository = userRepository;
         }

@@ -21,7 +21,7 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<ICartsRepository, CartsRepository>();
 builder.Services.AddSingleton<IProductsRepository, ProductsRepository>();
-builder.Services.AddSingleton<IUserRepository, UsersRepository>();
+builder.Services.AddSingleton<IUsersRepository, UsersRepository>();
 builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
 builder.Services.AddSingleton<IRolesRepository, RolesRepository>();
 

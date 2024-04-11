@@ -10,9 +10,9 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IOrdersRepository ordersRepository;
         private readonly ICartsRepository cartsRepository;
-        private readonly IUserRepository userRepository;
+        private readonly IUsersRepository userRepository;
 
-        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, IUserRepository userRepository)
+        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, IUsersRepository userRepository)
         {
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;
@@ -23,6 +23,10 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = userRepository.TryGetById(userId);
             var cart = cartsRepository.TryGetByUserId(userId);
+
+            if (user == null || cart == null)
+                return RedirectToAction("Index", "Carts");
+
             return View(new OrderFormViewModel(user.Addresses, user.LastAddress, cart));
         }
 

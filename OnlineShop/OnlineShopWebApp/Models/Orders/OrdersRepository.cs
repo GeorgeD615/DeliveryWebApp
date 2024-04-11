@@ -21,6 +21,10 @@ namespace OnlineShopWebApp.Models.Orders
         public void EditStatus(Guid orderId, StateOfOrder status)
         {
             var order = TryGetById(orderId);
+
+            if (order == null)
+                return;
+                
             order.StateOfOrder = status;
             SaveOrdersIntoJson();
         }

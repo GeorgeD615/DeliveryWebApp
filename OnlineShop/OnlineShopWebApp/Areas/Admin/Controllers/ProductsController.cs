@@ -29,6 +29,10 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Edit(Guid productId)
         {
             var product = productsRepository.TryGetById(productId);
+
+            if (product == null)
+                return RedirectToAction("Index");
+
             var productEditModel = ModelConverter.ConvertToProductViewModel(product);
             return View(productEditModel);
         }
