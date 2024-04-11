@@ -5,11 +5,11 @@ namespace OnlineShopWebApp.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly IUsersRepository userRepository;
+        private readonly IUsersRepository usersRepository;
 
         public ProfileController(IUsersRepository userRepository)
         {
-            this.userRepository = userRepository;
+            this.usersRepository = userRepository;
         }
 
         public IActionResult Index() => View(); 
@@ -23,14 +23,14 @@ namespace OnlineShopWebApp.Controllers
 
             if (!ModelState.IsValid)
                 return View("Index", address);
-            userRepository.AddAddress(userId, address);
+            usersRepository.AddAddress(userId, address);
             return RedirectToAction("Index", "Orders", new { userId });
         }
 
         [HttpPost]
         public IActionResult RemoveAddress(Guid userId, Guid addressId)
         {
-            userRepository.RemoveAddress(userId, addressId);
+            usersRepository.RemoveAddress(userId, addressId);
             return RedirectToAction("Index", "Orders", new { userId });
         }
     }
