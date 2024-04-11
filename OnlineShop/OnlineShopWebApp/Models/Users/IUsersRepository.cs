@@ -1,5 +1,4 @@
 ﻿using OnlineShopWebApp.Models.Products;
-using System.Runtime.InteropServices;
 
 namespace OnlineShopWebApp.Models.Users
 {

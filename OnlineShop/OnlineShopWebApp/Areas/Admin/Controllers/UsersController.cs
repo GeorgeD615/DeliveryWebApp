@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
+using OnlineShopWebApp.Models.ViewModels;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -76,7 +76,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Create() => View(new CreateUserViewModel() { RegistrationModel = new Models.ViewModels.RegistrationViewModel()});
+        public IActionResult Create() => View(new CreateUserViewModel() { RegistrationModel = new RegistrationViewModel()});
 
         [HttpPost]
         public IActionResult Create(CreateUserViewModel createUserViewModel)
