@@ -10,18 +10,18 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IOrdersRepository ordersRepository;
         private readonly ICartsRepository cartsRepository;
-        private readonly IUsersRepository userRepository;
+        private readonly IUsersRepository usersRepository;
 
         public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, IUsersRepository userRepository)
         {
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;
-            this.userRepository = userRepository;
+            this.usersRepository = userRepository;
         }
 
         public IActionResult Index(Guid userId)
         {
-            var user = userRepository.TryGetById(userId);
+            var user = usersRepository.TryGetById(userId);
             var cart = cartsRepository.TryGetByUserId(userId);
 
             if (user == null || cart == null)
@@ -34,9 +34,9 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult CreateOrder(Guid userId, Guid addressId, string commentsToCourier)
         {
             var cart = cartsRepository.TryGetByUserId(userId);
-            var address = userRepository.TryGetAddress(userId, addressId);
-            userRepository.SetLastAddress(userId, address);
-            var user = userRepository.TryGetById(userId);
+            var address = usersRepository.TryGetAddress(userId, addressId);
+            usersRepository.SetLastAddress(userId, address);
+            var user = usersRepository.TryGetById(userId);
             var order = new Order(cart, address, commentsToCourier.Trim(), user);
             ordersRepository.Add(order);
             cartsRepository.ClearCart(userId);
