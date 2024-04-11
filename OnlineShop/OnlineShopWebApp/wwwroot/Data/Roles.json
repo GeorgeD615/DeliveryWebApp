@@ -6,5 +6,9 @@
   {
     "Id": "492acbaa-5b43-4d86-b7fa-915be0499978",
     "Name": "user"
+  },
+  {
+    "Id": "baf745ca-6bd1-460a-8671-c3f9db68cdb2",
+    "Name": "доставщик"
   }
 ]

@@ -1,12 +1,168 @@
 [
   {
-    "Id": "b0b5e344-2771-4f84-a565-b0c15a9585c9",
+    "Id": "6fd67192-938c-4d4b-82e0-e93c209765ac",
     "Cart": {
-      "Id": "ba48c85e-a661-49bf-8ae2-65d4da513bf0",
+      "Id": "56f98bdc-ea86-4ee7-9430-8ad03b5dace1",
       "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
       "Items": [
         {
-          "Id": "4219f379-f141-4640-a96a-37f3ecf0c930",
+          "Id": "aab5a24c-b532-407d-ab8a-497afa8a0cab",
+          "Product": {
+            "Id": "2ad860b1-90b1-41ba-b703-350a4af09585",
+            "Name": "Хинкали",
+            "Cost": 300.0,
+            "Description": "Очень вкусные пельмени",
+            "ImagePath": "/images/products/khinkali.jpg"
+          },
+          "Amount": 2,
+          "Cost": 600.0
+        }
+      ],
+      "Cost": "600",
+      "Amount": 2
+    },
+    "Address": {
+      "Id": "e0a795e9-2b69-48db-b36c-b2f2f68fb73a",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "City": "Казань",
+      "Street": "Баумана",
+      "House": "24к2",
+      "Flat": 12
+    },
+    "User": {
+      "Id": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Login": "George",
+      "Password": "123456",
+      "Favorites": [],
+      "Addresses": [
+        {
+          "Id": "e0a795e9-2b69-48db-b36c-b2f2f68fb73a",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Казань",
+          "Street": "Баумана",
+          "House": "24к2",
+          "Flat": 12
+        },
+        {
+          "Id": "e5138c45-e7f5-4f59-adba-ebba659062e5",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Ковров",
+          "Street": "Еловая",
+          "House": "88/1",
+          "Flat": 123
+        },
+        {
+          "Id": "7ffda252-3088-4bee-8414-327323dd9c41",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Санкт-Петербург",
+          "Street": "Ботаническая",
+          "House": "64к3",
+          "Flat": 134
+        }
+      ],
+      "LastAddress": {
+        "Id": "7ffda252-3088-4bee-8414-327323dd9c41",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Санкт-Петербург",
+        "Street": "Ботаническая",
+        "House": "64к3",
+        "Flat": 134
+      },
+      "Role": {
+        "Id": "02e79f7a-7d83-4176-9ed5-7d17d61118f4",
+        "Name": "admin"
+      }
+    },
+    "CommentsToCourier": "123",
+    "StateOfOrder": 0,
+    "TimeOfOrder": "2024-04-11T15:41:07.8304454+03:00"
+  },
+  {
+    "Id": "b555b7c1-01d2-451b-85d4-449f83122f6a",
+    "Cart": {
+      "Id": "5b4c58f5-81a6-4705-affe-679108fef51a",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Items": [
+        {
+          "Id": "a1da6f63-f5c5-4133-906b-2f430c6c74a4",
+          "Product": {
+            "Id": "6844a9af-cf36-42c8-9ab6-694e2d91fbf1",
+            "Name": "Чак-чак",
+            "Cost": 200.0,
+            "Description": "Традиционный татарский десерт",
+            "ImagePath": "/images/products/chuck-chuck.jpg"
+          },
+          "Amount": 1,
+          "Cost": 200.0
+        }
+      ],
+      "Cost": "200",
+      "Amount": 1
+    },
+    "Address": {
+      "Id": "e5138c45-e7f5-4f59-adba-ebba659062e5",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "City": "Ковров",
+      "Street": "Еловая",
+      "House": "88/1",
+      "Flat": 123
+    },
+    "User": {
+      "Id": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Login": "George",
+      "Password": "123456",
+      "Favorites": [],
+      "Addresses": [
+        {
+          "Id": "e0a795e9-2b69-48db-b36c-b2f2f68fb73a",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Казань",
+          "Street": "Баумана",
+          "House": "24к2",
+          "Flat": 12
+        },
+        {
+          "Id": "e5138c45-e7f5-4f59-adba-ebba659062e5",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Ковров",
+          "Street": "Еловая",
+          "House": "88/1",
+          "Flat": 123
+        },
+        {
+          "Id": "7ffda252-3088-4bee-8414-327323dd9c41",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Санкт-Петербург",
+          "Street": "Ботаническая",
+          "House": "64к3",
+          "Flat": 134
+        }
+      ],
+      "LastAddress": {
+        "Id": "7ffda252-3088-4bee-8414-327323dd9c41",
+        "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+        "City": "Санкт-Петербург",
+        "Street": "Ботаническая",
+        "House": "64к3",
+        "Flat": 134
+      },
+      "Role": {
+        "Id": "02e79f7a-7d83-4176-9ed5-7d17d61118f4",
+        "Name": "admin"
+      }
+    },
+    "CommentsToCourier": "123",
+    "StateOfOrder": 0,
+    "TimeOfOrder": "2024-04-11T15:41:41.2798172+03:00"
+  },
+  {
+    "Id": "2750854b-10d9-43c5-84fb-c9bc624ede85",
+    "Cart": {
+      "Id": "dabba512-8963-4961-aa11-e29c2b72fdcd",
+      "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+      "Items": [
+        {
+          "Id": "01103b76-09fa-4e8d-8e3c-a30999ecd2dd",
           "Product": {
             "Id": "6844a9af-cf36-42c8-9ab6-694e2d91fbf1",
             "Name": "Чак-чак",
@@ -22,36 +178,21 @@
       "Amount": 2
     },
     "Address": {
-      "Id": "26ba6bf1-fa55-4d9a-bb9b-773741b291a6",
+      "Id": "7ffda252-3088-4bee-8414-327323dd9c41",
       "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
-      "City": "Казань",
-      "Street": "Баумана",
-      "House": "24к2",
-      "Flat": 23
+      "City": "Санкт-Петербург",
+      "Street": "Ботаническая",
+      "House": "64к3",
+      "Flat": 134
     },
     "User": {
       "Id": "186ac130-d279-4385-8d22-1954eaec2680",
       "Login": "George",
       "Password": "123456",
-      "Favorites": [
-        {
-          "Id": "31b3b010-a18a-4f10-b334-ff29e6376fc4",
-          "Name": "Самса",
-          "Cost": 90.0,
-          "Description": "Узбекский пирожок",
-          "ImagePath": "/images/products/samsa.jpg"
-        },
-        {
-          "Id": "50d4c0c8-247b-4725-9dcc-4b7d40d200d9",
-          "Name": "Нэмы",
-          "Cost": 300.0,
-          "Description": "Вьетнамские фаршированные рулетики",
-          "ImagePath": "/images/products/nams.jpeg"
-        }
-      ],
+      "Favorites": [],
       "Addresses": [
         {
-          "Id": "3fb6f11d-a5c4-4d2c-bbd1-f6a06b2d1b7a",
+          "Id": "e0a795e9-2b69-48db-b36c-b2f2f68fb73a",
           "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
           "City": "Казань",
           "Street": "Баумана",
@@ -59,26 +200,37 @@
           "Flat": 12
         },
         {
-          "Id": "26ba6bf1-fa55-4d9a-bb9b-773741b291a6",
+          "Id": "e5138c45-e7f5-4f59-adba-ebba659062e5",
           "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
-          "City": "Казань",
-          "Street": "Баумана",
-          "House": "24к2",
-          "Flat": 23
+          "City": "Ковров",
+          "Street": "Еловая",
+          "House": "88/1",
+          "Flat": 123
+        },
+        {
+          "Id": "7ffda252-3088-4bee-8414-327323dd9c41",
+          "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
+          "City": "Санкт-Петербург",
+          "Street": "Ботаническая",
+          "House": "64к3",
+          "Flat": 134
         }
       ],
       "LastAddress": {
-        "Id": "26ba6bf1-fa55-4d9a-bb9b-773741b291a6",
+        "Id": "7ffda252-3088-4bee-8414-327323dd9c41",
         "UserId": "186ac130-d279-4385-8d22-1954eaec2680",
-        "City": "Казань",
-        "Street": "Баумана",
-        "House": "24к2",
-        "Flat": 23
+        "City": "Санкт-Петербург",
+        "Street": "Ботаническая",
+        "House": "64к3",
+        "Flat": 134
       },
-      "RoleId": "02e79f7a-7d83-4176-9ed5-7d17d61118f4"
+      "Role": {
+        "Id": "02e79f7a-7d83-4176-9ed5-7d17d61118f4",
+        "Name": "admin"
+      }
     },
-    "CommentsToCourier": "asdf",
+    "CommentsToCourier": "1234",
     "StateOfOrder": 0,
-    "TimeOfOrder": "2024-04-11T12:15:18.492103+03:00"
+    "TimeOfOrder": "2024-04-11T15:42:03.403402+03:00"
   }
 ]

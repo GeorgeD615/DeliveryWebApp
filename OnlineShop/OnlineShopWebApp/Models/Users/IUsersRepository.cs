@@ -1,10 +1,13 @@
 ﻿using OnlineShopWebApp.Models.Products;
+using System.Runtime.InteropServices;
 
 namespace OnlineShopWebApp.Models.Users
 {
     public interface IUsersRepository 
     {
         User? TryGetById(Guid userId);
+
+        List<User> GetAll();
         User? TryGetByLogin(string login);
         List<Product>? TryGetFavorites(Guid userId);
         void AddFavorite(Guid userId, Product product);
@@ -15,5 +18,8 @@ namespace OnlineShopWebApp.Models.Users
         void RemoveAddress(Guid userId, Guid addressId);
         void SetLastAddress(Guid userId, Address address);
         void Add(User user);
+        void ChangePassword(Guid userId, string password);
+        void Edit(EditUserModel editModel);
+        void Remove(Guid userId);
     } 
 }

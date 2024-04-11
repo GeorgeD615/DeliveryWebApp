@@ -7,7 +7,7 @@ namespace OnlineShopWebApp.Models.Users
     {
         private static readonly string dataJsonFilePath = Directory.GetCurrentDirectory() + "\\wwwroot\\Data\\Users.json";
         
-        private List<User>? users;
+        private List<User> users;
 
         public UsersRepository()
         {
@@ -15,6 +15,7 @@ namespace OnlineShopWebApp.Models.Users
             users = JsonConvert.DeserializeObject<List<User>>(reader.ReadToEnd());
         }
         public User? TryGetById(Guid userId) => users?.FirstOrDefault(user => user.Id == userId);
+        public List<User> GetAll() => users;
         public List<Product>? TryGetFavorites(Guid userId) => TryGetById(userId)?.Favorites;
         public void AddFavorite(Guid userId, Product product) {
             var user = TryGetById(userId);
@@ -82,5 +83,36 @@ namespace OnlineShopWebApp.Models.Users
         }
 
         public User? TryGetByLogin(string login) => users?.FirstOrDefault(user => user.Login == login);
+
+        public void ChangePassword(Guid userId, string password)
+        {
+            var user = TryGetById(userId);
+
+            if (user == null)
+                return;
+
+            user.Password = password;
+            SaveUsersIntoJson();
+        }
+
+        public void Edit(EditUserModel editModel)
+        {
+            var user = TryGetById(editModel.UserId);
+
+            if (user == null) 
+                return;
+
+            user.Login = editModel.Login;
+
+            user.Role = editModel.Role;
+
+            SaveUsersIntoJson();
+        }
+
+        public void Remove(Guid userId)
+        {
+            users.RemoveAll(user => user.Id == userId);
+            SaveUsersIntoJson();
+        }
     }
 }

@@ -1,0 +1,9 @@
+﻿@using OnlineShopWebApp.Models.Roles
+@model List<Role>
+
+<option selected"></option>
+@foreach(var role in Model)
+{
+    <option value="@role.Id">@role.Name</option>
+}
+

@@ -1,0 +1,41 @@
+﻿@using OnlineShopWebApp.Models.Users
+@model EditUserViewModel
+
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    <div class="row m-2">
+                        <div class="col-4 gray">Логин:</div>
+                        <div class="col-8">
+                            <input asp-for="Login" class="form-control" id="inputLogin" value="@Model.Login" aria-describedby="emailHelp">
+                            <span asp-validation-for="Login" class="validation-error"></span>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4 gray">Роль:</div>
+                        <div class="col-8">
+                            <select asp-for="RoleId" class="form-select" aria-label="Default select example">
+                                @await Component.InvokeAsync("RolesForEdit")
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-4">
+                            <button class="btn btn-outline-success" type="submit" asp-area="admin" asp-controller="users" asp-action="edit" asp-route-userId="@Model.UserId">
+                                Сохранить изменения
+                            </button>
+                        </div>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="validation-error"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -4,7 +4,7 @@ namespace OnlineShopWebApp.Models.Roles
 {
     public class Role
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
         public Role(string name)

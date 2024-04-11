@@ -43,7 +43,7 @@ namespace OnlineShopWebApp.Controllers
                 return View(logInViewModel);
 
             CommonData.CurrentUserId = user.Id;
-            CommonData.CurrentUserRoleId = user.RoleId;
+            CommonData.CurrentUserRoleId = user.Role.Id;
 
             return RedirectToAction("Page", "Product", new { numberOfProductsPerPage = 10, pageNumber = 1 });
         }
@@ -77,7 +77,10 @@ namespace OnlineShopWebApp.Controllers
                 rolesRepository.AddRole(userRole);
             }
 
-            var user = new User(registrationViewModel.Login, registrationViewModel.Password, userRole.Id);
+            var user = new User(
+                registrationViewModel.Login, 
+                registrationViewModel.Password,
+                userRole);
 
             usersRepository.Add(user);
 

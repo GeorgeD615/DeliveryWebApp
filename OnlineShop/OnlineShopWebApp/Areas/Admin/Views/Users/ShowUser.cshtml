@@ -1,0 +1,65 @@
+﻿@using OnlineShopWebApp.Models.Users
+@model User
+
+<div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row m-2">
+                    <div class="col-4 gray">Id пользователя:</div>
+                    <div class="col-8">@Model.Id</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Логин:</div>
+                    <div class="col-8">@Model.Login</div>
+                </div>
+                @if(Model.Addresses?.Any() ?? false)
+                {
+                    <div class="row m-2">
+                        <div class="col-4 gray">Адреса:</div>
+                        <div class="col-8">
+                            <div class="overflow-auto" style="height : 80px">
+                                @foreach (var address in Model.Addresses)
+                                {
+                                    <p>@address.ToString()</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4 gray">Последний адрес:</div>
+                        <div class="col-8">@Model.LastAddress.ToString()</div>
+                    </div>
+                }
+                <div class="row m-2">
+                    <div class="col-4 gray">Роль:</div>
+                    <div class="col-8">@Model.Role.Name</div>
+                </div>
+                
+                <br>
+                <div class="row">
+                    <div class="col-3 m-4 text-lg-start">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Действия
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="admin" asp-controller="users" asp-action="changePassword" asp-route-userId="@Model.Id" class="dropdown-item">Смена пароля</a></li>
+                                <li><a asp-area="admin" asp-controller="users" asp-action="edit" asp-route-userId="@Model.Id" class="dropdown-item">Редактировать данные</a></li>
+                                <li><a asp-area="admin" asp-controller="users" asp-action="remove" asp-route-userId="@Model.Id" class="dropdown-item">Удалить пользователя</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-7 m-4 text-lg-end">
+                        <a asp-area="admin" asp-controller="users" asp-action="index" class="btn btn-dark">Вернуться к списку польователей</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

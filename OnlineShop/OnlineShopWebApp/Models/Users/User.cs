@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OnlineShopWebApp.Models.Products;
+using OnlineShopWebApp.Models.Roles;
 
 namespace OnlineShopWebApp.Models.Users
 {
@@ -11,9 +12,9 @@ namespace OnlineShopWebApp.Models.Users
         public List<Product> Favorites { get; set; }
         public List<Address> Addresses { get; set; }
         public Address? LastAddress { get; set; }
-        public Guid RoleId { get; set; }
+        public Role Role { get; set; }
 
-        public User(string login, string password, Guid roleId)
+        public User(string login, string password, Role role)
         {
             Id = Guid.NewGuid();
             Favorites = new();
@@ -21,11 +22,11 @@ namespace OnlineShopWebApp.Models.Users
             LastAddress = null;
             Login = login;
             Password = password;
-            RoleId = roleId;
+            Role = role;
         }
 
         [JsonConstructor]
-        public User(Guid id, string login, List<Product> favorites, List<Address> addresses, Address lastAddress, string password, Guid roleId)
+        public User(Guid id, string login, List<Product> favorites, List<Address> addresses, Address lastAddress, string password, Role role)
         {
             Id = id;
             Login = login;
@@ -33,7 +34,7 @@ namespace OnlineShopWebApp.Models.Users
             Favorites = favorites;
             Addresses = addresses;
             LastAddress = lastAddress;
-            RoleId = roleId;
+            Role = role;
         }
     }
 }
