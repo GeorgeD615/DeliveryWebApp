@@ -31,14 +31,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult ChangePassword(Guid userId) => View(new ChangePasswordViewModel() { UserId = userId });
 
         [HttpPost]
-        public IActionResult ChangePassword(ChangePasswordViewModel changePasswordViewModel)
+        public IActionResult ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(changePasswordViewModel);
+                return View(model);
 
-            usersRepository.ChangePassword(changePasswordViewModel.UserId, changePasswordViewModel.Password);
+            usersRepository.ChangePassword(model.UserId, model.Password);
 
-            return RedirectToAction("ShowUser", new { changePasswordViewModel.UserId });
+            return RedirectToAction("ShowUser", new { model.UserId });
         }
 
         public IActionResult Edit(Guid userId)
@@ -48,26 +48,26 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EditUserViewModel editUserViewModel)
+        public IActionResult Edit(EditUserViewModel userVM)
         {
-            var existingUser = usersRepository.TryGetByLogin(editUserViewModel.Login);
+            var existingUser = usersRepository.TryGetByLogin(userVM.Login);
 
             if (existingUser != null)
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
 
             if (!ModelState.IsValid)
-                return View(editUserViewModel);
+                return View(userVM);
 
             var editModel = new EditUserModel()
             {
-                Login = editUserViewModel.Login,
-                UserId = editUserViewModel.UserId,
-                Role = rolesRepository.TryGetById(editUserViewModel.RoleId)
+                Login = userVM.Login,
+                UserId = userVM.UserId,
+                Role = rolesRepository.TryGetById(userVM.RoleId)
             };
 
             usersRepository.Edit(editModel);
 
-            return RedirectToAction("ShowUser", new { editUserViewModel.UserId });
+            return RedirectToAction("ShowUser", new { userVM.UserId });
         }
 
         public IActionResult Remove(Guid userId)
