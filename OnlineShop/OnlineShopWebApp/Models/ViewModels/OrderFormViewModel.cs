@@ -7,9 +7,9 @@ namespace OnlineShopWebApp.Models.ContainersForView
     {
         public List<Address>? Addresses { get; set; }
         public Address? LastAddress { get; set; }
-        public Cart? Cart { get; set; }
+        public CartViewModel? Cart { get; set; }
 
-        public OrderFormViewModel(List<Address>? addresses, Address? lastAddress, Cart? cart) 
+        public OrderFormViewModel(List<Address>? addresses, Address? lastAddress, CartViewModel? cart) 
         {
             Addresses = addresses;
             LastAddress = lastAddress;

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using OnlineShopWebApp.Models.Products;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Roles;
 
 namespace OnlineShopWebApp.Models.Users

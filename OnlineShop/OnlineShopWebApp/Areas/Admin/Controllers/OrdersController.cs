@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Orders;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -16,12 +17,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var orders = ordersRepository.GetAll();
-            return View(orders);
+            return View(orders.Select(ModelConverter.ConvertToOrderViewModel).ToList());
         }
         public IActionResult ShowInfo(Guid orderId)
         {
             var order = ordersRepository.TryGetById(orderId);
-            return View(order);
+            return View(ModelConverter.ConvertToOrderViewModel(order));
         }
         public IActionResult EditStatus(Guid orderId, StateOfOrder status)
         {

@@ -1,8 +1,8 @@
 ﻿namespace OnlineShopWebApp.Models.Products
 {
-    public class ProductsPage
+    public class ProductsPageViewModel
     {
-        public List<Product> Products { get; set; }
+        public List<ProductViewModel> Products { get; set; }
         public int AmountOfPages { get; set; }
         public int PageNumber { get; set; }
         public int NumOfProdPerPage { get; set; }

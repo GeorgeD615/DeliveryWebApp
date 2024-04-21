@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
 using OnlineShopWebApp.Models.ViewModels;
@@ -19,13 +20,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var users = usersRepository.GetAll();
-            return View(users);
+            return View(users.Select(ModelConverter.ConvertToUserViewModel).ToList());
         }
 
         public IActionResult ShowUser(Guid userId)
         {
             var user = usersRepository.TryGetById(userId);
-            return View(user);
+            return View(ModelConverter.ConvertToUserViewModel(user));
         }
 
         public IActionResult ChangePassword(Guid userId) => View(new ChangePasswordViewModel() { UserId = userId });

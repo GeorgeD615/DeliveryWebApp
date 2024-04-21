@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Localization;
-using OnlineShopWebApp.Models.Carts;
+using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db;
+using OnlineShop.Db.Implementations;
+using OnlineShop.Db.Interfaces;
 using OnlineShopWebApp.Models.Orders;
-using OnlineShopWebApp.Models.Products;
 using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
 using Serilog;
@@ -17,10 +19,15 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 
 });
 
+string connection = builder.Configuration.GetConnectionString("online_shop");
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+    options.UseSqlServer(connection));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<ICartsRepository, CartsRepository>();
-builder.Services.AddSingleton<IProductsRepository, ProductsRepository>();
+builder.Services.AddTransient<ICartsRepository, CartsDbRepository>();
+builder.Services.AddTransient<IProductsRepository, ProductsDbRepository>();
 builder.Services.AddSingleton<IUsersRepository, UsersRepository>();
 builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
 builder.Services.AddSingleton<IRolesRepository, RolesRepository>();

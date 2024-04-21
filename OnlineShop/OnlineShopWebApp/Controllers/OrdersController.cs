@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models.Carts;
+using OnlineShop.Db.Interfaces;
 using OnlineShopWebApp.Models.ContainersForView;
+using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Users;
 
@@ -27,7 +28,7 @@ namespace OnlineShopWebApp.Controllers
             if (user == null || cart == null)
                 return RedirectToAction("Index", "Carts");
 
-            return View(new OrderFormViewModel(user.Addresses, user.LastAddress, cart));
+            return View(new OrderFormViewModel(user.Addresses, user.LastAddress, ModelConverter.ConvertToCartViewModel(cart)));
         }
 
         [HttpPost]

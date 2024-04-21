@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace OnlineShopWebApp.Models
+namespace OnlineShopWebApp.Models.Helpers
 {
     public static class EnumHelper
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models;
+using OnlineShop.Db.Interfaces;
+using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -17,7 +18,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var products = productsRepository.GetAll();
-            return View(products);
+            return View(products.Select(ModelConverter.ConvertToProductViewModel).ToList());
         }
 
         public IActionResult RemoveById(Guid productId)
@@ -49,7 +50,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(product);
 
-            productsRepository.Edit(product);
+            productsRepository.Edit(ModelConverter.ConvertToProduct(product));
             return RedirectToAction("Index");
         }
 
@@ -60,6 +61,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             product.Name = product.Name.Trim();
             product.Description = product.Description.Trim();
+            product.ImagePath = "/images/products/hachapury.jpg";
 
             if (product.Name == product.Description)
                 ModelState.AddModelError("", "Название и описание блюда не должны совпадать");
@@ -67,7 +69,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(product);
 
-            productsRepository.Add(product);
+            productsRepository.Add(ModelConverter.ConvertToProduct(product));
             return RedirectToAction("Index");
         }
     }

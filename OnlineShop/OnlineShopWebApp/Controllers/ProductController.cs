@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Interfaces;
+using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Controllers
@@ -25,7 +27,7 @@ namespace OnlineShopWebApp.Controllers
             if (pageNumber > amountOfPages)
                 return View(null);
 
-            var productsPage = new ProductsPage()
+            var productsPage = new ProductsPageViewModel()
             {
                 AmountOfPages = amountOfPages,
                 NumOfProdPerPage = numberOfProductsPerPage,
@@ -44,8 +46,9 @@ namespace OnlineShopWebApp.Controllers
                     productsPage.ImageHeight = 125;
                     break;
             }
-
-            productsPage.Products = productsRepository.GetPageOfProducts(numberOfProductsPerPage, pageNumber, amountOfPages);
+                
+            var products = productsRepository.GetPageOfProducts(numberOfProductsPerPage, pageNumber, amountOfPages);
+            productsPage.Products = products.Select(ModelConverter.ConvertToProductViewModel).ToList();  
 
             return View(productsPage);
         }
