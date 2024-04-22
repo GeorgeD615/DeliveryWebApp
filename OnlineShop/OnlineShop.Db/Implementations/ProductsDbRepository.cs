@@ -14,7 +14,10 @@ namespace OnlineShop.Db.Implementations
 
         public List<Product> GetAll() => databaseContext.Products.ToList();
         public int GetCount() => databaseContext.Products.Count();
-        public Product? TryGetById(Guid productId) => databaseContext.Products.FirstOrDefault(p => p.Id == productId);
+        public Product? TryGetById(Guid productId)
+        {
+            return databaseContext.Products.FirstOrDefault(p => p.Id == productId);
+        }
         public List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages)
         {
             int lastIndex = pageNumber < amountOfPages ? numberOfProductsPerPage : databaseContext.Products.Count() - numberOfProductsPerPage * (pageNumber - 1);
@@ -32,14 +35,15 @@ namespace OnlineShop.Db.Implementations
 
         public void Edit(Product product)
         {
-            var exisyingProduct = TryGetById(product.Id);
+            var existingProduct = TryGetById(product.Id);
 
-            if (exisyingProduct == null)
+            if (existingProduct == null)
                 return;
 
-            product.Name = exisyingProduct.Name;
-            product.Cost = exisyingProduct.Cost;
-            product.Description = exisyingProduct.Description;
+            existingProduct.Name = product.Name;
+            existingProduct.Cost = product.Cost;
+            existingProduct.Description = product.Description;
+            existingProduct.ImagePath = product.ImagePath;
             databaseContext.SaveChanges();
         }
         public void Add(Product product)
@@ -48,7 +52,9 @@ namespace OnlineShop.Db.Implementations
             databaseContext.SaveChanges();
         }
 
-        public List<Product> SearchByName(string name)
-            => GetAll().FindAll(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+        public List<Product> SearchByName(string name) 
+        {
+            return databaseContext.Products.Where(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList(); 
+        }
     }
 }

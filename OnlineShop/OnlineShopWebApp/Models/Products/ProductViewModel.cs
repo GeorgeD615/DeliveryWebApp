@@ -19,5 +19,17 @@ namespace OnlineShopWebApp.Models.Products
         public string Description { get; set; }
 
         public string ImagePath { get; set; }
+
+        public ProductViewModel(Guid id, string name, decimal cost, string description, string imagePath)
+        {
+            Id = id;
+            Name = name;
+            Cost = cost;
+            Description = description;
+            ImagePath = imagePath;
+        }
+
+        public ProductViewModel() { }
+
     }
 }

@@ -7,6 +7,8 @@
             <div class="card-body">
                 <h3 class="card-title text-center">Редактирование товара</h3>
                 <form method="post">
+                    <input asp-for="Id" value="@Model.Id" hidden></input>
+                    <input asp-for="ImagePath" value="@Model.ImagePath" hidden></input>
                     <div class="row">
                         <div class="mb-3 col-6">
                             <label asp-for="Name" class="form-label">Название</label>
@@ -28,7 +30,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <button class="btn btn-outline-success" type="submit" asp-area="admin" asp-controller="products" asp-action="edit" asp-route-id="@Model.Id" asp-route-ImagePath="/images/products/eachpochmak.jpg">
+                            <button class="btn btn-outline-success" type="submit" asp-area="admin" asp-controller="products" asp-action="edit">
                                 Сохранить изменения
                             </button>
                         </div>

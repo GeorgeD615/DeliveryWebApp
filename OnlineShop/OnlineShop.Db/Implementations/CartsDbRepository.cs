@@ -11,8 +11,12 @@ namespace OnlineShop.Db.Implementations
         {
             this.databaseContext = databaseContext;
         }
-        public Cart? TryGetByUserId(Guid userId) => databaseContext.Carts.Include(cart => cart.Items).ThenInclude(item => item.Product)
-            .FirstOrDefault(cart => cart.UserId == userId);
+        public Cart? TryGetByUserId(Guid userId)
+        {
+            var carts = databaseContext.Carts.Include(cart => cart.Items).ThenInclude(item => item.Product);
+            return carts.FirstOrDefault(cart => cart.UserId == userId);
+        }
+
         public void AddProduct(Product product, Guid userId)
         {
             var cart = TryGetByUserId(userId);
@@ -35,12 +39,14 @@ namespace OnlineShop.Db.Implementations
         public void ChangeProductAmount(Guid userId, Guid cartItemId, int difference)
         {
             var cart = TryGetByUserId(userId);
+
+            if(cart == null) 
+                throw new Exception("Корзина не найдена");
+
             var cartItem = cart?.Items.FirstOrDefault(x => x.Id == cartItemId);
 
             if (cartItem == null)
-            {
-                return;
-            }
+                throw new Exception("CartItem не найден");
 
             int newAmount = cartItem.Amount + difference;
 
@@ -49,7 +55,7 @@ namespace OnlineShop.Db.Implementations
             else
                 cartItem.Amount = newAmount;
 
-            if (cart?.Items.Count == 0)
+            if (!cart.Items.Any())
                 databaseContext.Carts.Remove(cart);
 
             databaseContext.SaveChanges();

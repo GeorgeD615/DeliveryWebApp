@@ -14,7 +14,15 @@ namespace OnlineShopWebApp.Controllers
             this.productsRepository = productsRepository;
         }
 
-        public IActionResult Index(Guid productId) => View(productsRepository.TryGetById(productId));
+        public IActionResult Index(Guid productId)
+        {
+            var product = productsRepository.TryGetById(productId);
+
+            if (product == null)
+                return View("Error");
+
+            return View(ModelConverter.ConvertToProductViewModel(product));
+        }
 
         public IActionResult Page(int numberOfProductsPerPage, int pageNumber)
         {

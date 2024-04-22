@@ -3,7 +3,22 @@
     "Id": "186ac130-d279-4385-8d22-1954eaec2680",
     "Login": "George",
     "Password": "0987654321",
-    "Favorites": [],
+    "Favorites": [
+      {
+        "Id": "08e1f726-130f-4257-4fad-08dc622070f1",
+        "Name": "Эчпочмак",
+        "Cost": 140.00,
+        "Description": "описание 1",
+        "ImagePath": "/images/products/hachapury.jpg"
+      },
+      {
+        "Id": "5cb7f7da-cec5-42eb-4fae-08dc622070f1",
+        "Name": "Эчпочмак 2",
+        "Cost": 130.00,
+        "Description": "Описание 2",
+        "ImagePath": "/images/products/hachapury.jpg"
+      }
+    ],
     "Addresses": [
       {
         "Id": "e0a795e9-2b69-48db-b36c-b2f2f68fb73a",

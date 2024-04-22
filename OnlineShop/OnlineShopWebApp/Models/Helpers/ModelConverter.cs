@@ -8,67 +8,105 @@ namespace OnlineShopWebApp.Models.Helpers
 {
     public static class ModelConverter
     {
-        public static ProductViewModel ConvertToProductViewModel(Product product) => new ProductViewModel()
+        public static ProductViewModel? ConvertToProductViewModel(Product product)
         {
-            Id = product.Id,
-            Name = product.Name,
-            Cost = product.Cost,
-            Description = product.Description,
-            ImagePath = product.ImagePath,
-        };
+            if (product == null)
+                return null;
 
-        public static Product ConvertToProduct(ProductViewModel productViewModel) => new Product()
-        {
-            Name = productViewModel.Name,
-            Cost = productViewModel.Cost,
-            Description = productViewModel.Description,
-            ImagePath = productViewModel.ImagePath
-        };
+            return new ProductViewModel(
+                            product.Id,
+                            product.Name,
+                            product.Cost,
+                            product.Description,
+                            product.ImagePath);
+        }
 
-        public static CartItemViewModel ConvertToCartItemViewModel(CartItem cartItem) => new CartItemViewModel()
+        public static Product? ConvertToProduct(ProductViewModel productViewModel)
         {
-            Id = cartItem.Id,
-            Product = ConvertToProductViewModel(cartItem.Product),
-            Amount = cartItem.Amount
-        };
+            if (productViewModel == null)
+                return null;
 
-        public static CartViewModel ConvertToCartViewModel(Cart cart) => new CartViewModel()
-        {
-            Id = cart.Id,
-            UserId = cart.UserId,
-            Items = cart.Items.Select(ConvertToCartItemViewModel).ToList()
-        };
+            return new Product()
+            {
+                Id = productViewModel.Id,
+                Name = productViewModel.Name,
+                Cost = productViewModel.Cost,
+                Description = productViewModel.Description,
+                ImagePath = productViewModel.ImagePath
+            };
+        }
 
-        public static AddressViewModel ConvertToAddressViewModel(Address address) => new AddressViewModel()
+        public static CartItemViewModel? ConvertToCartItemViewModel(CartItem cartItem)
         {
-            Id = address.Id,
-            UserId = address.UserId,
-            City = address.City,
-            Street = address.Street,
-            House = address.House,
-            Flat = address.Flat
-        };
+            if (cartItem == null)
+                return null;
 
-        public static OrderViewModel ConvertToOrderViewModel(Order order) => new OrderViewModel()
-        {
-            Id = order.Id,
-            Address = order.Address,
-            Cart = ConvertToCartViewModel(order.Cart),
-            CommentsToCourier = order.CommentsToCourier,
-            StateOfOrder = order.StateOfOrder,
-            TimeOfOrder = order.TimeOfOrder,
-            User = order.User
-        };
+            return new CartItemViewModel(
+                cartItem.Id,
+                ConvertToProductViewModel(cartItem.Product),
+                cartItem.Amount);
+        }
 
-        public static UserViewModel ConvertToUserViewModel(User user) => new UserViewModel()
+        public static CartViewModel? ConvertToCartViewModel(Cart cart)
         {
-            Id = user.Id,
-            Addresses = user.Addresses,
-            LastAddress = user.LastAddress,
-            Favorites = user.Favorites.Select(ConvertToProductViewModel).ToList(),
-            Login = user.Login,
-            Password = user.Password,
-            Role = user.Role
-        };
+            if (cart == null)
+                return null;
+
+            return new CartViewModel(
+                cart.Id,
+                cart.UserId,
+                cart.Items.Select(ConvertToCartItemViewModel).ToList());
+        }
+
+        public static AddressViewModel ConvertToAddressViewModel(Address address)
+        {
+            if (address == null)
+                return null;
+
+            return new AddressViewModel()
+            {
+                Id = address.Id,
+                UserId = address.UserId,
+                City = address.City,
+                Street = address.Street,
+                House = address.House,
+                Flat = address.Flat
+            };
+        }
+
+
+        public static OrderViewModel? ConvertToOrderViewModel(Order order)
+        {
+            if (order == null)
+                return null;
+
+            return new OrderViewModel()
+            {
+                Id = order.Id,
+                Address = order.Address,
+                Cart = ConvertToCartViewModel(order.Cart),
+                CommentsToCourier = order.CommentsToCourier,
+                StateOfOrder = order.StateOfOrder,
+                TimeOfOrder = order.TimeOfOrder,
+                User = order.User
+            };
+        }
+
+        public static UserViewModel? ConvertToUserViewModel(User user)
+        {
+            if (user == null)
+                return null;
+
+            return new UserViewModel()
+            {
+                Id = user.Id,
+                Addresses = user.Addresses,
+                LastAddress = user.LastAddress,
+                Favorites = user.Favorites.Select(ConvertToProductViewModel).ToList(),
+                Login = user.Login,
+                Password = user.Password,
+                Role = user.Role
+            };
+        }
     }
 }
