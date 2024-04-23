@@ -26,8 +26,9 @@ namespace OnlineShop.Db.Implementations
         public void DeleteProduct(Guid productId)
         {
             var product = TryGetById(productId);
+
             if (product == null)
-                return;
+                throw new Exception("Товар не найден");
 
             databaseContext.Products.Remove(product);
             databaseContext.SaveChanges();
@@ -54,7 +55,9 @@ namespace OnlineShop.Db.Implementations
 
         public List<Product> SearchByName(string name) 
         {
-            return databaseContext.Products.Where(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList(); 
+            return databaseContext.Products
+                .Where(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+                .ToList(); 
         }
     }
 }

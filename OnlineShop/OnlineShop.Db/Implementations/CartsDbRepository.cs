@@ -13,8 +13,10 @@ namespace OnlineShop.Db.Implementations
         }
         public Cart? TryGetByUserId(Guid userId)
         {
-            var carts = databaseContext.Carts.Include(cart => cart.Items).ThenInclude(item => item.Product);
-            return carts.FirstOrDefault(cart => cart.UserId == userId);
+            return databaseContext.Carts
+                .Include(cart => cart.Items)
+                .ThenInclude(item => item.Product)
+                .FirstOrDefault(cart => cart.UserId == userId);
         }
 
         public void AddProduct(Product product, Guid userId)
@@ -43,7 +45,7 @@ namespace OnlineShop.Db.Implementations
             if(cart == null) 
                 throw new Exception("Корзина не найдена");
 
-            var cartItem = cart?.Items.FirstOrDefault(x => x.Id == cartItemId);
+            var cartItem = cart.Items.FirstOrDefault(x => x.Id == cartItemId);
 
             if (cartItem == null)
                 throw new Exception("CartItem не найден");
@@ -51,7 +53,7 @@ namespace OnlineShop.Db.Implementations
             int newAmount = cartItem.Amount + difference;
 
             if (newAmount == 0)
-                cart?.Items.Remove(cartItem);
+                cart.Items.Remove(cartItem);
             else
                 cartItem.Amount = newAmount;
 
