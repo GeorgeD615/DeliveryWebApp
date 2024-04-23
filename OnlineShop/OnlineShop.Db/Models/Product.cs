@@ -8,6 +8,6 @@
         public string? Description { get; set; }
         public string ImagePath { get; set; }
         public List<CartItem> CartItems { get; set; } = new();
-        public List<User> UsersFav { get; set; } = new(); 
+        public List<User> Favorites { get; set; } = new(); 
     }
 }

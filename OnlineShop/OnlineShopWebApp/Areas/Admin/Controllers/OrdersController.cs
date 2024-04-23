@@ -17,7 +17,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var orders = ordersRepository.GetAll();
-            return View(orders.Select(ModelConverter.ConvertToOrderViewModel).ToList());
+            return View(orders?.Select(ModelConverter.ConvertToOrderViewModel).ToList());
         }
         public IActionResult ShowInfo(Guid orderId)
         {
