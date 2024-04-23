@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models.Roles;
+using OnlineShop.Db.Interfaces;
 
 namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles
 {

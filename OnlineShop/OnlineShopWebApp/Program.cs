@@ -4,7 +4,6 @@ using OnlineShop.Db;
 using OnlineShop.Db.Implementations;
 using OnlineShop.Db.Interfaces;
 using OnlineShopWebApp.Models.Orders;
-using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
 using Serilog;
 using System.Globalization;
@@ -28,9 +27,9 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICartsRepository, CartsDbRepository>();
 builder.Services.AddTransient<IProductsRepository, ProductsDbRepository>();
-builder.Services.AddSingleton<IUsersRepository, UsersRepository>();
+builder.Services.AddTransient<IUsersRepository, UsersDbRepository>();
 builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
-builder.Services.AddSingleton<IRolesRepository, RolesRepository>();
+builder.Services.AddTransient<IRolesRepository, RolesDbRepository>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

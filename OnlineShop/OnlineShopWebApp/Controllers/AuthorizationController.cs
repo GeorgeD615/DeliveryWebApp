@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Interfaces;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Roles;
-using OnlineShopWebApp.Models.Users;
 using OnlineShopWebApp.Models.ViewModels;
 
 namespace OnlineShopWebApp.Controllers
@@ -71,15 +71,17 @@ namespace OnlineShopWebApp.Controllers
 
             if (userRole == null)
             {
-                userRole = new Role("user");
+                userRole = new Role() { Name = "user" };
                 CommonData.UserRoleId = userRole.Id;
                 rolesRepository.AddRole(userRole);
             }
 
-            var user = new User(
-                registrationViewModel.Login, 
-                registrationViewModel.Password,
-                userRole);
+            var user = new User
+            {
+                Login = registrationViewModel.Login,
+                Password = registrationViewModel.Password,
+                Role = userRole
+            };
 
             usersRepository.Add(user);
 

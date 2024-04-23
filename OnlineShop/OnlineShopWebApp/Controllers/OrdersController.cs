@@ -3,7 +3,6 @@ using OnlineShop.Db.Interfaces;
 using OnlineShopWebApp.Models.ContainersForView;
 using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Orders;
-using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -28,7 +27,11 @@ namespace OnlineShopWebApp.Controllers
             if (user == null || cart == null)
                 return RedirectToAction("Index", "Carts");
 
-            return View(new OrderFormViewModel(user.Addresses, user.LastAddress, ModelConverter.ConvertToCartViewModel(cart)));
+            return View(new OrderFormViewModel(
+                user.Addresses.Select(ModelConverter.ConvertToAddressViewModel).ToList(),
+                ModelConverter.ConvertToAddressViewModel(user.Addresses.FirstOrDefault(a => a.IsLast)),
+                ModelConverter.ConvertToCartViewModel(cart))
+            );
         }
 
         [HttpPost]
@@ -36,7 +39,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var cart = cartsRepository.TryGetByUserId(userId);
             var address = usersRepository.TryGetAddress(userId, addressId);
-            usersRepository.SetLastAddress(userId, address);
+            usersRepository.SetLastAddress(userId, addressId);
             var user = usersRepository.TryGetById(userId);
             var order = new Order(cart, address, commentsToCourier.Trim(), user);
             ordersRepository.Add(order);

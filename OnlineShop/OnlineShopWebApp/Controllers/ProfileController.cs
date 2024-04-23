@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Interfaces;
+using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Controllers
@@ -15,7 +17,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index() => View(); 
 
         [HttpPost]
-        public IActionResult AddAddress(Guid userId, Address address)
+        public IActionResult AddAddress(Guid userId, AddressViewModel address)
         {
             address.City = address.City.Trim();
             address.Street = address.Street.Trim();
@@ -23,7 +25,7 @@ namespace OnlineShopWebApp.Controllers
 
             if (!ModelState.IsValid)
                 return View("Index", address);
-            usersRepository.AddAddress(userId, address);
+            usersRepository.AddAddress(userId, ModelConverter.ConvertToAddress(address));
             return RedirectToAction("Index", "Orders", new { userId });
         }
 

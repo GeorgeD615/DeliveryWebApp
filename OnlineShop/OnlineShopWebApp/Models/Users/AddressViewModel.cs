@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
 
 namespace OnlineShopWebApp.Models.Users
 {
@@ -27,6 +26,8 @@ namespace OnlineShopWebApp.Models.Users
         [Required(ErrorMessage = "Укажите номер квартиры")]
         [Range(0,10000, ErrorMessage = "Номер квартиры должен находится в диапозоне от 0 до 100000")]
         public int Flat { get; set; } 
+
+        public bool IsLast { get; set; }
 
         public override string ToString() => $"г. {City}, ул. {Street}, д. {House}, кв. {Flat}";
     }

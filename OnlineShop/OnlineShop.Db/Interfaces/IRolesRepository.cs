@@ -1,4 +1,6 @@
-﻿namespace OnlineShopWebApp.Models.Roles
+﻿using OnlineShop.Db.Models;
+
+namespace OnlineShop.Db.Interfaces
 {
     public interface IRolesRepository
     {

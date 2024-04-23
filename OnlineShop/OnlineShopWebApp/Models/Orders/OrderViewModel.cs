@@ -7,8 +7,8 @@ namespace OnlineShopWebApp.Models.Orders
     {
         public Guid Id { get; set; }
         public CartViewModel Cart { get; set; }
-        public Address Address { get; set; }
-        public User User { get; set; }
+        public AddressViewModel Address { get; set; }
+        public UserViewModel User { get; set; }
         public string CommentsToCourier { get; set; }
         public StateOfOrder StateOfOrder { get; set; }
         public DateTime TimeOfOrder { get; set; }

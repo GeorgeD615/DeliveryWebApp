@@ -1,5 +1,4 @@
 ﻿using OnlineShopWebApp.Models.ViewModels;
-using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models.Users
 {

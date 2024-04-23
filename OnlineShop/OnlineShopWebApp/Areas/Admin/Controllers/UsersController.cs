@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Interfaces;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
-using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
 using OnlineShopWebApp.Models.ViewModels;
 
@@ -45,7 +46,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Edit(Guid userId)
         {
             var user = usersRepository.TryGetById(userId);
-            return View(new EditUserViewModel() { UserId = userId, Login = user.Login, RoleId = user.Role.Id });
+            return View(new UserViewModel() { Id = userId, Login = user.Login, Role = ModelConverter.ConvertToRoleViewModel(user.Role)});
         }
 
         [HttpPost]
@@ -59,14 +60,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(userVM);
 
-            var editModel = new EditUserModel()
+            var userModel = new User()
             {
+                Id = userVM.UserId,
                 Login = userVM.Login,
-                UserId = userVM.UserId,
                 Role = rolesRepository.TryGetById(userVM.RoleId)
             };
 
-            usersRepository.Edit(editModel);
+            usersRepository.Edit(userModel);
 
             return RedirectToAction("ShowUser", new { userVM.UserId });
         }
@@ -93,10 +94,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(createUserViewModel);
 
-            var user = new User(
-                createUserViewModel.RegistrationModel.Login, 
-                createUserViewModel.RegistrationModel.Password,
-                rolesRepository.TryGetById(createUserViewModel.RoleId));
+            var user = new User()
+            {
+                Login = createUserViewModel.RegistrationModel.Login,
+                Password = createUserViewModel.RegistrationModel.Password,
+                Role = rolesRepository.TryGetById(createUserViewModel.RoleId)
+            };
 
             usersRepository.Add(user);
 

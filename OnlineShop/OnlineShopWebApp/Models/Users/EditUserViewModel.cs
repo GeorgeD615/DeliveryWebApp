@@ -1,5 +1,4 @@
-﻿using OnlineShopWebApp.Models.Roles;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models.Users
 {

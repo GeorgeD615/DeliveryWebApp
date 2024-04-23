@@ -6,6 +6,6 @@ namespace OnlineShopWebApp.Models.Users
     {
         public Guid UserId { get; set; }
         public string Login { get; set; }
-        public Role Role { get; set; }
+        public RoleViewModel Role { get; set; }
     }
 }

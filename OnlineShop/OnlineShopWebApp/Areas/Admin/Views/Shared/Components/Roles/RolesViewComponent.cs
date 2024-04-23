@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopWebApp.Models.Roles;
+using OnlineShop.Db.Interfaces;
+using OnlineShopWebApp.Models.Helpers;
 
 namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles
 {
@@ -15,7 +16,7 @@ namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles
         public IViewComponentResult Invoke()
         {
             var roles = rolesRepository.GetAll();
-            return View("Roles", roles);
+            return View("Roles", roles.Select(ModelConverter.ConvertToRoleViewModel).ToList());
         }
     }
 }

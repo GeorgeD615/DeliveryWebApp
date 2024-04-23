@@ -5,11 +5,11 @@ namespace OnlineShopWebApp.Models.ContainersForView
 {
     public class OrderFormViewModel
     {
-        public List<Address>? Addresses { get; set; }
-        public Address? LastAddress { get; set; }
+        public List<AddressViewModel>? Addresses { get; set; }
+        public AddressViewModel? LastAddress { get; set; }
         public CartViewModel? Cart { get; set; }
 
-        public OrderFormViewModel(List<Address>? addresses, Address? lastAddress, CartViewModel? cart) 
+        public OrderFormViewModel(List<AddressViewModel>? addresses, AddressViewModel? lastAddress, CartViewModel? cart) 
         {
             Addresses = addresses;
             LastAddress = lastAddress;

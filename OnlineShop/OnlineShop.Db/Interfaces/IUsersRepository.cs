@@ -1,11 +1,10 @@
 ﻿using OnlineShop.Db.Models;
 
-namespace OnlineShopWebApp.Models.Users
+namespace OnlineShop.Db.Interfaces
 {
     public interface IUsersRepository 
     {
         User? TryGetById(Guid userId);
-
         List<User> GetAll();
         User? TryGetByLogin(string login);
         List<Product>? TryGetFavorites(Guid userId);
@@ -15,10 +14,10 @@ namespace OnlineShopWebApp.Models.Users
         Address? TryGetAddress(Guid userId, Guid addressId);
         void AddAddress(Guid userId, Address address);
         void RemoveAddress(Guid userId, Guid addressId);
-        void SetLastAddress(Guid userId, Address address);
+        void SetLastAddress(Guid userId, Guid addressId);
         void Add(User user);
         void ChangePassword(Guid userId, string password);
-        void Edit(EditUserModel editModel);
+        void Edit(User user);
         void Remove(Guid userId);
     } 
 }

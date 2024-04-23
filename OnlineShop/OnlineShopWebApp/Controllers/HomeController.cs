@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
 using OnlineShopWebApp.Models.Helpers;
-using OnlineShopWebApp.Models.Products;
 
 namespace OnlineShopWebApp.Controllers
 {

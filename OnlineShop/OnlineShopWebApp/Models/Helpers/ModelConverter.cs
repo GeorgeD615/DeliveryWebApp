@@ -2,6 +2,7 @@
 using OnlineShopWebApp.Models.Carts;
 using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
+using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Models.Helpers
@@ -74,6 +75,22 @@ namespace OnlineShopWebApp.Models.Helpers
             };
         }
 
+        public static Address ConvertToAddress(AddressViewModel address)
+        {
+            if (address == null)
+                return null;
+
+            return new Address()
+            {
+                Id = address.Id,
+                UserId = address.UserId,
+                City = address.City,
+                Street = address.Street,
+                House = address.House,
+                Flat = address.Flat
+            };
+        }
+
 
         public static OrderViewModel? ConvertToOrderViewModel(Order order)
         {
@@ -83,12 +100,12 @@ namespace OnlineShopWebApp.Models.Helpers
             return new OrderViewModel()
             {
                 Id = order.Id,
-                Address = order.Address,
+                Address = ConvertToAddressViewModel(order.Address),
                 Cart = ConvertToCartViewModel(order.Cart),
                 CommentsToCourier = order.CommentsToCourier,
                 StateOfOrder = order.StateOfOrder,
                 TimeOfOrder = order.TimeOfOrder,
-                User = order.User
+                User = ConvertToUserViewModel(order.User)
             };
         }
 
@@ -100,12 +117,23 @@ namespace OnlineShopWebApp.Models.Helpers
             return new UserViewModel()
             {
                 Id = user.Id,
-                Addresses = user.Addresses,
-                LastAddress = user.LastAddress,
-                Favorites = user.Favorites.Select(ConvertToProductViewModel).ToList(),
+                Addresses = user.Addresses?.Select(ConvertToAddressViewModel).ToList(),
+                Favorites = user.Favorites?.Select(ConvertToProductViewModel).ToList(),
                 Login = user.Login,
                 Password = user.Password,
-                Role = user.Role
+                Role = ConvertToRoleViewModel(user.Role)
+            };
+
+        }
+        public static RoleViewModel ConvertToRoleViewModel(Role role)
+        {
+            if (role == null)
+                return null;
+
+            return new RoleViewModel()
+            {
+                Id = role.Id,
+                Name = role.Name,
             };
         }
     }

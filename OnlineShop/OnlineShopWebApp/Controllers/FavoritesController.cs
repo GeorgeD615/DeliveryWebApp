@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
 using OnlineShopWebApp.Models.Helpers;
-using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Controllers
 {
@@ -19,7 +18,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(Guid userId)
         {
             var favorites = usersRepository.TryGetFavorites(userId);
-            return View(favorites.Select(ModelConverter.ConvertToProductViewModel).ToList());
+            return View(favorites?.Select(ModelConverter.ConvertToProductViewModel).ToList());
         }
 
         public IActionResult AddFavorite(Guid userId, Guid productId) 

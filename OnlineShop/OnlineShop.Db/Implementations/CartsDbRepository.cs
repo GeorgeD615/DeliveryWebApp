@@ -67,7 +67,7 @@ namespace OnlineShop.Db.Implementations
             var cart = TryGetByUserId(userId);
 
             if (cart == null)
-                return;
+                throw new Exception("Корзина не найдена");
 
             databaseContext.Carts.Remove(cart);
             databaseContext.SaveChanges();

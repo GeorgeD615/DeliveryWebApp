@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db.Interfaces;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Roles;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -26,7 +28,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(role);
 
-            rolesRepository.AddRole(new Role(roleName));
+            rolesRepository.AddRole(new Role() { Name = roleName });
 
             return RedirectToAction("Index");
         }

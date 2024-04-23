@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using OnlineShop.Db.Models;
-using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Models.Orders
 {
