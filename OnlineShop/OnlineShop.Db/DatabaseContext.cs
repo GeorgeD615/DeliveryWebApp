@@ -9,6 +9,7 @@ namespace OnlineShop.Db
         public DbSet<Cart> Carts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) 
             : base(options)
@@ -24,6 +25,7 @@ namespace OnlineShop.Db
             modelBuilder.Entity<User>().HasKey(user => user.Id);
             modelBuilder.Entity<Role>().HasKey(role => role.Id);
             modelBuilder.Entity<Address>().HasKey(address => address.Id);
+            modelBuilder.Entity<Order>().HasKey(order => order.Id);
 
             var adminRole = new Role() { Id = new Guid("02e79f7a-7d83-4176-9ed5-7d17d61118f4"), Name = "admin" };
             var userRole = new Role() { Id = new Guid("492acbaa-5b43-4d86-b7fa-915be0499978"), Name = "user" };
@@ -40,6 +42,7 @@ namespace OnlineShop.Db
 
             modelBuilder.Entity<User>().HasData(defaultAdmin);
 
+            modelBuilder.Entity<Order>().HasOne(o => o.User).WithMany(o => o.Orders).OnDelete(DeleteBehavior.NoAction);
         }
 
     }

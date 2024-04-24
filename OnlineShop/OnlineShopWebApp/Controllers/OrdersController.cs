@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
+using OnlineShop.Db.Models;
+using OnlineShop.Db.Enums;
 using OnlineShopWebApp.Models.ContainersForView;
 using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Orders;
@@ -12,17 +14,17 @@ namespace OnlineShopWebApp.Controllers
         private readonly ICartsRepository cartsRepository;
         private readonly IUsersRepository usersRepository;
 
-        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, IUsersRepository userRepository)
+        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, IUsersRepository usersRepository)
         {
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;
-            this.usersRepository = userRepository;
+            this.usersRepository = usersRepository;
         }
 
         public IActionResult Index(Guid userId)
         {
             var user = usersRepository.TryGetById(userId);
-            var cart = cartsRepository.TryGetByUserId(userId);
+            var cart = cartsRepository.TryGetNotYetOrderedByUserId(userId);
 
             if (user == null || cart == null)
                 return RedirectToAction("Index", "Carts");
@@ -37,14 +39,22 @@ namespace OnlineShopWebApp.Controllers
         [HttpPost]
         public IActionResult CreateOrder(Guid userId, Guid addressId, string commentsToCourier)
         {
-            var cart = cartsRepository.TryGetByUserId(userId);
+            var cart = cartsRepository.TryGetNotYetOrderedByUserId(userId);
             var address = usersRepository.TryGetAddress(userId, addressId);
             usersRepository.SetLastAddress(userId, addressId);
             var user = usersRepository.TryGetById(userId);
-            var order = new Order(cart, address, commentsToCourier.Trim(), user);
+            var order = new Order()
+            {
+                Cart = cart,
+                Address = address,
+                CommentsToCourier = commentsToCourier.Trim(),
+                User = user,
+                StateOfOrder = StateOfOrder.InProcessing,
+                TimeOfOrder = DateTime.Now
+            };
             ordersRepository.Add(order);
             cartsRepository.ClearCart(userId);
-            return View("OrderCreated", order);
+            return View("OrderCreated", ModelConverter.ConvertToOrderViewModel(order));
         }
     }
 }

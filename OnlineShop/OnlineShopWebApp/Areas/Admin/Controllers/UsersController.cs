@@ -46,7 +46,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Edit(Guid userId)
         {
             var user = usersRepository.TryGetById(userId);
-            return View(new UserViewModel() { Id = userId, Login = user.Login, Role = ModelConverter.ConvertToRoleViewModel(user.Role)});
+            return View(new EditUserViewModel() { UserId = userId, Login = user.Login, RoleId = user.Role.Id});
         }
 
         [HttpPost]
@@ -54,7 +54,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         {
             var existingUser = usersRepository.TryGetByLogin(userVM.Login);
 
-            if (existingUser != null)
+            if (existingUser != null && existingUser.Id != userVM.UserId)
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
 
             if (!ModelState.IsValid)

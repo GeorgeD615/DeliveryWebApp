@@ -1,4 +1,5 @@
-﻿using OnlineShopWebApp.Models.Orders;
+﻿using OnlineShop.Db.Enums;
+using OnlineShopWebApp.Models.Orders;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 

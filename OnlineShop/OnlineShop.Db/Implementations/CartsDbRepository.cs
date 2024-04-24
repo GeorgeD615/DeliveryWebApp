@@ -11,17 +11,17 @@ namespace OnlineShop.Db.Implementations
         {
             this.databaseContext = databaseContext;
         }
-        public Cart? TryGetByUserId(Guid userId)
+        public Cart? TryGetNotYetOrderedByUserId(Guid userId)
         {
             return databaseContext.Carts
                 .Include(cart => cart.Items)
                 .ThenInclude(item => item.Product)
-                .FirstOrDefault(cart => cart.UserId == userId);
+                .FirstOrDefault(cart => cart.UserId == userId && !cart.IsOrdered);
         }
 
         public void AddProduct(Product product, Guid userId)
         {
-            var cart = TryGetByUserId(userId);
+            var cart = TryGetNotYetOrderedByUserId(userId);
 
             if (cart == null)
             {
@@ -40,7 +40,7 @@ namespace OnlineShop.Db.Implementations
         }
         public void ChangeProductAmount(Guid userId, Guid cartItemId, int difference)
         {
-            var cart = TryGetByUserId(userId);
+            var cart = TryGetNotYetOrderedByUserId(userId);
 
             if(cart == null) 
                 throw new Exception("Корзина не найдена");
@@ -64,12 +64,12 @@ namespace OnlineShop.Db.Implementations
         }
         public void ClearCart(Guid userId)
         {
-            var cart = TryGetByUserId(userId);
+            var cart = TryGetNotYetOrderedByUserId(userId);
 
             if (cart == null)
                 throw new Exception("Корзина не найдена");
 
-            databaseContext.Carts.Remove(cart);
+            cart.IsOrdered = true;
             databaseContext.SaveChanges();
         }
     }

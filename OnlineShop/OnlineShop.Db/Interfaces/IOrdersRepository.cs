@@ -1,4 +1,7 @@
-﻿namespace OnlineShopWebApp.Models.Orders
+﻿using OnlineShop.Db.Enums;
+using OnlineShop.Db.Models;
+
+namespace OnlineShopWebApp.Models.Orders
 {
     public interface IOrdersRepository
     {

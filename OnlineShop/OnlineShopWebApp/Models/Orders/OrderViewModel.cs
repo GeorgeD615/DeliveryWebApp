@@ -1,4 +1,5 @@
-﻿using OnlineShopWebApp.Models.Carts;
+﻿using OnlineShop.Db.Enums;
+using OnlineShopWebApp.Models.Carts;
 using OnlineShopWebApp.Models.Users;
 
 namespace OnlineShopWebApp.Models.Orders

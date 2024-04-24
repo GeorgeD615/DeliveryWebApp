@@ -112,7 +112,7 @@ namespace OnlineShopWebApp.Models.Users
 
         public User? TryGetByLogin(string login)
         {
-            return databaseContext.Users.FirstOrDefault(user => user.Login == login);
+            return databaseContext.Users.Include(user => user.Role).FirstOrDefault(user => user.Login == login);
         }
 
         public void ChangePassword(Guid userId, string password)

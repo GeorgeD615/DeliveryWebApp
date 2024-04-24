@@ -1,4 +1,5 @@
-﻿using OnlineShop.Db.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
 
 namespace OnlineShop.Db.Implementations
@@ -56,8 +57,8 @@ namespace OnlineShop.Db.Implementations
         public List<Product> SearchByName(string name) 
         {
             return databaseContext.Products
-                .Where(product => product.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
-                .ToList(); 
+                .Where(product => EF.Functions.Like(product.Name, $"%{name}%"))
+                .ToList();
         }
     }
 }

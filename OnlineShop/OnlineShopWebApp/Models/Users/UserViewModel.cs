@@ -20,7 +20,6 @@ namespace OnlineShopWebApp.Models.Users
         public string Password { get; set; }
         public List<ProductViewModel> Favorites { get; set; }
         public List<AddressViewModel> Addresses { get; set; }
-        public AddressViewModel? LastAddress { get; set; }
         public RoleViewModel Role { get; set; }
     }
 }

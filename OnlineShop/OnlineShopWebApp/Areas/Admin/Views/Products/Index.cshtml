@@ -19,11 +19,11 @@
         </ul>
     </div>
     <div class="card-body">
-        <div class="text-start">
-            <a asp-area="admin" asp-controller="products" asp-action="add" class="btn btn-outline-cartChangeAmount">Добавить товар</a>
-        </div>
-        @if (Model != null)
+        @if (Model != null && Model.Any())
         {
+            <div class="text-start">
+                <a asp-area="admin" asp-controller="products" asp-action="add" class="btn btn-outline-cartChangeAmount">Добавить товар</a>
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -69,6 +69,9 @@
         else
         {
             <h2>В вашем магазине пока нет товаров</h2>
+            <div class="text-center">
+                <a asp-area="admin" asp-controller="products" asp-action="add" class="btn btn-outline-cartChangeAmount">Добавить товар</a>
+            </div>
         }
     </div>
 </div>

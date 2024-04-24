@@ -15,9 +15,13 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index(string name) {
             var searchName = name?.Trim();
+
             if (string.IsNullOrEmpty(searchName))
-                return View(productsRepository.GetAll());
-            return View(productsRepository.SearchByName(searchName).Select(ModelConverter.ConvertToProductViewModel));
+                return View(productsRepository.GetAll().Select(ModelConverter.ConvertToProductViewModel).ToList());
+
+            var products = productsRepository.SearchByName(searchName);
+
+            return View(products.Select(ModelConverter.ConvertToProductViewModel).ToList());
         }
     }
 }

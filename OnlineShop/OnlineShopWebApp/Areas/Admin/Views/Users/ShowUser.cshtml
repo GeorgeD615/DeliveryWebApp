@@ -24,14 +24,14 @@
                             <div class="overflow-auto" style="height : 80px">
                                 @foreach (var address in Model.Addresses)
                                 {
-                                    <p>@address.ToString()</p>
+                                    <p>@address.ToString() @if(address.IsLast)
+                                        {
+                                            <i>(последний адрес)</i>
+                                        }
+                                    </p>
                                 }
                             </div>
                         </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-4 gray">Последний адрес:</div>
-                        <div class="col-8">@Model.LastAddress.ToString()</div>
                     </div>
                 }
                 <div class="row m-2">

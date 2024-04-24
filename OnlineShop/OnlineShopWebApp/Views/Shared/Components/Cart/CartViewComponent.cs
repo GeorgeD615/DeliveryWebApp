@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
 using OnlineShopWebApp.Models;
-using OnlineShopWebApp.Models.Carts;
 
 namespace OnlineShopWebApp.Views.Shared.Components.Cart
 {
@@ -16,7 +15,7 @@ namespace OnlineShopWebApp.Views.Shared.Components.Cart
 
         public IViewComponentResult Invoke()
         {
-            var cart = cartsRepository.TryGetByUserId(CommonData.CurrentUserId);
+            var cart = cartsRepository.TryGetNotYetOrderedByUserId(CommonData.CurrentUserId);
             var amount = cart?.Items.Sum(item => item.Amount) ?? 0;
             return View("Cart", amount);
         }

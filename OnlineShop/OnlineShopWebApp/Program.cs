@@ -28,7 +28,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICartsRepository, CartsDbRepository>();
 builder.Services.AddTransient<IProductsRepository, ProductsDbRepository>();
 builder.Services.AddTransient<IUsersRepository, UsersDbRepository>();
-builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
+builder.Services.AddTransient<IOrdersRepository, OrdersDbRepository>();
 builder.Services.AddTransient<IRolesRepository, RolesDbRepository>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
