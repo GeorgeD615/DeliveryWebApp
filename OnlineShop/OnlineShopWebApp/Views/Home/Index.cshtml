@@ -1,7 +1,7 @@
 ﻿@using OnlineShopWebApp.Models.Products
 @model List<ProductViewModel> 
 
-@if(Model != null && Model.Any())
+@if (Model?.Any() ?? false)
 {
     <div class="row justify-content-start">
         @foreach(var product in Model)

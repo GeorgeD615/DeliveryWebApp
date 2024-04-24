@@ -21,7 +21,7 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 string connection = builder.Configuration.GetConnectionString("online_shop");
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseSqlServer(connection));
+    options.UseSqlServer(connection, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

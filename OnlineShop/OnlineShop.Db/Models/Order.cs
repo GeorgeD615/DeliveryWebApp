@@ -17,7 +17,7 @@ namespace OnlineShop.Db.Models
         [ForeignKey("UserId")]
         public Guid UserId { get; set; }
         public User User { get; set; }
-        public string CommentsToCourier { get; set; }
+        public string? CommentsToCourier { get; set; }
         public StateOfOrder StateOfOrder { get; set; }
         public DateTime TimeOfOrder { get; set; }
     }

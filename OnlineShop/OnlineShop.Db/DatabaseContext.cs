@@ -43,6 +43,8 @@ namespace OnlineShop.Db
             modelBuilder.Entity<User>().HasData(defaultAdmin);
 
             modelBuilder.Entity<Order>().HasOne(o => o.User).WithMany(o => o.Orders).OnDelete(DeleteBehavior.NoAction);
+
+            //modelBuilder.Entity<Order>().Property(order => order.CommentsToCourier).IsRequired(false);
         }
 
     }

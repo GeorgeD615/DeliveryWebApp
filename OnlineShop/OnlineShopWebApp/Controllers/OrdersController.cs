@@ -47,7 +47,7 @@ namespace OnlineShopWebApp.Controllers
             {
                 Cart = cart,
                 Address = address,
-                CommentsToCourier = commentsToCourier.Trim(),
+                CommentsToCourier = commentsToCourier?.Trim(),
                 User = user,
                 StateOfOrder = StateOfOrder.InProcessing,
                 TimeOfOrder = DateTime.Now

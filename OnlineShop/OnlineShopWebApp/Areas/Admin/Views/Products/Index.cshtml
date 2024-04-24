@@ -19,7 +19,7 @@
         </ul>
     </div>
     <div class="card-body">
-        @if (Model != null && Model.Any())
+        @if (Model?.Any() ?? false)
         {
             <div class="text-start">
                 <a asp-area="admin" asp-controller="products" asp-action="add" class="btn btn-outline-cartChangeAmount">Добавить товар</a>

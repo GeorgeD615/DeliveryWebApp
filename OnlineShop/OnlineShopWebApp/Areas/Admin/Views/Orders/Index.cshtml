@@ -20,7 +20,7 @@
         </ul>
     </div>
     <div class="card-body">
-        @if (Model != null && Model.Any()) 
+        @if (Model?.Any() ?? false)
         {
             <table class="table table-striped">
                 <thead>
