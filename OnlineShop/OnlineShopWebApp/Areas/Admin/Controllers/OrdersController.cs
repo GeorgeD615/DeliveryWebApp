@@ -18,12 +18,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var orders = ordersRepository.GetAll();
-            return View(orders?.Select(ModelConverter.ConvertToOrderViewModel).ToList());
+            return View(orders?.Select(order => order.ToOrderViewModel()).ToList());
         }
         public IActionResult ShowInfo(Guid orderId)
         {
             var order = ordersRepository.TryGetById(orderId);
-            return View(ModelConverter.ConvertToOrderViewModel(order));
+            return View(order?.ToOrderViewModel());
         }
         public IActionResult EditStatus(Guid orderId, StateOfOrder status)
         {

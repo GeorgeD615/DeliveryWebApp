@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(Guid userId)
         {
             var favorites = usersRepository.TryGetFavorites(userId);
-            return View(favorites?.Select(ModelConverter.ConvertToProductViewModel).ToList());
+            return View(favorites?.Select(favorite => favorite.ToProductViewModel()).ToList());
         }
 
         public IActionResult AddFavorite(Guid userId, Guid productId) 

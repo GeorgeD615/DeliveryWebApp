@@ -42,9 +42,15 @@ namespace OnlineShop.Db
 
             modelBuilder.Entity<User>().HasData(defaultAdmin);
 
-            modelBuilder.Entity<Order>().HasOne(o => o.User).WithMany(o => o.Orders).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(o => o.Orders)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Order>().Property(order => order.CommentsToCourier).IsRequired(false);
+            modelBuilder.Entity<Cart>()
+                .HasMany(c => c.Items)
+                .WithOne(o => o.Cart)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
     }

@@ -17,11 +17,15 @@ namespace OnlineShopWebApp.Controllers
             var searchName = name?.Trim();
 
             if (string.IsNullOrEmpty(searchName))
-                return View(productsRepository.GetAll().Select(ModelConverter.ConvertToProductViewModel).ToList());
+                return View(productsRepository.GetAll()
+                    .Select(product => product.ToProductViewModel())
+                    .ToList());
 
             var products = productsRepository.SearchByName(searchName);
 
-            return View(products.Select(ModelConverter.ConvertToProductViewModel).ToList());
+            return View(products
+                .Select(product => product.ToProductViewModel())
+                .ToList());
         }
     }
 }

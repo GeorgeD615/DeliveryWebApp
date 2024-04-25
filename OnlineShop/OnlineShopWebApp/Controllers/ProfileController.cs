@@ -25,7 +25,7 @@ namespace OnlineShopWebApp.Controllers
 
             if (!ModelState.IsValid)
                 return View("Index", address);
-            usersRepository.AddAddress(userId, ModelConverter.ConvertToAddress(address));
+            usersRepository.AddAddress(userId, address.ToAddress());
             return RedirectToAction("Index", "Orders", new { userId });
         }
 

@@ -21,13 +21,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var users = usersRepository.GetAll();
-            return View(users.Select(ModelConverter.ConvertToUserViewModel).ToList());
+            return View(users.Select(user => user.ToUserViewModel()).ToList());
         }
 
         public IActionResult ShowUser(Guid userId)
         {
             var user = usersRepository.TryGetById(userId);
-            return View(ModelConverter.ConvertToUserViewModel(user));
+            return View(user.ToUserViewModel());
         }
 
         public IActionResult ChangePassword(Guid userId) => View(new ChangePasswordViewModel() { UserId = userId });

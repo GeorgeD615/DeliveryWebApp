@@ -16,7 +16,7 @@ namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles
         public IViewComponentResult Invoke()
         {
             var roles = rolesRepository.GetAll();
-            return View("Roles", roles.Select(ModelConverter.ConvertToRoleViewModel).ToList());
+            return View("Roles", roles.Select(role => role.ToRoleViewModel()).ToList());
         }
     }
 }

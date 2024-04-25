@@ -15,7 +15,7 @@ namespace OnlineShopWebApp.Views.Shared.Components.Cart
 
         public IViewComponentResult Invoke()
         {
-            var cart = cartsRepository.TryGetNotYetOrderedByUserId(CommonData.CurrentUserId);
+            var cart = cartsRepository.TryGetByUserId(CommonData.CurrentUserId);
             var amount = cart?.Items.Sum(item => item.Amount) ?? 0;
             return View("Cart", amount);
         }

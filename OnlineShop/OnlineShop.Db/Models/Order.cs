@@ -5,10 +5,7 @@ namespace OnlineShop.Db.Models
     public class Order
     {
         public Guid Id { get; }
-
-        [ForeignKey("CartId")]
-        public Guid CartId { get; set; }
-        public Cart Cart { get; set; }
+        public List<CartItem> CartItems { get; set; }
 
         [ForeignKey("AddressId")]
         public Guid AddressId { get; set; }

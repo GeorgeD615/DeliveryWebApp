@@ -33,8 +33,7 @@ namespace OnlineShopWebApp.Models.Orders
         public List<Order> GetAll() 
         {
             return databaseContext.Orders
-                .Include(order => order.Cart)
-                .ThenInclude(cart => cart.Items)
+                .Include(order => order.CartItems)
                 .ThenInclude(item => item.Product)
                 .Include(order => order.User)
                 .ToList(); 
@@ -43,8 +42,7 @@ namespace OnlineShopWebApp.Models.Orders
         public Order? TryGetById(Guid orderId)
         {
             return databaseContext.Orders
-                .Include(order => order.Cart)
-                .ThenInclude(cart => cart.Items)
+                .Include(order => order.CartItems)
                 .ThenInclude(item => item.Product)
                 .Include(order => order.User)
                 .Include(order => order.Address)

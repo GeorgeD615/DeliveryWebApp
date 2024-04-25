@@ -17,8 +17,8 @@ namespace OnlineShopWebApp.Controllers
 
         public IActionResult Index(Guid userId)
         {
-            var cart = cartsRepository.TryGetNotYetOrderedByUserId(userId);
-            return View(ModelConverter.ConvertToCartViewModel(cart));
+            var cart = cartsRepository.TryGetByUserId(userId);
+            return View(cart?.ToCartViewModel());
         }
 
         public IActionResult AddProduct(Guid userId, Guid productId)

@@ -9,7 +9,7 @@ namespace OnlineShopWebApp.Models.Helpers
 {
     public static class ModelConverter
     {
-        public static ProductViewModel? ConvertToProductViewModel(Product product)
+        public static ProductViewModel? ToProductViewModel(this Product product)
         {
             if (product == null)
                 return null;
@@ -22,7 +22,7 @@ namespace OnlineShopWebApp.Models.Helpers
                             product.ImagePath);
         }
 
-        public static Product? ConvertToProduct(ProductViewModel productViewModel)
+        public static Product? ToProduct(this ProductViewModel productViewModel)
         {
             if (productViewModel == null)
                 return null;
@@ -37,18 +37,18 @@ namespace OnlineShopWebApp.Models.Helpers
             };
         }
 
-        public static CartItemViewModel? ConvertToCartItemViewModel(CartItem cartItem)
+        public static CartItemViewModel? ToCartItemViewModel(this CartItem cartItem)
         {
             if (cartItem == null)
                 return null;
 
             return new CartItemViewModel(
                 cartItem.Id,
-                ConvertToProductViewModel(cartItem.Product),
+                ToProductViewModel(cartItem.Product),
                 cartItem.Amount);
         }
 
-        public static CartViewModel? ConvertToCartViewModel(Cart cart)
+        public static CartViewModel? ToCartViewModel(this Cart cart)
         {
             if (cart == null)
                 return null;
@@ -56,10 +56,10 @@ namespace OnlineShopWebApp.Models.Helpers
             return new CartViewModel(
                 cart.Id,
                 cart.UserId,
-                cart.Items.Select(ConvertToCartItemViewModel).ToList());
+                cart.Items.Select(ToCartItemViewModel).ToList());
         }
 
-        public static AddressViewModel ConvertToAddressViewModel(Address address)
+        public static AddressViewModel ToAddressViewModel(this Address address)
         {
             if (address == null)
                 return null;
@@ -75,7 +75,7 @@ namespace OnlineShopWebApp.Models.Helpers
             };
         }
 
-        public static Address ConvertToAddress(AddressViewModel address)
+        public static Address ToAddress(this AddressViewModel address)
         {
             if (address == null)
                 return null;
@@ -92,7 +92,7 @@ namespace OnlineShopWebApp.Models.Helpers
         }
 
 
-        public static OrderViewModel? ConvertToOrderViewModel(Order order)
+        public static OrderViewModel? ToOrderViewModel(this Order order)
         {
             if (order == null)
                 return null;
@@ -100,16 +100,16 @@ namespace OnlineShopWebApp.Models.Helpers
             return new OrderViewModel()
             {
                 Id = order.Id,
-                Address = ConvertToAddressViewModel(order.Address),
-                Cart = ConvertToCartViewModel(order.Cart),
+                Address = ToAddressViewModel(order.Address),
+                Cart = new CartViewModel() { Items = order.CartItems.Select(ToCartItemViewModel).ToList(), UserId = order.Id },
                 CommentsToCourier = order.CommentsToCourier,
                 StateOfOrder = order.StateOfOrder,
                 TimeOfOrder = order.TimeOfOrder,
-                User = ConvertToUserViewModel(order.User)
+                User = ToUserViewModel(order.User)
             };
         }
 
-        public static UserViewModel? ConvertToUserViewModel(User user)
+        public static UserViewModel? ToUserViewModel(this User user)
         {
             if (user == null)
                 return null;
@@ -117,15 +117,15 @@ namespace OnlineShopWebApp.Models.Helpers
             return new UserViewModel()
             {
                 Id = user.Id,
-                Addresses = user.Addresses?.Select(ConvertToAddressViewModel).ToList(),
-                Favorites = user.Favorites?.Select(ConvertToProductViewModel).ToList(),
+                Addresses = user.Addresses?.Select(ToAddressViewModel).ToList(),
+                Favorites = user.Favorites?.Select(ToProductViewModel).ToList(),
                 Login = user.Login,
                 Password = user.Password,
-                Role = ConvertToRoleViewModel(user.Role)
+                Role = ToRoleViewModel(user.Role)
             };
 
         }
-        public static RoleViewModel ConvertToRoleViewModel(Role role)
+        public static RoleViewModel ToRoleViewModel(this Role role)
         {
             if (role == null)
                 return null;

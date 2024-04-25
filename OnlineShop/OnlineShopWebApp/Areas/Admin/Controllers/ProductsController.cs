@@ -18,7 +18,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var products = productsRepository.GetAll();
-            return View(products.Select(ModelConverter.ConvertToProductViewModel).ToList());
+            return View(products.Select(product => product.ToProductViewModel()).ToList());
         }
 
         public IActionResult RemoveById(Guid productId)
@@ -34,7 +34,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (product == null)
                 return RedirectToAction("Index");
 
-            var productEditModel = ModelConverter.ConvertToProductViewModel(product);
+            var productEditModel = product.ToProductViewModel();
             return View(productEditModel);
         }
 
@@ -50,7 +50,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(product);
 
-            productsRepository.Edit(ModelConverter.ConvertToProduct(product));
+            productsRepository.Edit(product.ToProduct());
             return RedirectToAction("Index");
         }
 
@@ -69,7 +69,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(product);
 
-            productsRepository.Add(ModelConverter.ConvertToProduct(product));
+            productsRepository.Add(product.ToProduct());
             return RedirectToAction("Index");
         }
     }

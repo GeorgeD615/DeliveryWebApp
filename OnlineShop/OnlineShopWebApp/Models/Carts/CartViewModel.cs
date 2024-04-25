@@ -16,5 +16,7 @@ namespace OnlineShopWebApp.Models.Carts
             UserId = userId;
             Items = items;
         }
+
+        public CartViewModel() { }
     }
 }

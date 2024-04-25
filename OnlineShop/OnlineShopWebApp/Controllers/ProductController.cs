@@ -21,7 +21,7 @@ namespace OnlineShopWebApp.Controllers
             if (product == null)
                 return View("Error");
 
-            return View(ModelConverter.ConvertToProductViewModel(product));
+            return View(product.ToProductViewModel());
         }
 
         public IActionResult Page(int numberOfProductsPerPage, int pageNumber)
@@ -56,7 +56,7 @@ namespace OnlineShopWebApp.Controllers
             }
                 
             var products = productsRepository.GetPageOfProducts(numberOfProductsPerPage, pageNumber, amountOfPages);
-            productsPage.Products = products.Select(ModelConverter.ConvertToProductViewModel).ToList();  
+            productsPage.Products = products.Select(product => product.ToProductViewModel()).ToList();  
 
             return View(productsPage);
         }

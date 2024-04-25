@@ -24,28 +24,28 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(Guid userId)
         {
             var user = usersRepository.TryGetById(userId);
-            var cart = cartsRepository.TryGetNotYetOrderedByUserId(userId);
+            var cart = cartsRepository.TryGetByUserId(userId);
 
             if (user == null || cart == null)
                 return RedirectToAction("Index", "Carts");
 
             return View(new OrderFormViewModel(
-                user.Addresses.Select(ModelConverter.ConvertToAddressViewModel).ToList(),
-                ModelConverter.ConvertToAddressViewModel(user.Addresses.FirstOrDefault(a => a.IsLast)),
-                ModelConverter.ConvertToCartViewModel(cart))
+                user.Addresses.Select(address => address.ToAddressViewModel()).ToList(),
+                user.Addresses.FirstOrDefault(a => a.IsLast)?.ToAddressViewModel(),
+                cart.ToCartViewModel())
             );
         }
 
         [HttpPost]
         public IActionResult CreateOrder(Guid userId, Guid addressId, string commentsToCourier)
         {
-            var cart = cartsRepository.TryGetNotYetOrderedByUserId(userId);
+            var cart = cartsRepository.TryGetByUserId(userId);
             var address = usersRepository.TryGetAddress(userId, addressId);
             usersRepository.SetLastAddress(userId, addressId);
             var user = usersRepository.TryGetById(userId);
             var order = new Order()
             {
-                Cart = cart,
+                CartItems = cart.Items,
                 Address = address,
                 CommentsToCourier = commentsToCourier?.Trim(),
                 User = user,
@@ -54,7 +54,7 @@ namespace OnlineShopWebApp.Controllers
             };
             ordersRepository.Add(order);
             cartsRepository.ClearCart(userId);
-            return View("OrderCreated", ModelConverter.ConvertToOrderViewModel(order));
+            return View("OrderCreated", order.ToOrderViewModel());
         }
     }
 }
