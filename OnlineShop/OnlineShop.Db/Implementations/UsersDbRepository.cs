@@ -21,7 +21,7 @@ namespace OnlineShopWebApp.Models.Users
                 .Include(user => user.Role)
                 .FirstOrDefault(user => user.Id == userId);
         }
-        public List<User> GetAll() => databaseContext.Users.Include(user => user.Role).ToList();
+        public List<User> GetAll() => databaseContext.Users.AsNoTracking().Include(user => user.Role).ToList();
         public List<Product>? TryGetFavorites(Guid userId) => TryGetById(userId)?.Favorites;
         public void AddFavorite(Guid userId, Product product) {    
             var user = TryGetById(userId);

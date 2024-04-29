@@ -53,7 +53,7 @@ namespace OnlineShop.Db.Implementations
             int newAmount = cartItem.Amount + difference;
 
             if (newAmount == 0)
-                cart.Items.Remove(cartItem);
+                databaseContext.CartItems.Remove(cartItem);
             else
                 cartItem.Amount = newAmount;
 

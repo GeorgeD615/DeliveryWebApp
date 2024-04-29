@@ -32,7 +32,7 @@ namespace OnlineShopWebApp.Models.Orders
 
         public List<Order> GetAll() 
         {
-            return databaseContext.Orders
+            return databaseContext.Orders.AsNoTracking()
                 .Include(order => order.CartItems)
                 .ThenInclude(item => item.Product)
                 .Include(order => order.User)

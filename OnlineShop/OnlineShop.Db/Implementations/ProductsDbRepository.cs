@@ -13,7 +13,7 @@ namespace OnlineShop.Db.Implementations
             this.databaseContext = databaseContext;
         }
 
-        public List<Product> GetAll() => databaseContext.Products.ToList();
+        public List<Product> GetAll() => databaseContext.Products.AsNoTracking().ToList();
         public int GetCount() => databaseContext.Products.Count();
         public Product? TryGetById(Guid productId)
         {

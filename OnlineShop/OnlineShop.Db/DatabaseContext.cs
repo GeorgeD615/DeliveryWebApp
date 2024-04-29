@@ -11,6 +11,8 @@ namespace OnlineShop.Db
         public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<CartItem> CartItems { get; set; } 
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) 
             : base(options)
         {

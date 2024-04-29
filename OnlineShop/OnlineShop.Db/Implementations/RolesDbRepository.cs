@@ -1,4 +1,5 @@
-﻿using OnlineShop.Db.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
 
 namespace OnlineShop.Db.Implementations
@@ -10,7 +11,7 @@ namespace OnlineShop.Db.Implementations
         {
             this.databaseContext = databaseContext;
         }
-        public List<Role> GetAll() => databaseContext.Roles.ToList();
+        public List<Role> GetAll() => databaseContext.Roles.AsNoTracking().ToList();
 
         public Role? TryGetById(Guid id)
         {
