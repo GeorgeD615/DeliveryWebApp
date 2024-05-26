@@ -17,25 +17,29 @@ namespace OnlineShopWebApp.Models.Users
         {
             return databaseContext.Users
                 .Include(user => user.Addresses)
-                .Include(user => user.Favorites)
+                .Include(user => user.UserProductFavorites)
+                .ThenInclude(favorite => favorite.Product)
                 .Include(user => user.Role)
                 .FirstOrDefault(user => user.Id == userId);
         }
         public List<User> GetAll() => databaseContext.Users.AsNoTracking().Include(user => user.Role).ToList();
-        public List<Product>? TryGetFavorites(Guid userId) => TryGetById(userId)?.Favorites;
+        public List<Product>? TryGetFavorites(Guid userId) => 
+            TryGetById(userId)?.
+            UserProductFavorites.
+            Select(fav => fav.Product).ToList();
         public void AddFavorite(Guid userId, Product product) {    
             var user = TryGetById(userId);
 
-            if (user?.Favorites?.Any(favorite => favorite.Id == product.Id) ?? false)
+            if (user?.UserProductFavorites?.Any(favorite => favorite.ProductId == product.Id) ?? false)
                 return;
 
-            user?.Favorites.Add(product);
+            user?.UserProductFavorites.Add(new UserProductFavorite { Product = product, User = user});
             databaseContext.SaveChanges();
         }
 
         public void RemoveFavoriteById(Guid userId, Guid productId)
         {
-            TryGetById(userId)?.Favorites.RemoveAll(product => product.Id == productId);
+            TryGetById(userId)?.UserProductFavorites.RemoveAll(fav => fav.ProductId == productId);
             databaseContext.SaveChanges();
         }
 

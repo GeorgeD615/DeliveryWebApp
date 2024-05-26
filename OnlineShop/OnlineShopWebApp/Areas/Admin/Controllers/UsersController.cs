@@ -46,7 +46,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Edit(Guid userId)
         {
             var user = usersRepository.TryGetById(userId);
-            return View(new EditUserViewModel() { UserId = userId, Login = user.Login, RoleId = user.Role.Id});
+            return View(new EditUserViewModel() { UserId = userId, Login = user.Login, RoleId = user?.Role?.Id});
         }
 
         [HttpPost]

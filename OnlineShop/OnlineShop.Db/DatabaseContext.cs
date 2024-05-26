@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Models;
+using System.Data;
 
 namespace OnlineShop.Db
 {
@@ -10,7 +11,6 @@ namespace OnlineShop.Db
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
-
         public DbSet<CartItem> CartItems { get; set; } 
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) 
@@ -21,13 +21,116 @@ namespace OnlineShop.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cart>().HasKey(cart => cart.Id);
-            modelBuilder.Entity<CartItem>().HasKey(cartItem => cartItem.Id);
-            modelBuilder.Entity<Product>().HasKey(product => product.Id);
-            modelBuilder.Entity<User>().HasKey(user => user.Id);
-            modelBuilder.Entity<Role>().HasKey(role => role.Id);
+            //UserProductFavorite
+            modelBuilder.Entity<UserProductFavorite>()
+                .HasKey(upf => new { upf.UserId, upf.ProductId });
+            modelBuilder.Entity<UserProductFavorite>()
+                .HasOne(upf => upf.User)
+                .WithMany(user => user.UserProductFavorites)
+                .HasForeignKey(upf => upf.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<UserProductFavorite>()
+                .HasOne(upf => upf.Product)
+                .WithMany(product => product.UserProductFavorites)
+                .HasForeignKey(upf => upf.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //Address
             modelBuilder.Entity<Address>().HasKey(address => address.Id);
+            modelBuilder.Entity<Address>().Property(address => address.City).
+                IsRequired().
+                HasMaxLength(30);
+            modelBuilder.Entity<Address>().Property(address => address.Street).
+                IsRequired().
+                HasMaxLength(30);
+            modelBuilder.Entity<Address>().Property(address => address.House).
+                IsRequired().
+                HasMaxLength(7);
+            modelBuilder.Entity<Address>().Property(address => address.Flat).
+                IsRequired();
+            modelBuilder.Entity<Address>().Property(address => address.IsLast).
+                IsRequired().
+                HasDefaultValue(false);
+            modelBuilder.Entity<Address>().
+                HasOne(address => address.User).
+                WithMany(user => user.Addresses).
+                HasForeignKey(address => address.UserId);
+
+            //Cart
+            modelBuilder.Entity<Cart>().HasKey(cart => cart.Id);
+
+            //CartItem
+            modelBuilder.Entity<CartItem>().HasKey(cartItem => cartItem.Id);
+            modelBuilder.Entity<CartItem>().
+                HasOne(item => item.Product).
+                WithMany(product => product.CartItems).
+                HasForeignKey(item => item.ProductId);
+            modelBuilder.Entity<CartItem>().
+                HasOne(item => item.Cart).
+                WithMany(cart => cart.Items).
+                HasForeignKey(item => item.CartId);
+            modelBuilder.Entity<CartItem>().
+                HasOne(item => item.Order).
+                WithMany(Order => Order.CartItems).
+                HasForeignKey(item => item.OrderId);
+
+            //Product
+            modelBuilder.Entity<Product>().HasKey(product => product.Id);
+            modelBuilder.Entity<Product>().
+                Property(product => product.Name).
+                HasMaxLength(30).
+                IsRequired();
+            modelBuilder.Entity<Product>().
+                Property(product => product.Cost).
+                HasColumnType("decimal(18,2)").
+                IsRequired();
+            modelBuilder.Entity<Product>().
+                Property(product => product.Description).
+                HasMaxLength(1000).
+                IsRequired();
+
+            //User
+            modelBuilder.Entity<User>().HasKey(user => user.Id);
+            modelBuilder.Entity<User>().
+                Property(user => user.Login).
+                HasMaxLength(25).
+                IsRequired();
+            modelBuilder.Entity<User>().
+                Property(user => user.Password).
+                HasMaxLength(30).
+                IsRequired();
+            modelBuilder.Entity<User>().
+                HasOne(user => user.Role).
+                WithMany(role => role.Users).
+                HasForeignKey(user => user.RoleId).
+                OnDelete(DeleteBehavior.SetNull);
+
+            //Role
+            modelBuilder.Entity<Role>().HasKey(role => role.Id);
+            modelBuilder.Entity<Role>().
+                Property(role => role.Name).
+                HasMaxLength(15).
+                IsRequired();
+
+            //Order
             modelBuilder.Entity<Order>().HasKey(order => order.Id);
+            modelBuilder.Entity<Order>().
+                HasOne(order => order.Address).
+                WithMany(address => address.Orders).
+                HasForeignKey(order => order.AddressId);
+            modelBuilder.Entity<Order>().
+                Property(order => order.CommentsToCourier).
+                HasMaxLength(1000).
+                IsRequired(false);
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(o => o.Orders)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Order>().
+                HasMany(order => order.CartItems).
+                WithOne(item => item.Order).
+                HasForeignKey(item => item.OrderId).
+                OnDelete(DeleteBehavior.Cascade);
 
             var adminRole = new Role() { Id = new Guid("02e79f7a-7d83-4176-9ed5-7d17d61118f4"), Name = "admin" };
             var userRole = new Role() { Id = new Guid("492acbaa-5b43-4d86-b7fa-915be0499978"), Name = "user" };
@@ -39,6 +142,8 @@ namespace OnlineShop.Db
                 Password = "123456", 
                 RoleId = new Guid("02e79f7a-7d83-4176-9ed5-7d17d61118f4")
             };
+
+            modelBuilder.Entity<User>().HasData(defaultAdmin);
 
             modelBuilder.Entity<Product>().HasData([
                 new Product(){
@@ -127,18 +232,6 @@ namespace OnlineShop.Db
                 }
                 ]);
 
-
-            modelBuilder.Entity<User>().HasData(defaultAdmin);
-
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.User)
-                .WithMany(o => o.Orders)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Cart>()
-                .HasMany(c => c.Items)
-                .WithOne(o => o.Cart)
-                .OnDelete(DeleteBehavior.SetNull);
         }
 
     }

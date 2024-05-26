@@ -13,7 +13,7 @@ namespace OnlineShop.Db.Implementations
         }
         public List<Role> GetAll() => databaseContext.Roles.AsNoTracking().ToList();
 
-        public Role? TryGetById(Guid id)
+        public Role? TryGetById(Guid? id)
         {
             return databaseContext.Roles.FirstOrDefault(roles => roles.Id == id);
         }

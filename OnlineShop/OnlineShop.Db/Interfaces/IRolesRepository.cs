@@ -8,7 +8,7 @@ namespace OnlineShop.Db.Interfaces
         void AddRole(Role role);
         bool IsExisting(string name);
         void RemoveById(Guid id);
-        Role? TryGetById(Guid id);
+        Role? TryGetById(Guid? id);
         Role? TryGetByName(string name);
     }
 }

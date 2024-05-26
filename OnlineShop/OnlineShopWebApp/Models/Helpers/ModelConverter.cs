@@ -118,7 +118,7 @@ namespace OnlineShopWebApp.Models.Helpers
             {
                 Id = user.Id,
                 Addresses = user.Addresses?.Select(ToAddressViewModel).ToList(),
-                Favorites = user.Favorites?.Select(ToProductViewModel).ToList(),
+                Favorites = user.UserProductFavorites.Select(fav => ToProductViewModel(fav.Product)).ToList(),
                 Login = user.Login,
                 Password = user.Password,
                 Role = ToRoleViewModel(user.Role)

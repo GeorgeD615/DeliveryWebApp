@@ -1,4 +1,6 @@
-﻿namespace OnlineShop.Db.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace OnlineShop.Db.Models
 {
     public class Cart
     {
