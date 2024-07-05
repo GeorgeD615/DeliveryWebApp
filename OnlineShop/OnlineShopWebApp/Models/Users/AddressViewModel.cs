@@ -5,7 +5,7 @@ namespace OnlineShopWebApp.Models.Users
     public class AddressViewModel
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required(ErrorMessage = "Укажите название города")]
         [RegularExpression(@"[а-яА-я- ]{2,30}",

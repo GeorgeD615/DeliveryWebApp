@@ -1,7 +1,7 @@
-﻿@using OnlineShopWebApp.Models.ContainersForView
+﻿﻿@using OnlineShopWebApp.Models.ContainersForView
 @model OrderFormViewModel
 
-@if(Model != null)
+@if (Model != null)
 {
     <div class="row justify-content-center">
         <div class="col-5">
@@ -15,9 +15,9 @@
                             <label for="inputAddress" class="form-label">Адрес доставки</label>
                             <select name="addressId" class="form-select mb-3" aria-label="Default select example">
                                 <option value="@Model.LastAddress.Id" selected>@Model.LastAddress.ToString()</option>
-                                @foreach(var address in Model.Addresses)
+                                @foreach (var address in Model.Addresses)
                                 {
-                                    if(Model.LastAddress.Id != address.Id)
+                                    if (Model.LastAddress.Id != address.Id)
                                     {
                                         <option value="@address.Id">@address.ToString()</option>
                                     }
@@ -32,10 +32,9 @@
                         }
                         <div class="row">
                             <div class="col-8">
-                                
                             </div>
                             <div class="col-4">
-                                <a asp-controller="profile" asp-action="index" class="btn btn-outline-success"> Добавить адрес </a>
+                                <a asp-controller="profile" asp-action="index" asp-route-userId="@Model.UserId" class="btn btn-outline-success"> Добавить адрес </a>
                             </div>
                         </div>
 
@@ -49,7 +48,7 @@
                         {
                             <div class="row justify-content-center">
                                 <div class="col-4">
-                                    <button asp-controller="orders" asp-action="createOrder" asp-route-userId="@CommonData.CurrentUserId" type="submit" class="btn btn-outline-cartChangeAmount">
+                                    <button asp-controller="orders" asp-action="createOrder" asp-route-userId="@Model.UserId" type="submit" class="btn btn-outline-cartChangeAmount">
                                         Оформить заказ
                                     </button>
                                 </div>

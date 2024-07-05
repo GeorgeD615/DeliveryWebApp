@@ -5,55 +5,69 @@ using OnlineShop.Db.Enums;
 using OnlineShopWebApp.Models.ContainersForView;
 using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Orders;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly IOrdersRepository ordersRepository;
         private readonly ICartsRepository cartsRepository;
-        private readonly IUsersRepository usersRepository;
+        private readonly IAddressRepository addressRepository;
+        private readonly UserManager<User> usersManager;
 
-        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, IUsersRepository usersRepository)
+        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, UserManager<User> usersManager, IAddressRepository addressRepository)
         {
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;
-            this.usersRepository = usersRepository;
+            this.usersManager = usersManager;
+            this.addressRepository = addressRepository;
         }
 
-        public IActionResult Index(Guid userId)
+        public IActionResult Index(string userId)
         {
-            var user = usersRepository.TryGetById(userId);
-            var cart = cartsRepository.TryGetByUserId(userId);
+            var user = usersManager.FindByIdAsync(userId).Result;
 
-            if (user == null || cart == null)
+            if (user == null)
                 return RedirectToAction("Index", "Carts");
 
+            var cart = cartsRepository.TryGetByUserId(user.Id);
+
+            if (cart == null)
+                return RedirectToAction("Index", "Carts");
+
+            var addresses = addressRepository.GetByUserId(user.Id);
+
             return View(new OrderFormViewModel(
-                user.Addresses.Select(address => address.ToAddressViewModel()).ToList(),
-                user.Addresses.FirstOrDefault(a => a.IsLast)?.ToAddressViewModel(),
-                cart.ToCartViewModel())
+                addresses.Select(address => address.ToAddressViewModel()).ToList(),
+                addresses.FirstOrDefault(a => a.IsLast)?.ToAddressViewModel(),
+                cart.ToCartViewModel(),
+                userId)
             );
         }
 
         [HttpPost]
-        public IActionResult CreateOrder(Guid userId, Guid addressId, string commentsToCourier)
+        public IActionResult CreateOrder(string userId, Guid addressId, string commentsToCourier)
         {
+            var user = usersManager.FindByIdAsync(userId.ToString()).Result;
             var cart = cartsRepository.TryGetByUserId(userId);
-            var address = usersRepository.TryGetAddress(userId, addressId);
-            usersRepository.SetLastAddress(userId, addressId);
-            var user = usersRepository.TryGetById(userId);
+            addressRepository.ResetLastAddress(userId, addressId);
+
+            var address = addressRepository.TryGetById(addressId);
+
             var order = new Order()
             {
                 CartItems = cart.Items,
                 Address = address,
                 CommentsToCourier = commentsToCourier?.Trim(),
-                User = user,
+                UserId = user.Id,
                 StateOfOrder = StateOfOrder.InProcessing,
                 TimeOfOrder = DateTime.Now
             };
             ordersRepository.Add(order);
-            cartsRepository.ClearCart(userId);
+            cartsRepository.ClearCartByUserId(userId);
             return View("OrderCreated", order.ToOrderViewModel());
         }
     }

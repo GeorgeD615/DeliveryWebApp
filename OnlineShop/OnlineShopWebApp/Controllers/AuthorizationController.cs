@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db;
 using OnlineShop.Db.Models;
-using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.ViewModels;
 
 namespace OnlineShopWebApp.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private readonly IUsersRepository usersRepository;
-        private readonly IRolesRepository rolesRepository;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public AuthorizationController(IUsersRepository usersRepository, IRolesRepository rolesRepository)
+        public AuthorizationController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            this.usersRepository = usersRepository;
-            this.rolesRepository = rolesRepository;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
-        public IActionResult LogIn() => View();
+        public IActionResult LogIn(string returnUrl) =>  View(new LogInViewModel { ReturnUrl = returnUrl });
 
         [HttpPost]
         public IActionResult LogIn(LogInViewModel logInViewModel)
@@ -24,30 +24,33 @@ namespace OnlineShopWebApp.Controllers
             logInViewModel.Login = logInViewModel.Login.Trim();
             logInViewModel.Password = logInViewModel.Password.Trim();
 
-            if (logInViewModel.Password == logInViewModel.Login)
-                ModelState.AddModelError("", "Логин и пароль не должны совпадать");
-
-            var user = usersRepository.TryGetByLogin(logInViewModel.Login);
-
-            if (user == null)
-            {
-                ModelState.AddModelError("", "Пользователя с таким логином не существует");
-                return View(logInViewModel);
-            }
-            
-            if (user.Password != logInViewModel.Password)
-                ModelState.AddModelError("", "Неверный пароль");
-
             if (!ModelState.IsValid)
                 return View(logInViewModel);
 
-            CommonData.CurrentUserId = user.Id;
-            CommonData.CurrentUserRoleId = user.Role.Id;
+            if (logInViewModel.Password == logInViewModel.Login)
+            {
+                ModelState.AddModelError("", "Логин и пароль не должны совпадать");
+                return View(logInViewModel);
+            }
 
-            return RedirectToAction("Page", "Product", new { numberOfProductsPerPage = 10, pageNumber = 1 });
+            var result = signInManager.PasswordSignInAsync(logInViewModel.Login,
+                logInViewModel.Password,
+                logInViewModel.RememberMe,
+                false).Result;
+
+            if (result.Succeeded)
+            {
+                Constants.UserId = userManager.FindByNameAsync(logInViewModel.Login).Result.Id;
+                return logInViewModel.ReturnUrl != null ? 
+                    Redirect(logInViewModel.ReturnUrl) :
+                    RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
+            }
+
+            ModelState.AddModelError("", "Неверный логин или пароль");
+            return View(logInViewModel);
         }
 
-        public IActionResult Register() => View();
+        public IActionResult Register(string returnUrl) => View(new RegistrationViewModel { ReturnUrl = returnUrl});
 
         [HttpPost]
         public IActionResult Register(RegistrationViewModel registrationViewModel)
@@ -59,36 +62,37 @@ namespace OnlineShopWebApp.Controllers
             if (registrationViewModel.Password == registrationViewModel.Login)
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
 
-            var existingUser = usersRepository.TryGetByLogin(registrationViewModel.Login);
+            var existingUser = userManager.FindByNameAsync(registrationViewModel.Login).Result;
 
             if (existingUser != null)
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(registrationViewModel);
 
-            var userRole = rolesRepository.TryGetByName("user");
+            var user = new User { UserName = registrationViewModel.Login };
 
-            if (userRole == null)
+            var result = userManager.CreateAsync(user, registrationViewModel.Password).Result;
+
+            if (result.Succeeded)
             {
-                userRole = new Role() { Name = "user" };
-                CommonData.UserRoleId = userRole.Id;
-                rolesRepository.AddRole(userRole);
+                userManager.AddToRoleAsync(user, Constants.userRoleName).Wait();
+                signInManager.SignInAsync(user, false).Wait();
+                Constants.UserId = userManager.FindByNameAsync(registrationViewModel.Login).Result.Id;
+                return registrationViewModel.ReturnUrl != null ?
+                    Redirect(registrationViewModel.ReturnUrl) :
+                    RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
             }
 
-            var user = new User
-            {
-                Login = registrationViewModel.Login,
-                Password = registrationViewModel.Password,
-                Role = userRole
-            };
+            ModelState.AddModelError("", "Не удалось создать аккаунт");
+            return View(registrationViewModel);
+        }
 
-            usersRepository.Add(user);
-
-            CommonData.CurrentUserId = user.Id;
-            CommonData.CurrentUserRoleId = CommonData.UserRoleId;
-
-            return RedirectToAction("Page", "Product", new { numberOfProductsPerPage = 10, pageNumber = 1 });
+        public IActionResult LogOut()
+        {
+            signInManager.SignOutAsync().Wait();
+            Constants.UserId = null;
+            return RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@using OnlineShopWebApp.Models.Users
+﻿﻿@using OnlineShopWebApp.Models.Users
 @model AddressViewModel
 <div class="row justify-content-center">
     <div class="col-5">
@@ -34,7 +34,7 @@
                     <div class="validation-error" asp-validation-summary="ModelOnly"></div>
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <button class="btn btn-outline-success" type="submit" asp-controller="profile" asp-action="addAddress" asp-route-userId="@CommonData.CurrentUserId">
+                            <button class="btn btn-outline-success" type="submit" asp-controller="profile" asp-action="addAddress" asp-route-userId="@Model.UserId">
                                 Добавить адрес
                             </button>
                         </div>

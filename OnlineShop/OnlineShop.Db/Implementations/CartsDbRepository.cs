@@ -11,7 +11,7 @@ namespace OnlineShop.Db.Implementations
         {
             this.databaseContext = databaseContext;
         }
-        public Cart? TryGetByUserId(Guid userId)
+        public Cart? TryGetByUserId(string userId)
         {
             return databaseContext.Carts
                 .Include(cart => cart.Items)
@@ -19,26 +19,36 @@ namespace OnlineShop.Db.Implementations
                 .FirstOrDefault(cart => cart.UserId == userId);
         }
 
-        public void AddProduct(Product product, Guid userId)
+        public void AddProduct(Product product, string userId)
         {
             var cart = TryGetByUserId(userId);
 
             if (cart == null)
             {
-                cart = new Cart() { UserId = userId };
+                cart = new Cart() { UserId = userId.ToString() };
                 databaseContext.Carts.Add(cart);
             }
 
             var itemInCart = cart.Items.FirstOrDefault(item => item.Product.Id == product.Id);
 
             if (itemInCart == null)
-                cart.Items.Add(new CartItem() { Product = product, Amount = 1, Cart = cart });
+            {
+                var newCartItem = new CartItem()
+                {
+                    ProductId = product.Id,
+                    Amount = 1,
+                    CartId = cart.Id
+                };
+                cart.Items.Add(newCartItem);
+                databaseContext.CartItems.Add(newCartItem);
+
+            }
             else
                 itemInCart.Amount += 1;
 
             databaseContext.SaveChanges();
         }
-        public void ChangeProductAmount(Guid userId, Guid cartItemId, int difference)
+        public void ChangeProductAmount(string userId, Guid cartItemId, int difference)
         {
             var cart = TryGetByUserId(userId);
 
@@ -62,7 +72,7 @@ namespace OnlineShop.Db.Implementations
 
             databaseContext.SaveChanges();
         }
-        public void ClearCart(Guid userId)
+        public void ClearCartByUserId(string userId)
         {
             var cart = TryGetByUserId(userId);
 

@@ -1,23 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db.Interfaces;
-using OnlineShopWebApp.Models;
+using OnlineShop.Db.Models;
 
 namespace OnlineShopWebApp.Views.Shared.Components.Cart
 {
     public class CartViewComponent : ViewComponent
     {
         private readonly ICartsRepository cartsRepository;
+        private readonly UserManager<User> usersManager;
 
-        public CartViewComponent(ICartsRepository cartsRepository)
+        public CartViewComponent(ICartsRepository cartsRepository, UserManager<User> usersManager)
         {
             this.cartsRepository = cartsRepository;
+            this.usersManager = usersManager;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(bool isAuthenticated, string userName)
         {
-            var cart = cartsRepository.TryGetByUserId(CommonData.CurrentUserId);
-            var amount = cart?.Items.Sum(item => item.Amount) ?? 0;
-            return View("Cart", amount);
+            if (isAuthenticated)
+            {
+                var user = usersManager.FindByNameAsync(userName).Result;
+                var cart = cartsRepository.TryGetByUserId(user.Id);
+                var amount = cart?.Items.Sum(item => item.Amount) ?? 0;
+                return View("Cart", amount);
+            }
+            return View("Cart", 0);
         }
     }
 }

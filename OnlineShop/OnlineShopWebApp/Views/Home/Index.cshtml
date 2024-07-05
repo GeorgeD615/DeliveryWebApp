@@ -1,10 +1,10 @@
-﻿@using OnlineShopWebApp.Models.Products
-@model List<ProductViewModel> 
+﻿﻿@using OnlineShopWebApp.Models.Products
+@model List<ProductViewModel>
 
 @if (Model?.Any() ?? false)
 {
     <div class="row justify-content-start">
-        @foreach(var product in Model)
+        @foreach (var product in Model)
         {
             <div class="col-2 card shadow m-3">
                 <a asp-controller="product" asp-action="index" asp-route-productId="@product.Id">
@@ -16,10 +16,10 @@
                             <p><b>@product.Name</b><br>@product.Cost руб.</p>
                         </div>
                         <div class="col-1 justify-content-lg-end">
-                            <a asp-controller="carts" asp-action="addProduct" asp-route-userId="@CommonData.CurrentUserId" asp-route-productId="@product.Id" class="btn btn-outline-cartChangeAmount" role="button">
+                            <a asp-controller="carts" asp-action="addProduct" asp-route-userName="@User.Identity.Name" asp-route-productId="@product.Id" class="btn btn-outline-cartChangeAmount" role="button">
                                 @await Html.PartialAsync("AddToCartIcon")
                             </a>
-                            <a asp-controller="favorites" asp-action="addFavorite" asp-route-userId="@CommonData.CurrentUserId" asp-route-productId="@product.Id" class="btn btn-outline-addFavorite mt-1" role="button">
+                            <a asp-controller="favorites" asp-action="addFavorite" asp-route-userName="@User.Identity.Name" asp-route-productId="@product.Id" class="btn btn-outline-addFavorite mt-1" role="button">
                                 @await Html.PartialAsync("AddToFavoriteIcon")
                             </a>
                         </div>
@@ -33,4 +33,3 @@ else
 {
     <h2>Товары по вашему запросу не найдены</h2>
 }
-

@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db.Models;
-using System.Data;
 
 namespace OnlineShop.Db
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<User>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Cart> Carts { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<CartItem> CartItems { get; set; } 
+        public DbSet<UserProductFavorite> UserProductFavorites { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) 
             : base(options)
@@ -21,6 +22,7 @@ namespace OnlineShop.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             //UserProductFavorite
             modelBuilder.Entity<UserProductFavorite>()
                 .HasKey(upf => new { upf.UserId, upf.ProductId });
@@ -92,22 +94,13 @@ namespace OnlineShop.Db
             //User
             modelBuilder.Entity<User>().HasKey(user => user.Id);
             modelBuilder.Entity<User>().
-                Property(user => user.Login).
+                Property(user => user.UserName).
                 HasMaxLength(25).
                 IsRequired();
-            modelBuilder.Entity<User>().
-                Property(user => user.Password).
-                HasMaxLength(30).
-                IsRequired();
-            modelBuilder.Entity<User>().
-                HasOne(user => user.Role).
-                WithMany(role => role.Users).
-                HasForeignKey(user => user.RoleId).
-                OnDelete(DeleteBehavior.SetNull);
 
             //Role
-            modelBuilder.Entity<Role>().HasKey(role => role.Id);
-            modelBuilder.Entity<Role>().
+            modelBuilder.Entity<IdentityRole>().HasKey(role => role.Id);
+            modelBuilder.Entity<IdentityRole>().
                 Property(role => role.Name).
                 HasMaxLength(15).
                 IsRequired();
@@ -131,19 +124,6 @@ namespace OnlineShop.Db
                 WithOne(item => item.Order).
                 HasForeignKey(item => item.OrderId).
                 OnDelete(DeleteBehavior.Cascade);
-
-            var adminRole = new Role() { Id = new Guid("02e79f7a-7d83-4176-9ed5-7d17d61118f4"), Name = "admin" };
-            var userRole = new Role() { Id = new Guid("492acbaa-5b43-4d86-b7fa-915be0499978"), Name = "user" };
-
-            modelBuilder.Entity<Role>().HasData([adminRole, userRole]);
-
-            var defaultAdmin = new User() { Id = new Guid("186ac130-d279-4385-8d22-1954eaec2680"), 
-                Login = "george", 
-                Password = "123456", 
-                RoleId = new Guid("02e79f7a-7d83-4176-9ed5-7d17d61118f4")
-            };
-
-            modelBuilder.Entity<User>().HasData(defaultAdmin);
 
             modelBuilder.Entity<Product>().HasData([
                 new Product(){
@@ -231,7 +211,6 @@ namespace OnlineShop.Db
                     ImagePath = "/images/products/eachpochmak.jpg"
                 }
                 ]);
-
         }
 
     }

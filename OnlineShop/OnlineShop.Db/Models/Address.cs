@@ -10,7 +10,7 @@ namespace OnlineShop.Db.Models
         public string House { get; set; }
         public int Flat { get; set; }
         public bool IsLast { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
         public List<Order> Orders { get; set; } = new();
     }

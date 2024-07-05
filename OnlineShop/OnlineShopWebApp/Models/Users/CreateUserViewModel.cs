@@ -5,6 +5,6 @@ namespace OnlineShopWebApp.Models.Users
     public class CreateUserViewModel
     {
         public RegistrationViewModel RegistrationModel { get; set; }
-        public Guid RoleId { get; set; }
+        public string RoleId { get; set; }
     }
 }

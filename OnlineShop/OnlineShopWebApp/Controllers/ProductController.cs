@@ -29,8 +29,8 @@ namespace OnlineShopWebApp.Controllers
             if (numberOfProductsPerPage <= 0 || pageNumber <= 0)
                 return View(null);
 
-            int amountOfPages = productsRepository.GetCount() / numberOfProductsPerPage +
-                ((productsRepository.GetCount() % numberOfProductsPerPage) == 0 ? 0 : 1);
+            int amountOfPages = productsRepository.GetAmount() / numberOfProductsPerPage +
+                ((productsRepository.GetAmount() % numberOfProductsPerPage) == 0 ? 0 : 1);
 
             if (pageNumber > amountOfPages)
                 return View(null);

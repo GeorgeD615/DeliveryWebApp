@@ -4,7 +4,7 @@ namespace OnlineShopWebApp.Models.Users
 {
     public class ChangePasswordViewModel
     {
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required(ErrorMessage = "Укажите пароль")]
         [RegularExpression(@"[a-zA-Z0-9/?#@<>.,!]{5,30}",

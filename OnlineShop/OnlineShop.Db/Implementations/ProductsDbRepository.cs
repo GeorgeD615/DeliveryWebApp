@@ -14,7 +14,7 @@ namespace OnlineShop.Db.Implementations
         }
 
         public List<Product> GetAll() => databaseContext.Products.AsNoTracking().ToList();
-        public int GetCount() => databaseContext.Products.Count();
+        public int GetAmount() => databaseContext.Products.Count();
         public Product? TryGetById(Guid productId)
         {
             return databaseContext.Products.FirstOrDefault(p => p.Id == productId);

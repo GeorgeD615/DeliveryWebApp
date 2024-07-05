@@ -10,6 +10,7 @@
             <div class="card-body">
                 <h3 class="card-title">Вход</h3>
                 <form method="post" class="row g-4">
+                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl"/>
                     <div class="input-group">
                         <div class="input-group-text">
                             <i class="bi bi-person-fill">
@@ -37,7 +38,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <a asp-controller="authorization" asp-action="register" class="float-end link-color">Нет аккаунта?</a>
+                        <a asp-controller="authorization" asp-action="register" asp-route-returnUrl="@Model.ReturnUrl" class="float-end link-color">Нет аккаунта?</a>
                     </div>
                     <div class="row">
                         <div class="col-5">

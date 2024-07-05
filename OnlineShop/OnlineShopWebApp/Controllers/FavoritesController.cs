@@ -1,40 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Db;
 using OnlineShop.Db.Interfaces;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
 
 namespace OnlineShopWebApp.Controllers
 {
+    [Authorize]
     public class FavoritesController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly IUsersRepository usersRepository;
+        private readonly IFavoritesRepository favoritesRepository;
+        private readonly UserManager<User> usersManager;
 
-        public FavoritesController(IProductsRepository productsRepository, IUsersRepository userRepository)
+        public FavoritesController(IProductsRepository productsRepository, UserManager<User> usersManager, IFavoritesRepository favoritesRepository)
         {
             this.productsRepository = productsRepository;
-            this.usersRepository = userRepository;
+            this.usersManager = usersManager;
+            this.favoritesRepository = favoritesRepository;
         }
 
-        public IActionResult Index(Guid userId)
+        public IActionResult Index(string userName)
         {
-            var favorites = usersRepository.TryGetFavorites(userId);
+            var user = usersManager.FindByNameAsync(userName).Result;
+            var favorites = favoritesRepository.GetByUserId(user.Id);
             return View(favorites?.Select(favorite => favorite.ToProductViewModel()).ToList());
         }
 
-        public IActionResult AddFavorite(Guid userId, Guid productId) 
-        { 
+        public IActionResult AddFavorite(string userName, Guid productId)
+        {
             var favoriteProduct = productsRepository.TryGetById(productId);
 
-            if(favoriteProduct != null)
-                usersRepository.AddFavorite(userId, favoriteProduct);
+            var user = userName != null ? usersManager.FindByNameAsync(userName).Result :
+                usersManager.FindByIdAsync(Constants.UserId).Result;
 
-            return RedirectToAction("Index", new { userId });
+            if (favoriteProduct != null)
+                favoritesRepository.Add(user, favoriteProduct);
+
+            return RedirectToAction(nameof(Index), new { userName = user.UserName });
         }
 
-        public IActionResult RemoveFavorite(Guid userId, Guid productId)
+        public IActionResult RemoveFavorite(string userName, Guid productId)
         {
-            usersRepository.RemoveFavoriteById(userId, productId);
-            return RedirectToAction("Index", new { userId });
+            var user = usersManager.FindByNameAsync(userName).Result;
+            var product = favoritesRepository.GetByUserId(user.Id).FirstOrDefault(p => p.Id == productId);
+
+            if (user != null && product != null)
+                favoritesRepository.Remove(user, product);
+
+            return RedirectToAction(nameof(Index), new { user.UserName });
         }
     }
 }

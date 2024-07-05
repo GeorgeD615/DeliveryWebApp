@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
 using OnlineShopWebApp.Models.Products;
-using OnlineShopWebApp.Models.Roles;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models.Users
 {
     public class UserViewModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Укажите логин")]
         [RegularExpression(@"[a-zA-Z0-9]{5,25}",
@@ -20,6 +19,6 @@ namespace OnlineShopWebApp.Models.Users
         public string Password { get; set; }
         public List<ProductViewModel> Favorites { get; set; }
         public List<AddressViewModel> Addresses { get; set; }
-        public RoleViewModel Role { get; set; }
+        public string Role { get; set; }
     }
 }

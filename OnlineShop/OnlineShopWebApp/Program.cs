@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db;
 using OnlineShop.Db.Implementations;
 using OnlineShop.Db.Interfaces;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Orders;
-using OnlineShopWebApp.Models.Users;
 using Serilog;
 using System.Globalization;
 
@@ -21,15 +22,38 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 string connection = builder.Configuration.GetConnectionString("online_shop");
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseSqlServer(connection, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+    options.UseSqlServer(connection));
+
+// указываем тип пользователя и роли
+builder.Services.AddIdentity<User, IdentityRole>(opts => {
+    opts.Password.RequiredLength = 5;   // минимальная длина
+    opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
+    opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
+    opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
+    opts.Password.RequireDigit = false; // требуются ли цифры
+})
+.AddEntityFrameworkStores<DatabaseContext>();
+
+// настройка cookie
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromHours(8);
+    options.LoginPath = "/Authorization/Login";
+    options.LogoutPath = "/Authorization/Logout";
+    options.Cookie = new CookieBuilder
+    {
+        IsEssential = true
+    };
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICartsRepository, CartsDbRepository>();
 builder.Services.AddTransient<IProductsRepository, ProductsDbRepository>();
-builder.Services.AddTransient<IUsersRepository, UsersDbRepository>();
 builder.Services.AddTransient<IOrdersRepository, OrdersDbRepository>();
-builder.Services.AddTransient<IRolesRepository, RolesDbRepository>();
+builder.Services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
+builder.Services.AddTransient<IAddressRepository, AddressDbRepository>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -43,6 +67,16 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 var app = builder.Build();
+
+
+// инициализация администратора
+using (var serviceScope = app.Services.CreateScope())
+{
+    var services = serviceScope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    IdentityInitializer.Initialize(userManager, rolesManager);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -60,6 +94,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseRequestLocalization();

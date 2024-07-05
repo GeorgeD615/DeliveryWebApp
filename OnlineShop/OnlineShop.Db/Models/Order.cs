@@ -12,7 +12,7 @@ namespace OnlineShop.Db.Models
         public Address Address { get; set; }
 
         [ForeignKey("UserId")]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
         public string? CommentsToCourier { get; set; }
         public StateOfOrder StateOfOrder { get; set; }

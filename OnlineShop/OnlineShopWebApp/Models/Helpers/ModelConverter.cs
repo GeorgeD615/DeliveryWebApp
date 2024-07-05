@@ -1,9 +1,11 @@
-﻿using OnlineShop.Db.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Carts;
 using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
 using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
+using System.Runtime.CompilerServices;
 
 namespace OnlineShopWebApp.Models.Helpers
 {
@@ -83,7 +85,6 @@ namespace OnlineShopWebApp.Models.Helpers
             return new Address()
             {
                 Id = address.Id,
-                UserId = address.UserId,
                 City = address.City,
                 Street = address.Street,
                 House = address.House,
@@ -92,7 +93,7 @@ namespace OnlineShopWebApp.Models.Helpers
         }
 
 
-        public static OrderViewModel? ToOrderViewModel(this Order order)
+        public static OrderViewModel? ToOrderViewModel(this Order order, string role = null)
         {
             if (order == null)
                 return null;
@@ -101,15 +102,15 @@ namespace OnlineShopWebApp.Models.Helpers
             {
                 Id = order.Id,
                 Address = ToAddressViewModel(order.Address),
-                Cart = new CartViewModel() { Items = order.CartItems.Select(ToCartItemViewModel).ToList(), UserId = order.Id },
+                Cart = new CartViewModel() { Items = order.CartItems.Select(ToCartItemViewModel).ToList(), UserId = order.UserId },
                 CommentsToCourier = order.CommentsToCourier,
                 StateOfOrder = order.StateOfOrder,
                 TimeOfOrder = order.TimeOfOrder,
-                User = ToUserViewModel(order.User)
+                User = order.User.ToUserViewModel(role)
             };
         }
 
-        public static UserViewModel? ToUserViewModel(this User user)
+        public static UserViewModel? ToUserViewModel(this User user, string role = null)
         {
             if (user == null)
                 return null;
@@ -118,14 +119,14 @@ namespace OnlineShopWebApp.Models.Helpers
             {
                 Id = user.Id,
                 Addresses = user.Addresses?.Select(ToAddressViewModel).ToList(),
-                Favorites = user.UserProductFavorites.Select(fav => ToProductViewModel(fav.Product)).ToList(),
-                Login = user.Login,
-                Password = user.Password,
-                Role = ToRoleViewModel(user.Role)
+                Favorites = user.UserProductFavorites.Select(fav => fav.Product.ToProductViewModel()).ToList(),
+                Login = user.UserName,
+                Password = user.PasswordHash,
+                Role = role
             };
 
         }
-        public static RoleViewModel ToRoleViewModel(this Role role)
+        public static RoleViewModel ToRoleViewModel(this IdentityRole role)
         {
             if (role == null)
                 return null;
@@ -133,7 +134,7 @@ namespace OnlineShopWebApp.Models.Helpers
             return new RoleViewModel()
             {
                 Id = role.Id,
-                Name = role.Name,
+                Name = role.Name!,
             };
         }
     }

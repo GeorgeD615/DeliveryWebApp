@@ -19,13 +19,25 @@
                                         <h3 class="card-title">@item.Product.Name</h3>
                                         <div class="row">
                                             <div class="col-2">
-                                                <a class="btn btn-outline-cartChangeAmount" asp-controller="carts" asp-action="changeProductAmount" asp-route-userId="@Model.UserId" asp-route-cartItemId="@item.Id" asp-route-difference="-1" role="button" style="font-size:20px;">-</a>
+                                                <a class="btn btn-outline-cartChangeAmount" 
+                                                    asp-controller="carts" 
+                                                    asp-action="changeProductAmount" 
+                                                    asp-route-userId="@Model.UserId" 
+                                                    asp-route-cartItemId="@item.Id" 
+                                                    asp-route-difference="-1" 
+                                                    role="button" style="font-size:20px;">-</a>
                                             </div>
                                             <div class="col-2 pt-2">
                                                 <p>x <b>@item.Amount</b></p>
                                             </div>
                                             <div class="col-2">
-                                                <a class="btn btn-outline-cartChangeAmount" asp-controller="carts" asp-action="changeProductAmount" asp-route-userId="@Model.UserId" asp-route-cartItemId="@item.Id" asp-route-difference="1" role="button" style="font-size:20px">+</a>
+                                                <a class="btn btn-outline-cartChangeAmount" 
+                                                    asp-controller="carts" 
+                                                    asp-action="changeProductAmount" 
+                                                    asp-route-userId="@Model.UserId" 
+                                                    asp-route-cartItemId="@item.Id" 
+                                                    asp-route-difference="1" 
+                                                    role="button" style="font-size:20px">+</a>
                                             </div>
                                         </div>
                                     </div>
@@ -45,8 +57,14 @@
                 <div class="card-body">
                     <h2 class="card-title">Оплата</h2>
                     <p class="card-text">Итого: @Model.Cost руб.</p>
-                    <a asp-controller="orders" asp-action="index" asp-route-userId="@Model.UserId" class="btn btn-outline-dark" role="button">Продолжить</a>
-                    <a asp-controller="carts" asp-action="clearCart" asp-route-userId="@Model.UserId" class="btn btn-outline-danger" role="button">Очистить корзину</a>
+                    <a asp-controller="orders" 
+                        asp-action="index" 
+                        asp-route-userId="@Model.UserId" 
+                        class="btn btn-outline-dark" role="button">Продолжить</a>
+                    <a asp-controller="carts" 
+                        asp-action="clearCart" 
+                        asp-route-userId="@Model.UserId" 
+                        class="btn btn-outline-danger" role="button">Очистить корзину</a>
                 </div>
             </div>
         </div>
@@ -54,5 +72,5 @@
 }
 else
 {
-    <h3>Корзина пуста</h3>
+    <h2>Корзина пуста</h2>
 }

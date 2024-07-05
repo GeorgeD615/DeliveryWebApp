@@ -5,7 +5,7 @@ namespace OnlineShop.Db.Interfaces
     public interface IProductsRepository
     {
         List<Product> GetAll();
-        int GetCount();
+        int GetAmount();
         Product? TryGetById(Guid productId);
         List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages);
         public void DeleteProduct(Guid productId);
