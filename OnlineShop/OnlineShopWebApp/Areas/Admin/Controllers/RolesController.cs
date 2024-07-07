@@ -33,17 +33,17 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             rolesManager.CreateAsync(new IdentityRole { Name = roleName, }).Wait();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult RemoveById(Guid roleId)
+        public IActionResult RemoveById(string roleId)
         {
-            var role = rolesManager.FindByIdAsync(roleId.ToString()).Result;
+            var role = rolesManager.FindByIdAsync(roleId).Result;
 
             if (role != null)
                 rolesManager.DeleteAsync(role).Wait();
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

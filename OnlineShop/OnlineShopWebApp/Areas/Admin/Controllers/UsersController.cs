@@ -22,16 +22,19 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var users = usersManager.Users;
-            return View(users.
+            var users = usersManager.Users.ToList();
+
+            var usersViewModels = users.
                 Select(user => user.
-                ToUserViewModel(usersManager.GetRolesAsync(user).Result.Single())));
+                ToUserViewModel(usersManager.GetRolesAsync(user).Result?.FirstOrDefault())).ToList();
+
+            return View(usersViewModels);
         }
 
-        public IActionResult ShowUser(Guid userId)
+        public IActionResult ShowUser(string userId)
         {
-            var user = usersManager.FindByIdAsync(userId.ToString()).Result;
-            return View(user!.ToUserViewModel());
+            var user = usersManager.FindByIdAsync(userId).Result;
+            return View(user!.ToUserViewModel(usersManager.GetRolesAsync(user).Result?.FirstOrDefault()));
         }
 
         public IActionResult ChangePassword(string userId) => View(new ChangePasswordViewModel() { UserId = userId });
@@ -42,13 +45,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = usersManager.FindByIdAsync(model.UserId.ToString()).Result;
+            var user = usersManager.FindByIdAsync(model.UserId).Result;
 
             var newHashPassword = usersManager.PasswordHasher.HashPassword(user!, model.Password);
             user!.PasswordHash = newHashPassword;
             usersManager.UpdateAsync(user).Wait();
 
-            return RedirectToAction("ShowUser", new { model.UserId });
+            return RedirectToAction(nameof(ShowUser), new { model.UserId });
         }
 
         public IActionResult Edit(string userId)
@@ -61,7 +64,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(EditUserViewModel userVM)
         {
-            var user = usersManager.FindByNameAsync(userVM.Login).Result;
+            var user = usersManager.FindByIdAsync(userVM.UserId).Result;
 
             if (user != null && user.Id != userVM.UserId.ToString())
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
@@ -72,20 +75,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
 
             user.UserName = userVM.Login;
-            var prevRole = usersManager.GetRolesAsync(user).Result.First();
-            usersManager.RemoveFromRoleAsync(user, prevRole).Wait();
+            var prevRole = usersManager.GetRolesAsync(user).Result.FirstOrDefault();
+
+            if (prevRole != null)
+                usersManager.RemoveFromRoleAsync(user, prevRole).Wait();
+
             usersManager.AddToRoleAsync(user, userVM.Role).Wait();
 
             usersManager.UpdateAsync(user).Wait();
 
-            return RedirectToAction("ShowUser", new { userVM.UserId });
+            return RedirectToAction(nameof(ShowUser), new { userVM.UserId });
         }
 
-        public IActionResult Remove(Guid userId)
+        public IActionResult Remove(string userId)
         {
-            var user = usersManager.FindByIdAsync(userId.ToString()).Result;
+            var user = usersManager.FindByIdAsync(userId).Result;
             usersManager.DeleteAsync(user!).Wait();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Create() => View(new CreateUserViewModel() { RegistrationModel = new RegistrationViewModel() });
@@ -106,11 +112,9 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             var user = new User() { UserName = createUserViewModel.RegistrationModel.Login };
             usersManager.CreateAsync(user, createUserViewModel.RegistrationModel.Password).Wait();
-            usersManager.AddToRoleAsync(user, Constants.userRoleName);
+            usersManager.AddToRoleAsync(user, Constants.userRoleName).Wait();
 
-            usersManager.CreateAsync(user).Wait();
-
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

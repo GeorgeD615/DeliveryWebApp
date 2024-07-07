@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult EditStatus(Guid orderId, StateOfOrder status)
         {
             ordersRepository.EditStatus(orderId, status);
-            return RedirectToAction("ShowInfo", new { orderId });
+            return RedirectToAction(nameof(ShowInfo), new { orderId });
         }
     }
 }
