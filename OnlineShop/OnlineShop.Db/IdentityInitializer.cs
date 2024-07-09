@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using OnlineShop.Db.Models;
-using OnlineShopWebApp.Models;
 
 namespace OnlineShop.Db
 {
@@ -10,14 +9,14 @@ namespace OnlineShop.Db
         {
             var adminLogin = "george";
             var password = "Ab123456_";
-            if (roleManager.FindByNameAsync(Constants.adminRoleName).Result == null)
+            if (roleManager.FindByNameAsync(Constants.AdminRoleName).Result == null)
             {
-                var adminRole = new IdentityRole() { Name = Constants.adminRoleName };
+                var adminRole = new IdentityRole() { Name = Constants.AdminRoleName };
                 roleManager.CreateAsync(adminRole).Wait();
             }
-            if (roleManager.FindByNameAsync(Constants.userRoleName).Result == null)
+            if (roleManager.FindByNameAsync(Constants.UserRoleName).Result == null)
             {
-                var userRole = new IdentityRole() { Name = Constants.userRoleName };
+                var userRole = new IdentityRole() { Name = Constants.UserRoleName };
                 roleManager.CreateAsync(userRole).Wait();
             }
             if (userManager.FindByNameAsync(adminLogin).Result == null)
@@ -26,7 +25,7 @@ namespace OnlineShop.Db
                 var result = userManager.CreateAsync(admin, password).Result;
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(admin, Constants.adminRoleName).Wait();
+                    userManager.AddToRoleAsync(admin, Constants.AdminRoleName).Wait();
                 }
             }
         }

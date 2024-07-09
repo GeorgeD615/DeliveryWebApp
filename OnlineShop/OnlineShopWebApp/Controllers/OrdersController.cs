@@ -15,10 +15,10 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IOrdersRepository ordersRepository;
         private readonly ICartsRepository cartsRepository;
-        private readonly IAddressRepository addressRepository;
+        private readonly IAddressesRepository addressRepository;
         private readonly UserManager<User> usersManager;
 
-        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, UserManager<User> usersManager, IAddressRepository addressRepository)
+        public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, UserManager<User> usersManager, IAddressesRepository addressRepository)
         {
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;

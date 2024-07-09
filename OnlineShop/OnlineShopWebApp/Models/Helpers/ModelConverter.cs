@@ -110,7 +110,7 @@ namespace OnlineShopWebApp.Models.Helpers
             };
         }
 
-        public static UserViewModel? ToUserViewModel(this User user, string role = null)
+        public static UserViewModel? ToUserViewModel(this User user, string? role = null)
         {
             if (user == null)
                 return null;

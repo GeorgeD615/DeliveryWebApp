@@ -11,7 +11,7 @@ namespace OnlineShop.Db
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<CartItem> CartItems { get; set; } 
-        public DbSet<UserProductFavorite> UserProductFavorites { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Address> Addresses { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) 
@@ -23,21 +23,22 @@ namespace OnlineShop.Db
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //UserProductFavorite
-            modelBuilder.Entity<UserProductFavorite>()
-                .HasKey(upf => new { upf.UserId, upf.ProductId });
-            modelBuilder.Entity<UserProductFavorite>()
+
+            #region Favorites
+            modelBuilder.Entity<Favorite>().HasKey(f => f.Id);
+            modelBuilder.Entity<Favorite>()
                 .HasOne(upf => upf.User)
                 .WithMany(user => user.UserProductFavorites)
                 .HasForeignKey(upf => upf.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<UserProductFavorite>()
+            modelBuilder.Entity<Favorite>()
                 .HasOne(upf => upf.Product)
                 .WithMany(product => product.UserProductFavorites)
                 .HasForeignKey(upf => upf.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
+            #endregion
 
-            //Address
+            #region Address 
             modelBuilder.Entity<Address>().HasKey(address => address.Id);
             modelBuilder.Entity<Address>().Property(address => address.City).
                 IsRequired().
@@ -57,11 +58,13 @@ namespace OnlineShop.Db
                 HasOne(address => address.User).
                 WithMany(user => user.Addresses).
                 HasForeignKey(address => address.UserId);
+            #endregion
 
-            //Cart
+            #region Cart
             modelBuilder.Entity<Cart>().HasKey(cart => cart.Id);
+            #endregion
 
-            //CartItem
+            #region CartItem
             modelBuilder.Entity<CartItem>().HasKey(cartItem => cartItem.Id);
             modelBuilder.Entity<CartItem>().
                 HasOne(item => item.Product).
@@ -75,8 +78,9 @@ namespace OnlineShop.Db
                 HasOne(item => item.Order).
                 WithMany(Order => Order.CartItems).
                 HasForeignKey(item => item.OrderId);
+            #endregion
 
-            //Product
+            #region Product
             modelBuilder.Entity<Product>().HasKey(product => product.Id);
             modelBuilder.Entity<Product>().
                 Property(product => product.Name).
@@ -90,22 +94,25 @@ namespace OnlineShop.Db
                 Property(product => product.Description).
                 HasMaxLength(1000).
                 IsRequired();
+            #endregion
 
-            //User
+            #region User
             modelBuilder.Entity<User>().HasKey(user => user.Id);
             modelBuilder.Entity<User>().
                 Property(user => user.UserName).
                 HasMaxLength(25).
                 IsRequired();
+            #endregion
 
-            //Role
+            #region Role
             modelBuilder.Entity<IdentityRole>().HasKey(role => role.Id);
             modelBuilder.Entity<IdentityRole>().
                 Property(role => role.Name).
                 HasMaxLength(15).
                 IsRequired();
+            #endregion
 
-            //Order
+            #region Order
             modelBuilder.Entity<Order>().HasKey(order => order.Id);
             modelBuilder.Entity<Order>().
                 HasOne(order => order.Address).
@@ -124,7 +131,9 @@ namespace OnlineShop.Db
                 WithOne(item => item.Order).
                 HasForeignKey(item => item.OrderId).
                 OnDelete(DeleteBehavior.Cascade);
+            #endregion
 
+            #region DefaultData
             modelBuilder.Entity<Product>().HasData([
                 new Product(){
                     Id = new Guid("b1747d04-5529-4b07-bd2f-de95656d6a48"),
@@ -211,6 +220,7 @@ namespace OnlineShop.Db
                     ImagePath = "/images/products/eachpochmak.jpg"
                 }
                 ]);
+            #endregion
         }
 
     }

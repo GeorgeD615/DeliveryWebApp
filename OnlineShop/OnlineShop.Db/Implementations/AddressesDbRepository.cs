@@ -5,11 +5,11 @@ using OnlineShop.Db.Models;
 
 namespace OnlineShop.Db.Implementations
 {
-    public class AddressDbRepository : IAddressRepository
+    public class AddressesDbRepository : IAddressesRepository
     {
         private readonly DatabaseContext databaseContext;
 
-        public AddressDbRepository(DatabaseContext databaseContext)
+        public AddressesDbRepository(DatabaseContext databaseContext)
         {
             this.databaseContext = databaseContext;
         }
@@ -38,11 +38,6 @@ namespace OnlineShop.Db.Implementations
             databaseContext.Addresses.Add(address);
 
             databaseContext.SaveChanges();
-        }
-
-        public void Remove(Address address)
-        {
-            throw new NotImplementedException();
         }
 
         public List<Address> GetByUserId(string userId)

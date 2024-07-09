@@ -76,7 +76,7 @@ namespace OnlineShopWebApp.Controllers
 
             if (result.Succeeded)
             {
-                userManager.AddToRoleAsync(user, Constants.userRoleName).Wait();
+                userManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
                 signInManager.SignInAsync(user, false).Wait();
                 Constants.UserId = userManager.FindByNameAsync(registrationViewModel.Login).Result.Id;
                 return registrationViewModel.ReturnUrl != null ?

@@ -23,7 +23,7 @@
                 <div class="col-1 pt-4">
                 </div>
                 <div class="col-2 pt-4">
-                    @if (User.IsInRole(Constants.adminRoleName))
+                    @if (User.IsInRole(Constants.AdminRoleName))
                     {
                         <a asp-area="admin" asp-controller="orders" asp-action="index" class="nav-link active" aria-current="page">Администратор</a>
                     }

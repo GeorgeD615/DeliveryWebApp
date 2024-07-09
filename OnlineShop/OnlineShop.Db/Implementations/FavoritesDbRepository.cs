@@ -13,17 +13,17 @@ namespace OnlineShop.Db.Implementations
         }
         public void Add(User user, Product product)
         {
-            if (databaseContext.UserProductFavorites.
+            if (databaseContext.Favorites.
                 Any(fav => fav.UserId == user.Id && fav.ProductId == product.Id))
                 return;
-            var newConnection = new UserProductFavorite { User = user, Product = product };
-            databaseContext.UserProductFavorites.Add(newConnection);
+            var newFavorite = new Favorite { User = user, Product = product };
+            databaseContext.Favorites.Add(newFavorite);
             databaseContext.SaveChanges();
         }
 
         public List<Product> GetByUserId(string userId)
         {
-            return databaseContext.UserProductFavorites.
+            return databaseContext.Favorites.
                 Include(fav => fav.Product).
                 Where(fav => fav.UserId == userId).
                 Select(fav => fav.Product).ToList();
@@ -31,13 +31,13 @@ namespace OnlineShop.Db.Implementations
 
         public void Remove(User user, Product product)
         {
-            var fav = databaseContext.UserProductFavorites
+            var favorite = databaseContext.Favorites
                 .FirstOrDefault(fav => fav.UserId == user.Id && fav.ProductId == product.Id);
 
-            if (fav == null)
+            if (favorite == null)
                 return;
 
-            databaseContext.UserProductFavorites.Remove(fav);
+            databaseContext.Favorites.Remove(favorite);
             databaseContext.SaveChanges();
         }
     }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
-using OnlineShopWebApp.Models;
 using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Users;
 using OnlineShopWebApp.Models.ViewModels;
@@ -11,7 +10,7 @@ using OnlineShopWebApp.Models.ViewModels;
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = Constants.adminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class UsersController : Controller
     {
         private readonly UserManager<User> usersManager;
@@ -26,10 +25,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             var usersViewModels = users.
                 Select(user => user.
-                ToUserViewModel(usersManager.GetRolesAsync(user).Result?.FirstOrDefault())).ToList();
+                ToUserViewModel(GetUserRole(user))).ToList();
 
             return View(usersViewModels);
         }
+
+        private string? GetUserRole(User user) => usersManager.GetRolesAsync(user).Result?.FirstOrDefault();
 
         public IActionResult ShowUser(string userId)
         {
@@ -112,7 +113,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             var user = new User() { UserName = createUserViewModel.RegistrationModel.Login };
             usersManager.CreateAsync(user, createUserViewModel.RegistrationModel.Password).Wait();
-            usersManager.AddToRoleAsync(user, Constants.userRoleName).Wait();
+            usersManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
 
             return RedirectToAction(nameof(Index));
         }

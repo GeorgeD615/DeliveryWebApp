@@ -53,7 +53,7 @@ builder.Services.AddTransient<ICartsRepository, CartsDbRepository>();
 builder.Services.AddTransient<IProductsRepository, ProductsDbRepository>();
 builder.Services.AddTransient<IOrdersRepository, OrdersDbRepository>();
 builder.Services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
-builder.Services.AddTransient<IAddressRepository, AddressDbRepository>();
+builder.Services.AddTransient<IAddressesRepository, AddressesDbRepository>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

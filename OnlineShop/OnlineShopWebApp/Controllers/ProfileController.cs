@@ -13,9 +13,9 @@ namespace OnlineShopWebApp.Controllers
     public class ProfileController : Controller
     {
         private readonly UserManager<User> usersManager;
-        private readonly IAddressRepository addressRepository;
+        private readonly IAddressesRepository addressRepository;
 
-        public ProfileController(UserManager<User> usersManager, IAddressRepository addressRepository)
+        public ProfileController(UserManager<User> usersManager, IAddressesRepository addressRepository)
         {
             this.usersManager = usersManager;
             this.addressRepository = addressRepository;
