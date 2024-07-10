@@ -5,7 +5,6 @@ using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
 using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
-using System.Runtime.CompilerServices;
 
 namespace OnlineShopWebApp.Models.Helpers
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 using OnlineShopWebApp.Models.Helpers;
 
 namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles
@@ -14,10 +14,18 @@ namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles
             this.rolesManager = rolesManager;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string currentRoleName)
         {
-            var roles = rolesManager.Roles;
-            return View("Roles", roles.Select(role => role.ToRoleViewModel()).ToList());
+            var roles = rolesManager.Roles.Select(role => role.ToRoleViewModel()).ToList();
+
+            if (!currentRoleName.IsNullOrEmpty())
+            {
+                var currentRole = roles.FirstOrDefault(role => role.Name == currentRoleName);
+                roles.Remove(currentRole);
+                roles.Insert(0, currentRole);
+            }
+
+            return View("Roles", roles);
         }
     }
 }

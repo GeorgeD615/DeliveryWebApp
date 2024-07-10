@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
@@ -50,7 +49,7 @@ namespace OnlineShopWebApp.Controllers
             var address = user!.Addresses.FirstOrDefault(address => address.Id == addressId);
 
             if (address == null)
-                throw new Exception("Адрес не найден");
+                return View("Error");
 
             bool isLast = address.IsLast;
 

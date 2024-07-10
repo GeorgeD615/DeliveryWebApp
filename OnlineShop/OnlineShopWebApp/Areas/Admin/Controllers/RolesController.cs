@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
+using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Roles;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
@@ -11,10 +12,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> rolesManager;
+        private readonly UserManager<User> usersManager;
 
-        public RolesController(RoleManager<IdentityRole> rolesManager)
+        public RolesController(RoleManager<IdentityRole> rolesManager, UserManager<User> usersManager)
         {
             this.rolesManager = rolesManager;
+            this.usersManager = usersManager;
         }
 
         public IActionResult Index() => View();
@@ -38,6 +41,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult RemoveById(string roleId)
         {
             var role = rolesManager.FindByIdAsync(roleId).Result;
+            var usersInRole = usersManager.GetUsersInRoleAsync(role.Name).Result;
+
+            if(usersInRole.Count > 0)
+                ModelState.AddModelError("", "Данная роль уже присвоена какому-то пользователю.");
+
+            if (!ModelState.IsValid)
+                return View(nameof(Index));
+
 
             if (role != null)
                 rolesManager.DeleteAsync(role).Wait();

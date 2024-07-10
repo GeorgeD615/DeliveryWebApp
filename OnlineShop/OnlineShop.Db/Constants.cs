@@ -4,6 +4,5 @@
     {
         public const string AdminRoleName = "admin";
         public const string UserRoleName = "user";
-        public static string? UserId = null;
     }
 }

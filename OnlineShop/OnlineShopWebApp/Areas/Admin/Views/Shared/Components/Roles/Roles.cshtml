@@ -13,7 +13,7 @@
                         </div>
                     </td>
                     <td>
-                        @if (role.Name != "admin")
+                        @if (role.Name != "admin" && role.Name != "user")
                         {
                             <a asp-area="admin" asp-controller="roles" asp-action="removeById" asp-route-roleId="@role.Id" class="btn btn-outline-danger">Удалить</a>
                         }

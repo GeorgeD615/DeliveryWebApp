@@ -15,7 +15,7 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly IOrdersRepository ordersRepository;
         private readonly ICartsRepository cartsRepository;
-        private readonly IAddressesRepository addressRepository;
+        private readonly IAddressesRepository addressesRepository;
         private readonly UserManager<User> usersManager;
 
         public OrdersController(IOrdersRepository ordersRepository, ICartsRepository cartsRepository, UserManager<User> usersManager, IAddressesRepository addressRepository)
@@ -23,7 +23,7 @@ namespace OnlineShopWebApp.Controllers
             this.ordersRepository = ordersRepository;
             this.cartsRepository = cartsRepository;
             this.usersManager = usersManager;
-            this.addressRepository = addressRepository;
+            this.addressesRepository = addressRepository;
         }
 
         public IActionResult Index(string userId)
@@ -38,7 +38,7 @@ namespace OnlineShopWebApp.Controllers
             if (cart == null)
                 return RedirectToAction("Index", "Carts");
 
-            var addresses = addressRepository.GetByUserId(user.Id);
+            var addresses = addressesRepository.GetByUserId(user.Id);
 
             return View(new OrderFormViewModel(
                 addresses.Select(address => address.ToAddressViewModel()).ToList(),
@@ -53,9 +53,9 @@ namespace OnlineShopWebApp.Controllers
         {
             var user = usersManager.FindByIdAsync(userId.ToString()).Result;
             var cart = cartsRepository.TryGetByUserId(userId);
-            addressRepository.ResetLastAddress(userId, addressId);
+            addressesRepository.ResetLastAddress(userId, addressId);
 
-            var address = addressRepository.TryGetById(addressId);
+            var address = addressesRepository.TryGetById(addressId);
 
             var order = new Order()
             {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
@@ -33,8 +32,7 @@ namespace OnlineShopWebApp.Controllers
         {
             var favoriteProduct = productsRepository.TryGetById(productId);
 
-            var user = userName != null ? usersManager.FindByNameAsync(userName).Result :
-                usersManager.FindByIdAsync(Constants.UserId).Result;
+            var user = usersManager.FindByNameAsync(userName).Result;
 
             if (favoriteProduct != null)
                 favoritesRepository.Add(user, favoriteProduct);

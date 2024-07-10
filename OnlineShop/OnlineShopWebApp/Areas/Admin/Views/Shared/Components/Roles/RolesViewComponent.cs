@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
 
 namespace OnlineShopWebApp.Areas.Admin.Views.Shared.Components.Roles

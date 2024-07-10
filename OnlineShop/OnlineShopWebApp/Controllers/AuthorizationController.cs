@@ -8,12 +8,12 @@ namespace OnlineShopWebApp.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> usersManager;
         private readonly SignInManager<User> signInManager;
 
         public AuthorizationController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            this.userManager = userManager;
+            this.usersManager = userManager;
             this.signInManager = signInManager;
         }
         public IActionResult LogIn(string returnUrl) =>  View(new LogInViewModel { ReturnUrl = returnUrl });
@@ -40,9 +40,8 @@ namespace OnlineShopWebApp.Controllers
 
             if (result.Succeeded)
             {
-                Constants.UserId = userManager.FindByNameAsync(logInViewModel.Login).Result.Id;
                 return logInViewModel.ReturnUrl != null ? 
-                    Redirect(logInViewModel.ReturnUrl) :
+                    Redirect($"{logInViewModel.ReturnUrl}&userName={logInViewModel.Login}") :
                     RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
             }
 
@@ -62,7 +61,7 @@ namespace OnlineShopWebApp.Controllers
             if (registrationViewModel.Password == registrationViewModel.Login)
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
 
-            var existingUser = userManager.FindByNameAsync(registrationViewModel.Login).Result;
+            var existingUser = usersManager.FindByNameAsync(registrationViewModel.Login).Result;
 
             if (existingUser != null)
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
@@ -72,15 +71,14 @@ namespace OnlineShopWebApp.Controllers
 
             var user = new User { UserName = registrationViewModel.Login };
 
-            var result = userManager.CreateAsync(user, registrationViewModel.Password).Result;
+            var result = usersManager.CreateAsync(user, registrationViewModel.Password).Result;
 
             if (result.Succeeded)
             {
-                userManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
+                usersManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
                 signInManager.SignInAsync(user, false).Wait();
-                Constants.UserId = userManager.FindByNameAsync(registrationViewModel.Login).Result.Id;
                 return registrationViewModel.ReturnUrl != null ?
-                    Redirect(registrationViewModel.ReturnUrl) :
+                    Redirect($"{registrationViewModel.ReturnUrl}&userName={registrationViewModel.Login}") :
                     RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
             }
 
@@ -91,7 +89,6 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult LogOut()
         {
             signInManager.SignOutAsync().Wait();
-            Constants.UserId = null;
             return RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
         }
     }

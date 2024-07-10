@@ -43,10 +43,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordViewModel model)
         {
+            var user = usersManager.FindByIdAsync(model.UserId).Result;
+
+            if (user.UserName == model.Password)
+                ModelState.AddModelError("", "Пароль и логин не должны совпадать.");
+
             if (!ModelState.IsValid)
                 return View(model);
-
-            var user = usersManager.FindByIdAsync(model.UserId).Result;
 
             var newHashPassword = usersManager.PasswordHasher.HashPassword(user!, model.Password);
             user!.PasswordHash = newHashPassword;
@@ -58,7 +61,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Edit(string userId)
         {
             var user = usersManager.FindByIdAsync(userId.ToString()).Result;
-            var editUserVM = new EditUserViewModel { UserId = userId, Login = user.UserName };
+            var roleName = usersManager.GetRolesAsync(user).Result.FirstOrDefault();
+            var editUserVM = new EditUserViewModel { UserId = userId, Login = user.UserName, Role = roleName };
             return View(editUserVM);
         }
 
@@ -73,13 +77,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(userVM);
 
-
-
             user.UserName = userVM.Login;
-            var prevRole = usersManager.GetRolesAsync(user).Result.FirstOrDefault();
+            var currentRole = usersManager.GetRolesAsync(user).Result.FirstOrDefault();
 
-            if (prevRole != null)
-                usersManager.RemoveFromRoleAsync(user, prevRole).Wait();
+            if (currentRole != null)
+                usersManager.RemoveFromRoleAsync(user, currentRole).Wait();
 
             usersManager.AddToRoleAsync(user, userVM.Role).Wait();
 
