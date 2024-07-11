@@ -20,6 +20,8 @@ namespace OnlineShopWebApp.Models.Products
 
         public string ImagePath { get; set; }
 
+        public IFormFile? UploadedFile { get; set; }
+
         public ProductViewModel(Guid id, string name, decimal cost, string description, string imagePath)
         {
             Id = id;

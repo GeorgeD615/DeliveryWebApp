@@ -5,7 +5,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h3 class="card-title text-center">Добавление нового товара</h3>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="mb-3 col-6">
                             <label asp-for="Name" class="form-label">Название</label>
@@ -23,6 +23,12 @@
                             <label asp-for="Description" class="form-label">Описание</label>
                             <textarea asp-for="Description" class="form-control" aria-label="With textarea"></textarea>
                             <span class="validation-error" asp-validation-for="Description"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label>Загрузить изображение</label>
+                            <input type="file" name="UploadedFile" class="form-control"/>
                         </div>
                     </div>
                     <div class="row justify-content-center">
