@@ -16,6 +16,7 @@ namespace OnlineShop.Db.Implementations
             return databaseContext.Carts
                 .Include(cart => cart.Items)
                 .ThenInclude(item => item.Product)
+                .ThenInclude(product => product.Images)
                 .FirstOrDefault(cart => cart.UserId == userId);
         }
 

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models.Products
 {
-    public class ProductViewModel
+    public class EditProductViewModel
     {
         public Guid Id { get; set; }
 
@@ -20,20 +20,10 @@ namespace OnlineShopWebApp.Models.Products
         [StringLength(1000, ErrorMessage = "Длина описания не должна превышать 1000 символов")]
         public string Description { get; set; }
 
-        public string[] ImagesPaths { get; set; }
+        public IFormFile[]? UploadedFiles { get; set; }
+
+        public List<string>? ImagesPaths { get; set; }
 
         public string ImagePath => ImagesPaths.IsNullOrEmpty() ? Constants.DefaultProductImagePath : ImagesPaths[0];
-
-        public ProductViewModel(Guid id, string name, decimal cost, string description, string[] imagesPaths)
-        {
-            Id = id;
-            Name = name;
-            Cost = cost;
-            Description = description;
-            ImagesPaths = imagesPaths;
-        }
-
-        public ProductViewModel() { }
-
     }
 }

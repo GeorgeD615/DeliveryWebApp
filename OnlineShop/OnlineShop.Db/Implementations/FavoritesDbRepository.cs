@@ -25,8 +25,10 @@ namespace OnlineShop.Db.Implementations
         {
             return databaseContext.Favorites.
                 Include(fav => fav.Product).
+                ThenInclude(product => product.Images).
                 Where(fav => fav.UserId == userId).
-                Select(fav => fav.Product).ToList();
+                Select(fav => fav.Product).
+                ToList();
         }
 
         public void Remove(User user, Product product)

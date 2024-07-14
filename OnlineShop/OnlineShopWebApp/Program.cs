@@ -5,6 +5,7 @@ using OnlineShop.Db;
 using OnlineShop.Db.Implementations;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
+using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Orders;
 using Serilog;
 using System.Globalization;
@@ -54,6 +55,7 @@ builder.Services.AddTransient<IProductsRepository, ProductsDbRepository>();
 builder.Services.AddTransient<IOrdersRepository, OrdersDbRepository>();
 builder.Services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
 builder.Services.AddTransient<IAddressesRepository, AddressesDbRepository>();
+builder.Services.AddTransient<ImagesProvider>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

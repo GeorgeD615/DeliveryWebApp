@@ -20,7 +20,60 @@ namespace OnlineShopWebApp.Models.Helpers
                             product.Name,
                             product.Cost,
                             product.Description,
-                            product.ImagePath);
+                            product.Images.Select(i => i.Url).ToArray());
+        }
+
+        public static EditProductViewModel? ToEditProductViewModel(this Product product)
+        {
+            if (product == null)
+                return null;
+
+            return new EditProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Cost = product.Cost,
+                Description = product.Description,
+                ImagesPaths = product.Images.Select(i => i.Url).ToList()
+            };
+        }
+
+
+        public static Product? ToProduct(this AddProductViewModel productViewModel, List<string> imagesPaths)
+        {
+            if (productViewModel == null)
+                return null;
+
+            return new Product()
+            {
+                Name = productViewModel.Name,
+                Cost = productViewModel.Cost,
+                Description = productViewModel.Description,
+                Images = ToImages(imagesPaths)
+            };
+        }
+
+        public static Product? ToProduct(this EditProductViewModel productViewModel, List<string> uploadedImagesPaths)
+        {
+            if (productViewModel == null)
+                return null;
+
+            return new Product()
+            {
+                Id = productViewModel.Id,
+                Name = productViewModel.Name,
+                Cost = productViewModel.Cost,
+                Description = productViewModel.Description,
+                Images = ToImages(uploadedImagesPaths)
+            };
+        }
+
+        public static List<Image> ToImages(this List<string> imagesPaths)
+        {
+            return imagesPaths.Select(p => new Image() { 
+                Id = Guid.Parse(p.Split(['.', '/']).TakeLast(2).First()),  
+                Url = p 
+            }).ToList();
         }
 
         public static Product? ToProduct(this ProductViewModel productViewModel)
@@ -33,8 +86,7 @@ namespace OnlineShopWebApp.Models.Helpers
                 Id = productViewModel.Id,
                 Name = productViewModel.Name,
                 Cost = productViewModel.Cost,
-                Description = productViewModel.Description,
-                ImagePath = productViewModel.ImagePath
+                Description = productViewModel.Description
             };
         }
 

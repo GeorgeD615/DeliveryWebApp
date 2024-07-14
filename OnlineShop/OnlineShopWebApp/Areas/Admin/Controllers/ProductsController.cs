@@ -9,12 +9,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsRepository productsRepository;
-        private readonly IWebHostEnvironment appEnvironment;
+        private readonly ImagesProvider imagesProvider;
 
-        public ProductsController(IProductsRepository productsRepository, IWebHostEnvironment appEnvironment)
+        public ProductsController(IProductsRepository productsRepository, ImagesProvider imagesProvider)
         {
             this.productsRepository = productsRepository;
-            this.appEnvironment = appEnvironment;
+            this.imagesProvider = imagesProvider;
         }
 
         public IActionResult Index()
@@ -36,12 +36,12 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (product == null)
                 return RedirectToAction(nameof(Index));
 
-            var productEditModel = product.ToProductViewModel();
+            var productEditModel = product.ToEditProductViewModel();
             return View(productEditModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(ProductViewModel product)
+        public IActionResult Edit(EditProductViewModel product)
         {
             product.Name = product.Name.Trim();
             product.Description = product.Description.Trim();
@@ -52,28 +52,16 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(product);
 
-            if (product.UploadedFile != null)
-            {
-                var productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
-                if (!Directory.Exists(productImagesPath))
-                    Directory.CreateDirectory(productImagesPath);
+            var uploadedImagesPaths = imagesProvider.SafeFiles(product.UploadedFiles, ImageFolder.products);
 
-                var fileName = Guid.NewGuid() + "." + product.UploadedFile.FileName.Split('.').Last();
-                using (var fileStream = new FileStream(productImagesPath + fileName, FileMode.Create))
-                    product.UploadedFile.CopyTo(fileStream);
-
-                product.ImagePath = "/images/products/" + fileName;
-            }
-
-
-            productsRepository.Edit(product.ToProduct());
+            productsRepository.Edit(product.ToProduct(uploadedImagesPaths));
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Add() => View();
 
         [HttpPost]
-        public IActionResult Add(ProductViewModel product)
+        public IActionResult Add(AddProductViewModel product)
         {
             product.Name = product.Name.Trim();
             product.Description = product.Description.Trim();
@@ -84,25 +72,10 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(product);
 
-            if(product.UploadedFile != null)
-            {
-                var productImagesPath = Path.Combine(appEnvironment.WebRootPath + "/images/products/");
-                if(!Directory.Exists(productImagesPath))
-                    Directory.CreateDirectory(productImagesPath); 
-
-                var fileName = Guid.NewGuid() + "." + product.UploadedFile.FileName.Split('.').Last();
-                using (var fileStream = new FileStream(productImagesPath + fileName, FileMode.Create))
-                    product.UploadedFile.CopyTo(fileStream);
-
-                product.ImagePath = "/images/products/" + fileName;
-            }
-            else
-            {
-                product.ImagePath = "/images/products/" + "default_product.jpg";
-            }
+            var imagesPaths = imagesProvider.SafeFiles(product.UploadedFiles, ImageFolder.products);
 
 
-            productsRepository.Add(product.ToProduct());
+            productsRepository.Add(product.ToProduct(imagesPaths));
             return RedirectToAction(nameof(Index));
         }
     }

@@ -13,16 +13,18 @@ namespace OnlineShop.Db.Implementations
             this.databaseContext = databaseContext;
         }
 
-        public List<Product> GetAll() => databaseContext.Products.AsNoTracking().ToList();
+        public List<Product> GetAll() => databaseContext.Products.Include(product => product.Images).AsNoTracking().ToList();
         public int GetAmount() => databaseContext.Products.Count();
         public Product? TryGetById(Guid productId)
         {
-            return databaseContext.Products.FirstOrDefault(p => p.Id == productId);
+            return databaseContext.Products.Include(product => product.Images).
+                FirstOrDefault(p => p.Id == productId);
         }
         public List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages)
         {
             int lastIndex = pageNumber < amountOfPages ? numberOfProductsPerPage : databaseContext.Products.Count() - numberOfProductsPerPage * (pageNumber - 1);
-            return databaseContext.Products.ToList().GetRange((pageNumber - 1) * numberOfProductsPerPage, lastIndex);
+            return databaseContext.Products.Include(product => product.Images).ToList().
+                GetRange((pageNumber - 1) * numberOfProductsPerPage, lastIndex);
         }
         public void DeleteProduct(Guid productId)
         {
@@ -45,7 +47,13 @@ namespace OnlineShop.Db.Implementations
             existingProduct.Name = product.Name;
             existingProduct.Cost = product.Cost;
             existingProduct.Description = product.Description;
-            existingProduct.ImagePath = product.ImagePath;
+
+            foreach(var image in product.Images)
+            {
+                image.ProductId = product.Id;
+                databaseContext.Image.Add(image);
+            }
+
             databaseContext.SaveChanges();
         }
         public void Add(Product product)
@@ -53,7 +61,6 @@ namespace OnlineShop.Db.Implementations
             databaseContext.Products.Add(product);
             databaseContext.SaveChanges();
         }
-
         public List<Product> SearchByName(string name) 
         {
             return databaseContext.Products
