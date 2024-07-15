@@ -40,9 +40,12 @@ namespace OnlineShopWebApp.Controllers
 
             if (result.Succeeded)
             {
-                return logInViewModel.ReturnUrl != null ? 
-                    Redirect($"{logInViewModel.ReturnUrl}&userName={logInViewModel.Login}") :
-                    RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
+                if(logInViewModel.ReturnUrl == null)
+                    return RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
+
+                var requestUserInfo = logInViewModel.ReturnUrl.Contains('?') ?
+                    $"&userName={logInViewModel.Login}" : $"?userName={logInViewModel.Login}";
+                return Redirect($"{logInViewModel.ReturnUrl}{requestUserInfo}");
             }
 
             ModelState.AddModelError("", "Неверный логин или пароль");
@@ -77,9 +80,13 @@ namespace OnlineShopWebApp.Controllers
             {
                 usersManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
                 signInManager.SignInAsync(user, false).Wait();
-                return registrationViewModel.ReturnUrl != null ?
-                    Redirect($"{registrationViewModel.ReturnUrl}&userName={registrationViewModel.Login}") :
-                    RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
+
+                if (registrationViewModel.ReturnUrl == null)
+                    return RedirectToAction(nameof(ProductController.Page), nameof(Product), new { numberOfProductsPerPage = 10, pageNumber = 1 });
+
+                var requestUserInfo = registrationViewModel.ReturnUrl.Contains('?') ?
+                    $"&userName={registrationViewModel.Login}" : $"?userName={registrationViewModel.Login}";
+                return Redirect($"{registrationViewModel.ReturnUrl}{requestUserInfo}");
             }
 
             ModelState.AddModelError("", "Не удалось создать аккаунт");
