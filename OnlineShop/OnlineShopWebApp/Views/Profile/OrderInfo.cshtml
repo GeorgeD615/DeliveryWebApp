@@ -1,0 +1,74 @@
+﻿@using OnlineShopWebApp.Models.Helpers
+@using OnlineShopWebApp.Models.Orders
+@model OrderViewModel
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row m-2">
+                    <div class="col-4 gray">Номер заказа:</div>
+                    <div class="col-8">@Model.Id</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Адрес:</div>
+                    <div class="col-8">@Model.Address.ToString()</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Заказ:</div>
+                    <div class="col-8">
+                        <div class="overflow-auto" style="height : 160px">
+                            <div class="row m-0">
+                                <div class="col-4">
+                                    <b>Название</b>
+                                </div>
+                                <div class="col-3">
+                                    <b>Кол-во</b>
+                                </div>
+                                <div class="col-3">
+                                    <b>Стоимость</b>
+                                </div>
+                            </div>
+                            <hr>
+                            @foreach (var item in Model.Cart.Items)
+                            {
+                                <div class="row">
+                                    <div class="col-4">
+                                        @item.Product.Name
+                                    </div>
+                                    <div class="col-3">
+                                        x @item.Amount
+                                    </div>
+                                    <div class="col-3">
+                                        @item.Cost руб.
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Стоимость заказа:</div>
+                    <div class="col-8">@Model.Cart.Cost руб.</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Дата оформления:</div>
+                    <div class="col-8">@Model.TimeOfOrder.ToString("dd/MM/yyyy")</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Время оформления:</div>
+                    <div class="col-8">@Model.TimeOfOrder.ToString("HH:mm")</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Комментарий к заказу:</div>
+                    <div class="col-8">@Model.CommentsToCourier</div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-4 gray">Статус заказа:</div>
+                    <div class="col-8">@EnumHelper.GetDisplayName(Model.StateOfOrder)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

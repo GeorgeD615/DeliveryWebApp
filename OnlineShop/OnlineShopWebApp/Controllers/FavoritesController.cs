@@ -21,18 +21,18 @@ namespace OnlineShopWebApp.Controllers
             this.favoritesRepository = favoritesRepository;
         }
 
-        public IActionResult Index(string userName)
+        public IActionResult Index()
         {
-            var user = usersManager.FindByNameAsync(userName).Result;
+            var user = usersManager.GetUserAsync(HttpContext.User).Result;
             var favorites = favoritesRepository.GetByUserId(user.Id);
             return View(favorites?.Select(favorite => favorite.ToProductViewModel()).ToList());
         }
 
-        public IActionResult AddFavorite(string userName, Guid productId)
+        public IActionResult AddFavorite(Guid productId)
         {
             var favoriteProduct = productsRepository.TryGetById(productId);
 
-            var user = usersManager.FindByNameAsync(userName).Result;
+            var user = usersManager.GetUserAsync(HttpContext.User).Result;
 
             if (favoriteProduct != null)
                 favoritesRepository.Add(user, favoriteProduct);
@@ -40,9 +40,9 @@ namespace OnlineShopWebApp.Controllers
             return RedirectToAction(nameof(Index), new { userName = user.UserName });
         }
 
-        public IActionResult RemoveFavorite(string userName, Guid productId)
+        public IActionResult RemoveFavorite(Guid productId)
         {
-            var user = usersManager.FindByNameAsync(userName).Result;
+            var user = usersManager.GetUserAsync(HttpContext.User).Result;
             var product = favoritesRepository.GetByUserId(user.Id).FirstOrDefault(p => p.Id == productId);
 
             if (user != null && product != null)

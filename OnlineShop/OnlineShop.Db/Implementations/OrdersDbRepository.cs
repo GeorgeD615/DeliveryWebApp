@@ -39,6 +39,15 @@ namespace OnlineShopWebApp.Models.Orders
                 .ToList(); 
         }
 
+        public List<Order> GetByUserId(string userId)
+        {
+            return databaseContext.Orders
+                .Include(order => order.CartItems)
+                .ThenInclude(item => item.Product)
+                .Include(order => order.Address)
+                .Where(order => order.UserId == userId).ToList();
+        }
+
         public Order? TryGetById(Guid orderId)
         {
             return databaseContext.Orders

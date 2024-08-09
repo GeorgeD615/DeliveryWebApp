@@ -55,6 +55,7 @@ builder.Services.AddTransient<IProductsRepository, ProductsDbRepository>();
 builder.Services.AddTransient<IOrdersRepository, OrdersDbRepository>();
 builder.Services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
 builder.Services.AddTransient<IAddressesRepository, AddressesDbRepository>();
+builder.Services.AddTransient<IImagesRepository, ImagesRepository>();
 builder.Services.AddTransient<ImagesProvider>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>

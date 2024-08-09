@@ -76,6 +76,16 @@ namespace OnlineShopWebApp.Models.Helpers
             }).ToList();
         }
 
+        public static Avatar ToAvatar(this string imagePath, string userId)
+        {
+            return new Avatar()
+            {
+                Id = Guid.Parse(imagePath.Split(['.', '/']).TakeLast(2).First()),
+                Url = imagePath,
+                UserId = userId
+            };
+        }
+
         public static Product? ToProduct(this ProductViewModel productViewModel)
         {
             if (productViewModel == null)
@@ -124,7 +134,8 @@ namespace OnlineShopWebApp.Models.Helpers
                 City = address.City,
                 Street = address.Street,
                 House = address.House,
-                Flat = address.Flat
+                Flat = address.Flat,
+                IsLast = address.IsLast
             };
         }
 

@@ -9,5 +9,6 @@ namespace OnlineShopWebApp.Models.Orders
         void Add(Order order);
         Order? TryGetById(Guid orderId);
         void EditStatus(Guid orderId, StateOfOrder status);
+        List<Order> GetByUserId(string userId);
     }
 }

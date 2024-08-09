@@ -63,7 +63,7 @@ namespace OnlineShop.Db.Implementations
         }
         public List<Product> SearchByName(string name) 
         {
-            return databaseContext.Products
+            return databaseContext.Products.Include(product => product.Images)
                 .Where(product => EF.Functions.Like(product.Name, $"%{name}%"))
                 .ToList();
         }

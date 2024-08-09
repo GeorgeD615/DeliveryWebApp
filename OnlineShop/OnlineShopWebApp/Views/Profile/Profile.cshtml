@@ -1,0 +1,98 @@
+﻿@using OnlineShopWebApp.Models.Helpers
+@using OnlineShopWebApp.Models.ViewModels
+@model ProfileViewModel
+
+<h2 class="ms-3">Личный кабинет</h2>
+<div class="row">
+    <div class="col-2 text-center mt-2">
+        <img class="img-fluid rounded-1" src="@Model.AvatarImagesPath" alt="Avatar" width="157px">
+    </div>
+    <div class="col-10">
+        <div class="row">
+            <div class="col-4">
+                <form method="post" enctype="multipart/form-data">
+                    <input asp-for="AvatarImagesPath" value="@Model.AvatarImagesPath" hidden></input>
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label asp-for="Login" class="form-label">Login</label>
+                            <input asp-for="Login" value="@Model.Login" class="form-control" id="inputName" aria-describedby="nameHelp">
+                            <span asp-validation-for="Login" class="validation-error"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label>Изменить аватар</label>
+                            <input type="file" name="UploadedFile" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row justify-content-start">
+                        <div class="col-12">
+                            <button class="btn btn-outline-success" type="submit" asp-area="" asp-controller="profile" asp-action="profile">
+                                Сохранить изменения
+                            </button>
+                        </div>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="validation-error"></div>
+                </form>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-6">
+                @if (Model.Addresses?.Any() ?? false)
+                {
+                    <h4>Ваши адреса:</h4>
+                    <div class="overflow-auto" style="height : 120px">
+                        @foreach (var address in Model.Addresses)
+                        {
+                            <p>
+                                @address.ToString() @if (address.IsLast)
+                                {
+                                    <i>(последний адрес)</i>
+                                }
+                            </p>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.Orders?.Any() ?? false)
+    {
+        <div class="row mt-3">
+            <h4 class="ms-4">Ваши заказы:</h4>
+            <div class="col-11">
+                <div class="ms-4">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Время</th>
+                                <th scope="col">Сумма</th>
+                                <th scope="col">Статус</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.Orders)
+                            {
+                                <tr>
+                                    <td>@order.TimeOfOrder.ToString("dd/MM/yyyy")</td>
+                                    <td>@order.TimeOfOrder.ToString("HH:mm")</td>
+                                    <td>@order.Cart.Cost руб.</td>
+                                    <td>@EnumHelper.GetDisplayName(order.StateOfOrder)</td>
+                                    <td>
+                                        <a asp-area="" asp-controller="profile" asp-action="orderInfo" asp-route-orderId="@order.Id" class="btn btn-outline-info">Подробнее</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="text-center">
+    <a class="btn btn-outline-danger" asp-area="" asp-controller="authorization" asp-action="logOut">
+        Выйти
+    </a>
+</div>

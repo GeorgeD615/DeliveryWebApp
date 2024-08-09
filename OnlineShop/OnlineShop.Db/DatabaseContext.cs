@@ -14,6 +14,7 @@ namespace OnlineShop.Db
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Image> Image { get; set; }
+        public DbSet<Avatar> Avatars { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) 
             : base(options)
@@ -86,6 +87,14 @@ namespace OnlineShop.Db
                 HasOne(image => image.Product).
                 WithMany(product => product.Images).
                 HasForeignKey(image => image.ProductId).
+                OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
+            #region Avatar
+            modelBuilder.Entity<Avatar>().
+                HasOne(avatar => avatar.User).
+                WithOne(user => user.Avatar).
+                HasForeignKey<Avatar>(avatar => avatar.UserId).
                 OnDelete(DeleteBehavior.Cascade);
             #endregion
 

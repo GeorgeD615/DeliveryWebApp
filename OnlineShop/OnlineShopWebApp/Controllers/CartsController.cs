@@ -12,18 +12,18 @@ namespace OnlineShopWebApp.Controllers
     {
         private readonly ICartsRepository cartsRepository;
         private readonly IProductsRepository productsRepository;
-        private readonly UserManager<User> usersManager;
+        private readonly UserManager<User> userManager;
 
         public CartsController(ICartsRepository cartsRepository, IProductsRepository productsRepository, UserManager<User> userManager)
         {
             this.cartsRepository = cartsRepository;
             this.productsRepository = productsRepository;
-            this.usersManager = userManager;
+            this.userManager = userManager;
         }
 
-        public IActionResult Index(string userName)
+        public IActionResult Index()
         {
-            var user = usersManager.FindByNameAsync(userName).Result;
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
 
             if (user == null)
                 return View("Error");
@@ -33,9 +33,9 @@ namespace OnlineShopWebApp.Controllers
             return View(cart?.ToCartViewModel());
         }
 
-        public IActionResult AddProduct(string userName, Guid productId)
+        public IActionResult AddProduct(Guid productId)
         {
-            var user = usersManager.FindByNameAsync(userName).Result;
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
 
             var product = productsRepository.TryGetById(productId);
 
@@ -45,18 +45,18 @@ namespace OnlineShopWebApp.Controllers
             return RedirectToAction(nameof(Index), new { userName = user.UserName });
         }
 
-        public IActionResult ClearCart(string userId)
+        public IActionResult ClearCart()
         {
-            var user = usersManager.FindByIdAsync(userId).Result;
-            cartsRepository.ClearCartByUserId(userId);
-            return RedirectToAction(nameof(Index), new { userName = user.UserName });
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            cartsRepository.ClearCartByUserId(user.Id);
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult ChangeProductAmount(string userId, Guid cartItemId, int difference)
+        public IActionResult ChangeProductAmount(Guid cartItemId, int difference)
         {
-            var user = usersManager.FindByIdAsync(userId).Result;
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
             cartsRepository.ChangeProductAmount(user.Id, cartItemId, difference);
-            return RedirectToAction(nameof(Index), new { userName = user.UserName });
+            return RedirectToAction(nameof(Index));
         }
     }
 }

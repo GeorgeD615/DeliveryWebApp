@@ -8,19 +8,19 @@ namespace OnlineShopWebApp.Views.Shared.Components.Favorites
     public class FavoritesViewComponent : ViewComponent
     {
         private readonly IFavoritesRepository favoritesRepository;
-        private readonly UserManager<User> usersManager;
+        private readonly UserManager<User> userManager;
 
         public FavoritesViewComponent(UserManager<User> userManager, IFavoritesRepository favoritesRepository)
         {
-            this.usersManager = userManager;
+            this.userManager = userManager;
             this.favoritesRepository = favoritesRepository;
         }
 
-        public IViewComponentResult Invoke(bool isAuthenticated, string userName)
+        public IViewComponentResult Invoke(bool isAuthenticated)
         {
             if(isAuthenticated)
             {
-                var user = usersManager.FindByNameAsync(userName).Result;
+                var user = userManager.GetUserAsync(HttpContext.User).Result;
                 var favoritesCount = favoritesRepository.GetByUserId(user.Id)?.Count() ?? 0;
                 return View("Favorites", favoritesCount);
             }
