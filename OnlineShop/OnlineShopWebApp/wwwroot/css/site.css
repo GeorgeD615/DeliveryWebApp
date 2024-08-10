@@ -118,3 +118,16 @@ a.gray:hover {
     padding-top : 1px;
     margin-top : 1px;
 }
+
+.entryButton {
+    font-size: 21px;
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.entryButton:hover {
+    font-size: 21px;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
