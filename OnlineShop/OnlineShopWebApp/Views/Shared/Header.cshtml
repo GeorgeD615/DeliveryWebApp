@@ -20,11 +20,8 @@
                         </form>
                     </div>
                 </div>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <div class="col-1 pt-4">
-                    </div>
-                }
+                <div class="col-1 pt-4">
+                </div>
                 <div class="col-2 pt-4">
                     @if (User.IsInRole(Constants.AdminRoleName))
                     {
@@ -42,29 +39,29 @@
                                     </svg>
                                 </a>
                             </div>
+                            <div class="col-3">
+                                @await Component.InvokeAsync("Favorites", new
+                                    {
+                                        isAuthenticated = User.Identity.IsAuthenticated,
+                                        userName = User.Identity.Name
+                                    })
+                            </div>
+                            <div class="col-3">
+                                @await Component.InvokeAsync("Cart", new
+                                    {
+                                        isAuthenticated = User.Identity.IsAuthenticated,
+                                        userName = User.Identity.Name
+                                    })
+                            </div>
                         }
                         else
                         {
-                            <div class="col-3 me-5">
-                                <a class="btn entryButton pt-1 pb-1" asp-area="" asp-controller="authorization" asp-action="logIn">
+                            <div class="col-3 ms-3 me-5">
+                                <a class="btn btn-outline-primary" asp-area="" asp-controller="authorization" asp-action="logIn">
                                     Войти
                                 </a>
                             </div>
                         }
-                        <div class="col-3">
-                            @await Component.InvokeAsync("Favorites", new 
-                                { 
-                                    isAuthenticated = User.Identity.IsAuthenticated, 
-                                    userName = User.Identity.Name 
-                                })
-                        </div>
-                        <div class="col-3">
-                            @await Component.InvokeAsync("Cart", new
-                                {
-                                    isAuthenticated = User.Identity.IsAuthenticated,
-                                    userName = User.Identity.Name
-                                })
-                        </div>
                     </div>
                 </div>
             </div>

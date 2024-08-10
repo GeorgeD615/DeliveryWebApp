@@ -120,13 +120,11 @@ a.gray:hover {
 }
 
 .entryButton {
-    font-size: 21px;
     color: #0d6efd;
     border-color: #0d6efd;
 }
 
 .entryButton:hover {
-    font-size: 21px;
     color: #fff;
     background-color: #0d6efd;
     border-color: #0d6efd;
