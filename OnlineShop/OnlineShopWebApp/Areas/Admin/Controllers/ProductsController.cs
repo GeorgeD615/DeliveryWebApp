@@ -17,21 +17,21 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             this.imagesProvider = imagesProvider;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var products = productsRepository.GetAll();
+            var products = await productsRepository.GetAllAsync();
             return View(products.Select(product => product.ToProductViewModel()).ToList());
         }
 
-        public IActionResult RemoveById(Guid productId)
+        public async Task<ActionResult> RemoveById(Guid productId)
         {
-            productsRepository.DeleteProduct(productId);
+            await productsRepository.DeleteProductAsync(productId);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Edit(Guid productId)
+        public async Task<ActionResult> Edit(Guid productId)
         {
-            var product = productsRepository.TryGetById(productId);
+            var product = await productsRepository.TryGetByIdAsync(productId);
 
             if (product == null)
                 return RedirectToAction(nameof(Index));
@@ -41,7 +41,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EditProductViewModel product)
+        public async Task<ActionResult> EditAsync(EditProductViewModel product)
         {
             product.Name = product.Name.Trim();
             product.Description = product.Description.Trim();
@@ -54,14 +54,14 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             var uploadedImagesPaths = imagesProvider.SafeFiles(product.UploadedFiles, ImageFolder.products);
 
-            productsRepository.Edit(product.ToProduct(uploadedImagesPaths));
+            await productsRepository.EditAsync(product.ToProduct(uploadedImagesPaths));
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Add() => View();
 
         [HttpPost]
-        public IActionResult Add(AddProductViewModel product)
+        public async Task<ActionResult> AddAsync(AddProductViewModel product)
         {
             product.Name = product.Name.Trim();
             product.Description = product.Description.Trim();
@@ -74,8 +74,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             var imagesPaths = imagesProvider.SafeFiles(product.UploadedFiles, ImageFolder.products);
 
-
-            productsRepository.Add(product.ToProduct(imagesPaths));
+            await productsRepository.AddAsync(product.ToProduct(imagesPaths));
             return RedirectToAction(nameof(Index));
         }
     }

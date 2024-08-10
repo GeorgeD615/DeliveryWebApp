@@ -23,25 +23,25 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public IActionResult Index(RoleViewModel role)
+        public async Task<ActionResult> Index(RoleViewModel role)
         {
             var roleName = role.Name.Trim().ToLower();
 
-            if (rolesManager.RoleExistsAsync(roleName).Result)
+            if (await rolesManager.RoleExistsAsync(roleName))
                 ModelState.AddModelError("", "Такая роль уже существует");
 
             if (!ModelState.IsValid)
                 return View(role);
 
-            rolesManager.CreateAsync(new IdentityRole { Name = roleName, }).Wait();
+            await rolesManager.CreateAsync(new IdentityRole { Name = roleName, });
 
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult RemoveById(string roleId)
+        public async Task<ActionResult> RemoveByIdAsync(string roleId)
         {
-            var role = rolesManager.FindByIdAsync(roleId).Result;
-            var usersInRole = usersManager.GetUsersInRoleAsync(role.Name).Result;
+            var role = await rolesManager.FindByIdAsync(roleId);
+            var usersInRole = await usersManager.GetUsersInRoleAsync(role.Name);
 
             if(usersInRole.Count > 0)
                 ModelState.AddModelError("", "Данная роль уже присвоена какому-то пользователю.");
@@ -51,7 +51,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
 
             if (role != null)
-                rolesManager.DeleteAsync(role).Wait();
+                await rolesManager.DeleteAsync(role);
 
             return RedirectToAction(nameof(Index));
         }

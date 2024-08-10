@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
 
@@ -12,16 +13,18 @@ namespace OnlineShop.Db.Implementations
         {
             this.databaseContext = databaseContext;
         }
-        public void Add(Address address)
+        public async Task AddAsync(Address address)
         {
-            var userAddresses = databaseContext.Addresses.Where(addressFromDB => addressFromDB.UserId == address.UserId).ToList();
+            var userAddresses = await databaseContext.Addresses.
+                Where(addressFromDB => addressFromDB.UserId == address.UserId).
+                ToListAsync();
 
             address.IsLast = true;
 
             if (userAddresses.IsNullOrEmpty())
             {
                 databaseContext.Addresses.Add(address);
-                databaseContext.SaveChanges();
+                await databaseContext.SaveChangesAsync();
                 return;
             }
 
@@ -36,27 +39,27 @@ namespace OnlineShop.Db.Implementations
 
             databaseContext.Addresses.Add(address);
 
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public List<Address> GetByUserId(string userId)
+        public async Task<List<Address>> GetByUserIdAsync(string userId)
         {
-            return databaseContext.Addresses.Where(a => a.UserId == userId).ToList();
+            return await databaseContext.Addresses.Where(a => a.UserId == userId).ToListAsync();
         }
 
-        public Address? TryGetById(Guid addressId)
+        public async Task<Address?> TryGetByIdAsync(Guid addressId)
         {
-            return databaseContext.Addresses.FirstOrDefault(address => address.Id == addressId);
+            return await databaseContext.Addresses.FirstOrDefaultAsync(address => address.Id == addressId);
         }
 
-        public void ResetLastAddress(string userId, Guid addressId)
+        public async Task ResetLastAddressAsync(string userId, Guid addressId)
         {
-            var userAddresses = GetByUserId(userId);
+            var userAddresses = await GetByUserIdAsync(userId);
 
             foreach (var a in userAddresses)
                 a.IsLast = a.Id == addressId;
 
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
     }
 }

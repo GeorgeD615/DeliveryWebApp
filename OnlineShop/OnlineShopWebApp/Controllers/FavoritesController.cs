@@ -21,34 +21,34 @@ namespace OnlineShopWebApp.Controllers
             this.favoritesRepository = favoritesRepository;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var user = usersManager.GetUserAsync(HttpContext.User).Result;
-            var favorites = favoritesRepository.GetByUserId(user.Id);
+            var favorites = await favoritesRepository.GetByUserIdAsync(user.Id);
             return View(favorites?.Select(favorite => favorite.ToProductViewModel()).ToList());
         }
 
-        public IActionResult AddFavorite(Guid productId)
+        public async Task<ActionResult> AddFavoriteAsync(Guid productId)
         {
-            var favoriteProduct = productsRepository.TryGetById(productId);
+            var favoriteProduct = await productsRepository.TryGetByIdAsync(productId);
 
-            var user = usersManager.GetUserAsync(HttpContext.User).Result;
+            var user = await usersManager.GetUserAsync(HttpContext.User);
 
             if (favoriteProduct != null)
-                favoritesRepository.Add(user, favoriteProduct);
+                await favoritesRepository.AddAsync(user, favoriteProduct);
 
-            return RedirectToAction(nameof(Index), new { userName = user.UserName });
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult RemoveFavorite(Guid productId)
+        public async Task<ActionResult> RemoveFavoriteAsync(Guid productId)
         {
             var user = usersManager.GetUserAsync(HttpContext.User).Result;
-            var product = favoritesRepository.GetByUserId(user.Id).FirstOrDefault(p => p.Id == productId);
+            var product = (await favoritesRepository.GetByUserIdAsync(user.Id)).FirstOrDefault(p => p.Id == productId);
 
             if (user != null && product != null)
-                favoritesRepository.Remove(user, product);
+                await favoritesRepository.RemoveAsync(user, product);
 
-            return RedirectToAction(nameof(Index), new { user.UserName });
+            return RedirectToAction(nameof(Index));
         }
     }
 }

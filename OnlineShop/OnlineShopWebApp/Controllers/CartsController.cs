@@ -21,41 +21,41 @@ namespace OnlineShopWebApp.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
 
             if (user == null)
                 return View("Error");
 
-            var cart = cartsRepository.TryGetByUserId(user.Id);
+            var cart = await cartsRepository.TryGetByUserIdAsync(user.Id);
 
             return View(cart?.ToCartViewModel());
         }
 
-        public IActionResult AddProduct(Guid productId)
+        public async Task<ActionResult> AddProductAsync(Guid productId)
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
+            var user = await userManager.GetUserAsync(HttpContext.User);
 
-            var product = productsRepository.TryGetById(productId);
+            var product = await productsRepository.TryGetByIdAsync(productId);
 
             if(product != null && user != null)
-                cartsRepository.AddProduct(product, user.Id);
+                await cartsRepository.AddProductAsync(product, user.Id);
 
-            return RedirectToAction(nameof(Index), new { userName = user.UserName });
-        }
-
-        public IActionResult ClearCart()
-        {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
-            cartsRepository.ClearCartByUserId(user.Id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult ChangeProductAmount(Guid cartItemId, int difference)
+        public async Task<ActionResult> ClearCartAsync()
         {
-            var user = userManager.GetUserAsync(HttpContext.User).Result;
-            cartsRepository.ChangeProductAmount(user.Id, cartItemId, difference);
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            await cartsRepository.ClearCartByUserIdAsync(user.Id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<ActionResult> ChangeProductAmountAsync(Guid cartItemId, int difference)
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            await cartsRepository.ChangeProductAmountAsync(user.Id, cartItemId, difference);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -15,20 +15,20 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             this.ordersRepository = ordersRepository;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var orders = ordersRepository.GetAll();
+            var orders = await ordersRepository.GetAllAsync();
             return View(orders?.Select(order => order.ToOrderViewModel()).ToList());
         }
-        public IActionResult ShowInfo(Guid orderId)
+        public async Task<ActionResult> ShowInfoAsync(Guid orderId)
         {
-            var order = ordersRepository.TryGetById(orderId);
+            var order = await ordersRepository.TryGetByIdAsync(orderId);
             return View(order?.ToOrderViewModel());
         }
-        public IActionResult EditStatus(Guid orderId, StateOfOrder status)
+        public async Task<ActionResult> EditStatusAsync(Guid orderId, StateOfOrder status)
         {
-            ordersRepository.EditStatus(orderId, status);
-            return RedirectToAction(nameof(ShowInfo), new { orderId });
+            await ordersRepository.EditStatusAsync(orderId, status);
+            return RedirectToAction(nameof(ShowInfoAsync), new { orderId });
         }
     }
 }

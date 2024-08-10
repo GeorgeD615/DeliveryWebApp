@@ -13,33 +13,35 @@ namespace OnlineShop.Db.Implementations
             this.databaseContext = databaseContext;
         }
 
-        public List<Product> GetAll() => databaseContext.Products.Include(product => product.Images).AsNoTracking().ToList();
-        public int GetAmount() => databaseContext.Products.Count();
-        public Product? TryGetById(Guid productId)
+        public async Task<List<Product>> GetAllAsync() => await databaseContext.Products.Include(product => product.Images).AsNoTracking().ToListAsync();
+        public async Task<int> GetAmountAsync() => await databaseContext.Products.CountAsync();
+        public async Task<Product?> TryGetByIdAsync(Guid productId)
         {
-            return databaseContext.Products.Include(product => product.Images).
-                FirstOrDefault(p => p.Id == productId);
+            return await databaseContext.Products.Include(product => product.Images).
+                FirstOrDefaultAsync(p => p.Id == productId);
         }
-        public List<Product> GetPageOfProducts(int numberOfProductsPerPage, int pageNumber, int amountOfPages)
+        public async Task<List<Product>> GetPageOfProductsAsync(int numberOfProductsPerPage, int pageNumber, int amountOfPages)
         {
-            int lastIndex = pageNumber < amountOfPages ? numberOfProductsPerPage : databaseContext.Products.Count() - numberOfProductsPerPage * (pageNumber - 1);
-            return databaseContext.Products.Include(product => product.Images).ToList().
-                GetRange((pageNumber - 1) * numberOfProductsPerPage, lastIndex);
+            int lastIndex = pageNumber < amountOfPages ? 
+                numberOfProductsPerPage : 
+                await databaseContext.Products.CountAsync() - numberOfProductsPerPage * (pageNumber - 1);
+            var products = await databaseContext.Products.Include(product => product.Images).ToListAsync();
+            return products.GetRange((pageNumber - 1) * numberOfProductsPerPage, lastIndex);
         }
-        public void DeleteProduct(Guid productId)
+        public async Task DeleteProductAsync(Guid productId)
         {
-            var product = TryGetById(productId);
+            var product = await TryGetByIdAsync(productId);
 
             if (product == null)
                 throw new Exception("Товар не найден");
 
             databaseContext.Products.Remove(product);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public void Edit(Product product)
+        public async Task EditAsync(Product product)
         {
-            var existingProduct = TryGetById(product.Id);
+            var existingProduct = await TryGetByIdAsync(product.Id);
 
             if (existingProduct == null)
                 return;
@@ -54,18 +56,18 @@ namespace OnlineShop.Db.Implementations
                 databaseContext.Image.Add(image);
             }
 
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
-        public void Add(Product product)
+        public async Task AddAsync(Product product)
         {
             databaseContext.Products.Add(product);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
-        public List<Product> SearchByName(string name) 
+        public async Task<List<Product>> SearchByNameAsync(string name) 
         {
-            return databaseContext.Products.Include(product => product.Images)
+            return await databaseContext.Products.Include(product => product.Images)
                 .Where(product => EF.Functions.Like(product.Name, $"%{name}%"))
-                .ToList();
+                .ToListAsync();
         }
     }
 }

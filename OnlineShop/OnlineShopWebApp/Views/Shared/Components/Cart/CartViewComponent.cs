@@ -16,12 +16,12 @@ namespace OnlineShopWebApp.Views.Shared.Components.Cart
             this.usersManager = usersManager;
         }
 
-        public IViewComponentResult Invoke(bool isAuthenticated)
+        public async Task<IViewComponentResult> InvokeAsync(bool isAuthenticated)
         {
             if (isAuthenticated)
             {
-                var user = usersManager.GetUserAsync(HttpContext.User).Result;
-                var cart = cartsRepository.TryGetByUserId(user.Id);
+                var user = await usersManager.GetUserAsync(HttpContext.User);
+                var cart = await cartsRepository.TryGetByUserIdAsync(user.Id);
                 var amount = cart?.Items.Sum(item => item.Amount) ?? 0;
                 return View("Cart", amount);
             }

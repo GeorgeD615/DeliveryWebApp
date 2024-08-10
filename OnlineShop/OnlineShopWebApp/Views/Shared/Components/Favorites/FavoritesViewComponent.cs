@@ -16,12 +16,12 @@ namespace OnlineShopWebApp.Views.Shared.Components.Favorites
             this.favoritesRepository = favoritesRepository;
         }
 
-        public IViewComponentResult Invoke(bool isAuthenticated)
+        public async Task<IViewComponentResult> InvokeAsync(bool isAuthenticated)
         {
             if(isAuthenticated)
             {
                 var user = userManager.GetUserAsync(HttpContext.User).Result;
-                var favoritesCount = favoritesRepository.GetByUserId(user.Id)?.Count() ?? 0;
+                var favoritesCount = (await favoritesRepository.GetByUserIdAsync(user.Id))?.Count() ?? 0;
                 return View("Favorites", favoritesCount);
             }
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Db;
-using OnlineShop.Db.Implementations;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
@@ -34,7 +33,7 @@ namespace OnlineShopWebApp.Controllers
         public IActionResult Index(string userId) => View(new AddressViewModel() { UserId = userId });
          
         [HttpPost]
-        public IActionResult AddAddress(AddressViewModel address)
+        public async Task<ActionResult> AddAddressAsync(AddressViewModel address)
         {
             address.City = address.City.Trim();
             address.Street = address.Street.Trim();
@@ -47,15 +46,15 @@ namespace OnlineShopWebApp.Controllers
             var newAddress = address.ToAddress();
             newAddress.UserId = user.Id;
 
-            addressRepository.Add(newAddress);
+            await addressRepository.AddAsync(newAddress);
 
             return RedirectToAction("Index", "Orders", new { userId = address.UserId });
         }
 
         [HttpPost]
-        public IActionResult RemoveAddress(Guid userId, Guid addressId)
+        public async Task<ActionResult> RemoveAddress(Guid addressId)
         {
-            var user = usersManager.FindByIdAsync(userId.ToString()).Result;
+            var user = await usersManager.GetUserAsync(HttpContext.User);
 
             var address = user!.Addresses.FirstOrDefault(address => address.Id == addressId);
 
@@ -69,21 +68,21 @@ namespace OnlineShopWebApp.Controllers
             if (isLast && user.Addresses.Any())
                 user.Addresses[0].IsLast = true;
 
-            usersManager.UpdateAsync(user);
-            return RedirectToAction("Index", "Orders", new { userId });
+            await usersManager.UpdateAsync(user);
+            return RedirectToAction("Index", "Orders", new { user.Id });
         }
 
         [HttpGet]
-        public IActionResult Profile()
+        public async Task<ActionResult> ProfileAsync()
         {
-            var user = usersManager.GetUserAsync(HttpContext.User).Result;
+            var user = await usersManager.GetUserAsync(HttpContext.User);
 
             if (user == null) 
                 return View("Error");
 
-            var addresses = addressRepository.GetByUserId(user.Id);
-            var orders = ordersRepository.GetByUserId(user.Id);
-            var avatar = imagesRepository.TryGetAvatarByUserId(user.Id);
+            var addresses = await addressRepository.GetByUserIdAsync(user.Id);
+            var orders = await ordersRepository.GetByUserIdAsync(user.Id);
+            var avatar = await imagesRepository.TryGetAvatarByUserIdAsync(user.Id);
 
             var profile = new ProfileViewModel()
             {
@@ -96,28 +95,28 @@ namespace OnlineShopWebApp.Controllers
             return View(profile);
         }
 
-        public IActionResult OrderInfo(Guid orderId)
+        public async Task<ActionResult> OrderInfoAsync(Guid orderId)
         {
-            var order = ordersRepository.TryGetById(orderId);
+            var order = await ordersRepository.TryGetByIdAsync(orderId);
             return View(order?.ToOrderViewModel());
         }
 
         [HttpPost]
-        public IActionResult Profile(ProfileViewModel profileModel)
+        public async Task<ActionResult> ProfileAsync(ProfileViewModel profileModel)
         {
             profileModel.Login = profileModel.Login.Trim();
 
-            var currentUser = usersManager.GetUserAsync(HttpContext.User).Result;
+            var currentUser = await usersManager.GetUserAsync(HttpContext.User);
 
-            var user = usersManager.FindByNameAsync(profileModel.Login).Result;
+            var user = await usersManager.FindByNameAsync(profileModel.Login);
 
             if (user != null && user.Id != currentUser.Id)
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
 
             if (!ModelState.IsValid)
             {
-                var addresses = addressRepository.GetByUserId(currentUser.Id);
-                var orders = ordersRepository.GetByUserId(currentUser.Id);
+                var addresses = await addressRepository.GetByUserIdAsync(currentUser.Id);
+                var orders = await ordersRepository.GetByUserIdAsync(currentUser.Id);
 
                 profileModel.Addresses = addresses.Select(ModelConverter.ToAddressViewModel).ToList();
                 profileModel.Orders = orders.Select(order => order.ToOrderViewModel()).ToList();
@@ -127,14 +126,14 @@ namespace OnlineShopWebApp.Controllers
             if(profileModel.UploadedFile != null)
             {
                 var uploadedImagePath = imagesProvider.SafeFile(profileModel.UploadedFile, ImageFolder.avatars);
-                imagesRepository.SetAvatar(uploadedImagePath.ToAvatar(currentUser.Id));
+                await imagesRepository.SetAvatarAsync(uploadedImagePath.ToAvatar(currentUser.Id));
             }
 
             currentUser.UserName = profileModel.Login;
 
-            usersManager.UpdateAsync(currentUser).Wait();
+            await usersManager.UpdateAsync(currentUser);
 
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction("Profile");
         }
     }
 }

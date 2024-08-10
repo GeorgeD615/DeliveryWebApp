@@ -4,9 +4,9 @@ namespace OnlineShop.Db.Interfaces
 {
     public interface IAddressesRepository
     {
-        void Add(Address address);
-        List<Address> GetByUserId(string userId);
-        Address? TryGetById(Guid addressId);
-        void ResetLastAddress(string userId, Guid addressId);
+        Task AddAsync(Address address);
+        Task<List<Address>> GetByUserIdAsync(string userId);
+        Task<Address?> TryGetByIdAsync(Guid addressId);
+        Task ResetLastAddressAsync(string userId, Guid addressId);
     }
 }

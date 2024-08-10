@@ -11,36 +11,36 @@ namespace OnlineShop.Db.Implementations
         { 
             this.databaseContext = databaseContext;
         }
-        public void Add(User user, Product product)
+        public async Task AddAsync(User user, Product product)
         {
-            if (databaseContext.Favorites.
-                Any(fav => fav.UserId == user.Id && fav.ProductId == product.Id))
+            if (await databaseContext.Favorites.
+                AnyAsync(fav => fav.UserId == user.Id && fav.ProductId == product.Id))
                 return;
             var newFavorite = new Favorite { User = user, Product = product };
             databaseContext.Favorites.Add(newFavorite);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public List<Product> GetByUserId(string userId)
+        public async Task<List<Product>> GetByUserIdAsync(string userId)
         {
-            return databaseContext.Favorites.
+            return await databaseContext.Favorites.
                 Include(fav => fav.Product).
                 ThenInclude(product => product.Images).
                 Where(fav => fav.UserId == userId).
                 Select(fav => fav.Product).
-                ToList();
+                ToListAsync();
         }
 
-        public void Remove(User user, Product product)
+        public async Task RemoveAsync(User user, Product product)
         {
-            var favorite = databaseContext.Favorites
-                .FirstOrDefault(fav => fav.UserId == user.Id && fav.ProductId == product.Id);
+            var favorite = await databaseContext.Favorites
+                .FirstOrDefaultAsync(fav => fav.UserId == user.Id && fav.ProductId == product.Id);
 
             if (favorite == null)
                 return;
 
             databaseContext.Favorites.Remove(favorite);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
     }
 }

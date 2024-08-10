@@ -26,36 +26,36 @@ namespace OnlineShopWebApp.Controllers
             this.addressesRepository = addressRepository;
         }
 
-        public IActionResult Index(string userId)
+        public async Task<ActionResult> Index(string userId)
         {
-            var user = usersManager.FindByIdAsync(userId).Result;
+            var user = await usersManager.FindByIdAsync(userId);
 
             if (user == null)
                 return RedirectToAction("Index", "Carts");
 
-            var cart = cartsRepository.TryGetByUserId(user.Id);
+            var cart = await cartsRepository.TryGetByUserIdAsync(user.Id);
 
             if (cart == null)
                 return RedirectToAction("Index", "Carts");
 
-            var addresses = addressesRepository.GetByUserId(user.Id);
+            var addresses = await addressesRepository.GetByUserIdAsync(user.Id);
 
             return View(new OrderFormViewModel(
                 addresses.Select(address => address.ToAddressViewModel()).ToList(),
                 addresses.FirstOrDefault(a => a.IsLast)?.ToAddressViewModel(),
                 cart.ToCartViewModel(),
-                userId)
+                userId) 
             );
         }
 
         [HttpPost]
-        public IActionResult CreateOrder(string userId, Guid addressId, string commentsToCourier)
+        public async Task<ActionResult> CreateOrderAsync(string userId, Guid addressId, string commentsToCourier)
         {
-            var user = usersManager.FindByIdAsync(userId.ToString()).Result;
-            var cart = cartsRepository.TryGetByUserId(userId);
-            addressesRepository.ResetLastAddress(userId, addressId);
+            var user = await usersManager.FindByIdAsync(userId.ToString());
+            var cart = await cartsRepository.TryGetByUserIdAsync(userId);
+            await addressesRepository.ResetLastAddressAsync(userId, addressId);
 
-            var address = addressesRepository.TryGetById(addressId);
+            var address = await addressesRepository.TryGetByIdAsync(addressId);
 
             var order = new Order()
             {
@@ -66,8 +66,8 @@ namespace OnlineShopWebApp.Controllers
                 StateOfOrder = StateOfOrder.InProcessing,
                 TimeOfOrder = DateTime.Now
             };
-            ordersRepository.Add(order);
-            cartsRepository.ClearCartByUserId(userId);
+            await ordersRepository.AddAsync(order);
+            await cartsRepository.ClearCartByUserIdAsync(userId);
             return View("OrderCreated", order.ToOrderViewModel());
         }
     }

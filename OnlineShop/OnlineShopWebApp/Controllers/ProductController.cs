@@ -14,9 +14,9 @@ namespace OnlineShopWebApp.Controllers
             this.productsRepository = productsRepository;
         }
 
-        public IActionResult Index(Guid productId)
+        public async Task<ActionResult> Index(Guid productId)
         {
-            var product = productsRepository.TryGetById(productId);
+            var product = await productsRepository.TryGetByIdAsync(productId);
 
             if (product == null)
                 return View("Error");
@@ -24,13 +24,13 @@ namespace OnlineShopWebApp.Controllers
             return View(product.ToProductViewModel());
         }
 
-        public IActionResult Page(int numberOfProductsPerPage, int pageNumber)
+        public async Task<ActionResult> PageAsync(int numberOfProductsPerPage, int pageNumber)
         {
             if (numberOfProductsPerPage <= 0 || pageNumber <= 0)
                 return View(null);
 
-            int amountOfPages = productsRepository.GetAmount() / numberOfProductsPerPage +
-                ((productsRepository.GetAmount() % numberOfProductsPerPage) == 0 ? 0 : 1);
+            int amountOfPages = await productsRepository.GetAmountAsync() / numberOfProductsPerPage +
+                ((await productsRepository.GetAmountAsync() % numberOfProductsPerPage) == 0 ? 0 : 1);
 
             if (pageNumber > amountOfPages)
                 return View(null);
@@ -55,7 +55,7 @@ namespace OnlineShopWebApp.Controllers
                     break;
             }
                 
-            var products = productsRepository.GetPageOfProducts(numberOfProductsPerPage, pageNumber, amountOfPages);
+            var products = await productsRepository.GetPageOfProductsAsync(numberOfProductsPerPage, pageNumber, amountOfPages);
             productsPage.Products = products.Select(product => product.ToProductViewModel()).ToList();  
 
             return View(productsPage);

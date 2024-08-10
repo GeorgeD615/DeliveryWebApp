@@ -11,18 +11,18 @@ namespace OnlineShop.Db.Implementations
         {
             this.databaseContext = databaseContext;
         }
-        public Cart? TryGetByUserId(string userId)
+        public async Task<Cart?> TryGetByUserIdAsync(string userId)
         {
-            return databaseContext.Carts
+            return await databaseContext.Carts
                 .Include(cart => cart.Items)
                 .ThenInclude(item => item.Product)
                 .ThenInclude(product => product.Images)
-                .FirstOrDefault(cart => cart.UserId == userId);
+                .FirstOrDefaultAsync(cart => cart.UserId == userId);
         }
 
-        public void AddProduct(Product product, string userId)
+        public async Task AddProductAsync(Product product, string userId)
         {
-            var cart = TryGetByUserId(userId);
+            var cart = await TryGetByUserIdAsync(userId);
 
             if (cart == null)
             {
@@ -47,11 +47,11 @@ namespace OnlineShop.Db.Implementations
             else
                 itemInCart.Amount += 1;
 
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
-        public void ChangeProductAmount(string userId, Guid cartItemId, int difference)
+        public async Task ChangeProductAmountAsync(string userId, Guid cartItemId, int difference)
         {
-            var cart = TryGetByUserId(userId);
+            var cart = await TryGetByUserIdAsync(userId);
 
             if(cart == null) 
                 throw new Exception("Корзина не найдена");
@@ -71,17 +71,17 @@ namespace OnlineShop.Db.Implementations
             if (!cart.Items.Any())
                 databaseContext.Carts.Remove(cart);
 
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
-        public void ClearCartByUserId(string userId)
+        public async Task ClearCartByUserIdAsync(string userId)
         {
-            var cart = TryGetByUserId(userId);
+            var cart = await TryGetByUserIdAsync(userId);
 
             if (cart == null)
                 throw new Exception("Корзина не найдена");
 
             databaseContext.Carts.Remove(cart);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
     }
 }

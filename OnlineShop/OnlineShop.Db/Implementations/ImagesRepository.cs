@@ -1,10 +1,6 @@
-﻿using OnlineShop.Db.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineShop.Db.Implementations
 {
@@ -16,23 +12,21 @@ namespace OnlineShop.Db.Implementations
         {
             this.databaseContext = databaseContext;
         }
-        public Avatar? TryGetAvatarByUserId(string userId)
+        public async Task<Avatar?> TryGetAvatarByUserIdAsync(string userId)
         {
-            return databaseContext.Avatars.FirstOrDefault(avatar => avatar.UserId == userId);
+            return await databaseContext.Avatars.FirstOrDefaultAsync(avatar => avatar.UserId == userId);
         }
 
-        public void SetAvatar(Avatar newAvatar)
+        public async Task SetAvatarAsync(Avatar newAvatar)
         {
-            var avatar = databaseContext.Avatars.FirstOrDefault(a => a.UserId == newAvatar.UserId);
+            var avatar = await databaseContext.Avatars.FirstOrDefaultAsync(a => a.UserId == newAvatar.UserId);
 
             if(avatar == null)
                 databaseContext.Avatars.Add(newAvatar);
             else
-            {
                 avatar.Url = newAvatar.Url;
-            }
 
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
     }
 }

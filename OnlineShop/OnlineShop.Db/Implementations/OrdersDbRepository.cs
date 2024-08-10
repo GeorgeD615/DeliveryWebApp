@@ -13,49 +13,49 @@ namespace OnlineShopWebApp.Models.Orders
             this.databaseContext = databaseContext;
         }
 
-        public void Add(Order order) 
+        public async Task AddAsync(Order order) 
         {
             databaseContext.Orders.Add(order);
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public void EditStatus(Guid orderId, StateOfOrder status)
+        public async Task EditStatusAsync(Guid orderId, StateOfOrder status)
         {
-            var order = TryGetById(orderId);
+            var order = await TryGetByIdAsync(orderId);
 
             if (order == null)
                 throw new Exception("Заказ не найден");
                 
             order.StateOfOrder = status;
-            databaseContext.SaveChanges();
+            await databaseContext.SaveChangesAsync();
         }
 
-        public List<Order> GetAll() 
+        public async Task<List<Order>> GetAllAsync() 
         {
-            return databaseContext.Orders.AsNoTracking()
+            return await databaseContext.Orders.AsNoTracking()
                 .Include(order => order.CartItems)
                 .ThenInclude(item => item.Product)
                 .Include(order => order.User)
-                .ToList(); 
+                .ToListAsync(); 
         }
 
-        public List<Order> GetByUserId(string userId)
+        public async Task<List<Order>> GetByUserIdAsync(string userId)
         {
-            return databaseContext.Orders
+            return await databaseContext.Orders
                 .Include(order => order.CartItems)
                 .ThenInclude(item => item.Product)
                 .Include(order => order.Address)
-                .Where(order => order.UserId == userId).ToList();
+                .Where(order => order.UserId == userId).ToListAsync();
         }
 
-        public Order? TryGetById(Guid orderId)
+        public async Task<Order?> TryGetByIdAsync(Guid orderId)
         {
-            return databaseContext.Orders
+            return await databaseContext.Orders
                 .Include(order => order.CartItems)
                 .ThenInclude(item => item.Product)
                 .Include(order => order.User)
                 .Include(order => order.Address)
-                .FirstOrDefault(order => order.Id == orderId);
+                .FirstOrDefaultAsync(order => order.Id == orderId);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace OnlineShop.Db.Interfaces
 {
     public interface IImagesRepository
     {
-        public void SetAvatar(Avatar avatar);
-        public Avatar? TryGetAvatarByUserId(string userId);
+        Task SetAvatarAsync(Avatar avatar);
+        Task<Avatar?> TryGetAvatarByUserIdAsync(string userId);
     }
 }

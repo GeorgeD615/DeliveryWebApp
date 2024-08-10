@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Db;
 using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
@@ -19,31 +20,31 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
             this.usersManager = usersManager;
         }
 
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var users = usersManager.Users.ToList();
+            var users = await usersManager.Users.ToListAsync();
 
             var usersViewModels = users.
                 Select(user => user.
-                ToUserViewModel(GetUserRole(user))).ToList();
+                ToUserViewModel(GetUserRoleAsync(user).Result)).ToList();
 
             return View(usersViewModels);
         }
 
-        private string? GetUserRole(User user) => usersManager.GetRolesAsync(user).Result?.FirstOrDefault();
+        private async Task<string?> GetUserRoleAsync(User user) => (await usersManager.GetRolesAsync(user))?.FirstOrDefault();
 
-        public IActionResult ShowUser(string userId)
+        public async Task<ActionResult> ShowUserAsync(string userId)
         {
-            var user = usersManager.FindByIdAsync(userId).Result;
-            return View(user!.ToUserViewModel(usersManager.GetRolesAsync(user).Result?.FirstOrDefault()));
+            var user = await usersManager.FindByIdAsync(userId);
+            return View(user!.ToUserViewModel((await usersManager.GetRolesAsync(user))?.FirstOrDefault()));
         }
 
         public IActionResult ChangePassword(string userId) => View(new ChangePasswordViewModel() { UserId = userId });
 
         [HttpPost]
-        public IActionResult ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangePasswordAsync(ChangePasswordViewModel model)
         {
-            var user = usersManager.FindByIdAsync(model.UserId).Result;
+            var user = await usersManager.FindByIdAsync(model.UserId);
 
             if (user.UserName == model.Password)
                 ModelState.AddModelError("", "Пароль и логин не должны совпадать.");
@@ -53,23 +54,23 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             var newHashPassword = usersManager.PasswordHasher.HashPassword(user!, model.Password);
             user!.PasswordHash = newHashPassword;
-            usersManager.UpdateAsync(user).Wait();
+            await usersManager.UpdateAsync(user);
 
-            return RedirectToAction(nameof(ShowUser), new { model.UserId });
+            return RedirectToAction("ShowUser", new { model.UserId });
         }
 
-        public IActionResult Edit(string userId)
+        public async Task<ActionResult> EditAsync(string userId)
         {
-            var user = usersManager.FindByIdAsync(userId.ToString()).Result;
-            var roleName = usersManager.GetRolesAsync(user).Result.FirstOrDefault();
+            var user = await usersManager.FindByIdAsync(userId.ToString());
+            var roleName = (await usersManager.GetRolesAsync(user)).FirstOrDefault();
             var editUserVM = new EditUserViewModel { UserId = userId, Login = user.UserName, Role = roleName };
             return View(editUserVM);
         }
 
         [HttpPost]
-        public IActionResult Edit(EditUserViewModel userVM)
+        public async Task<ActionResult> EditAsync(EditUserViewModel userVM)
         {
-            var user = usersManager.FindByIdAsync(userVM.UserId).Result;
+            var user = await usersManager.FindByIdAsync(userVM.UserId);
 
             if (user != null && user.Id != userVM.UserId.ToString())
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
@@ -78,34 +79,34 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                 return View(userVM);
 
             user.UserName = userVM.Login;
-            var currentRole = usersManager.GetRolesAsync(user).Result.FirstOrDefault();
+            var currentRole = (await usersManager.GetRolesAsync(user)).FirstOrDefault();
 
             if (currentRole != null)
-                usersManager.RemoveFromRoleAsync(user, currentRole).Wait();
+                await usersManager.RemoveFromRoleAsync(user, currentRole);
 
-            usersManager.AddToRoleAsync(user, userVM.Role).Wait();
+            await usersManager.AddToRoleAsync(user, userVM.Role);
 
-            usersManager.UpdateAsync(user).Wait();
+            await usersManager.UpdateAsync(user);
 
-            return RedirectToAction(nameof(ShowUser), new { userVM.UserId });
+            return RedirectToAction("ShowUser", new { userVM.UserId });
         }
 
-        public IActionResult Remove(string userId)
+        public async Task<ActionResult> Remove(string userId)
         {
-            var user = usersManager.FindByIdAsync(userId).Result;
-            usersManager.DeleteAsync(user!).Wait();
+            var user = await usersManager.FindByIdAsync(userId);
+            await usersManager.DeleteAsync(user!);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Create() => View(new CreateUserViewModel() { RegistrationModel = new RegistrationViewModel() });
 
         [HttpPost]
-        public IActionResult Create(CreateUserViewModel createUserViewModel)
+        public async Task<ActionResult> CreateAsync(CreateUserViewModel createUserViewModel)
         {
             if (createUserViewModel.RegistrationModel.Password == createUserViewModel.RegistrationModel.Login)
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
 
-            var existingUser = usersManager.FindByNameAsync(createUserViewModel.RegistrationModel.Login).Result;
+            var existingUser = await usersManager.FindByNameAsync(createUserViewModel.RegistrationModel.Login);
 
             if (existingUser != null)
                 ModelState.AddModelError("", "Пользователь с таким логином уже существует");
@@ -114,8 +115,8 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
                 return View(createUserViewModel);
 
             var user = new User() { UserName = createUserViewModel.RegistrationModel.Login };
-            usersManager.CreateAsync(user, createUserViewModel.RegistrationModel.Password).Wait();
-            usersManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
+            await usersManager.CreateAsync(user, createUserViewModel.RegistrationModel.Password);
+            await usersManager.AddToRoleAsync(user, Constants.UserRoleName);
 
             return RedirectToAction(nameof(Index));
         }

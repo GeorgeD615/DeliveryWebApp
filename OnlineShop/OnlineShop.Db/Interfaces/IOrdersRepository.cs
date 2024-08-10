@@ -5,10 +5,10 @@ namespace OnlineShopWebApp.Models.Orders
 {
     public interface IOrdersRepository
     {
-        List<Order> GetAll();
-        void Add(Order order);
-        Order? TryGetById(Guid orderId);
-        void EditStatus(Guid orderId, StateOfOrder status);
-        List<Order> GetByUserId(string userId);
+        Task<List<Order>> GetAllAsync();
+        Task AddAsync(Order order);
+        Task<Order?> TryGetByIdAsync(Guid orderId);
+        Task EditStatusAsync(Guid orderId, StateOfOrder status);
+        Task<List<Order>> GetByUserIdAsync(string userId);
     }
 }

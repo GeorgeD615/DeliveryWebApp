@@ -13,15 +13,15 @@ namespace OnlineShopWebApp.Controllers
             this.productsRepository = productsRepository;
         }
 
-        public IActionResult Index(string name) {
+        public async Task<ActionResult> Index(string name) {
             var searchName = name?.Trim();
 
             if (string.IsNullOrEmpty(searchName))
-                return View(productsRepository.GetAll()
+                return View((await productsRepository.GetAllAsync())
                     .Select(product => product.ToProductViewModel())
                     .ToList());
 
-            var products = productsRepository.SearchByName(searchName);
+            var products = await productsRepository.SearchByNameAsync(searchName);
 
             return View(products
                 .Select(product => product.ToProductViewModel())
