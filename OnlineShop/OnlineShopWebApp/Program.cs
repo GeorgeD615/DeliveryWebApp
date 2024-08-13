@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using OnlineShop.Db;
 using OnlineShop.Db.Implementations;
 using OnlineShop.Db.Interfaces;
 using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Orders;
+using OnlineShopWebApp.ReviewApi;
 using Serilog;
 using System.Globalization;
 
@@ -47,6 +49,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
+builder.Services.AddHttpClient("ReviewApi", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://localhost:7274/");
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -57,6 +63,8 @@ builder.Services.AddTransient<IFavoritesRepository, FavoritesDbRepository>();
 builder.Services.AddTransient<IAddressesRepository, AddressesDbRepository>();
 builder.Services.AddTransient<IImagesRepository, ImagesRepository>();
 builder.Services.AddTransient<ImagesProvider>();
+builder.Services.AddTransient<ReviewApiClient>();
+
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

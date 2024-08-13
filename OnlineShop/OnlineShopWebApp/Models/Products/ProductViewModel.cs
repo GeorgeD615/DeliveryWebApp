@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Db;
+using OnlineShopWebApp.ReviewApi;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineShopWebApp.Models.Products
@@ -24,13 +25,20 @@ namespace OnlineShopWebApp.Models.Products
 
         public string ImagePath => ImagesPaths.IsNullOrEmpty() ? Constants.DefaultProductImagePath : ImagesPaths[0];
 
-        public ProductViewModel(Guid id, string name, decimal cost, string description, string[] imagesPaths)
+        public List<ReviewViewModel>? Reviews { get; set; }
+        public double? Grade { get; }
+        public string? NewReviewText { get; set; }
+        public int? NewReviewGrade { get; set; }
+
+        public ProductViewModel(Guid id, string name, decimal cost, string description, string[] imagesPaths, List<ReviewViewModel>? reviews = null)
         {
             Id = id;
             Name = name;
             Cost = cost;
             Description = description;
             ImagesPaths = imagesPaths;
+            Reviews = reviews;
+            Grade = reviews.IsNullOrEmpty() ? null : reviews.Select(r => r.Grade).Average();
         }
 
         public ProductViewModel() { }

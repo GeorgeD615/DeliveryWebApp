@@ -5,12 +5,13 @@ using OnlineShopWebApp.Models.Orders;
 using OnlineShopWebApp.Models.Products;
 using OnlineShopWebApp.Models.Roles;
 using OnlineShopWebApp.Models.Users;
+using OnlineShopWebApp.ReviewApi;
 
 namespace OnlineShopWebApp.Models.Helpers
 {
     public static class ModelConverter
     {
-        public static ProductViewModel? ToProductViewModel(this Product product)
+        public static ProductViewModel? ToProductViewModel(this Product product, List<ReviewViewModel>? reviews = null)
         {
             if (product == null)
                 return null;
@@ -20,7 +21,23 @@ namespace OnlineShopWebApp.Models.Helpers
                             product.Name,
                             product.Cost,
                             product.Description,
-                            product.Images.Select(i => i.Url).ToArray());
+                            product.Images.Select(i => i.Url).ToArray(),
+                            reviews);
+        }
+
+        public static ReviewViewModel? ToReviewViewModel(this Review review, string userName, string avatarUrl)
+        {
+            if (review == null)
+                return null;
+
+            return new ReviewViewModel()
+            {
+                UserName = userName,
+                Text = review.Text,
+                UserAvatarUrl = avatarUrl,
+                Grade = review.Grade,
+                CreationTime = review.CreateDate
+            };
         }
 
         public static EditProductViewModel? ToEditProductViewModel(this Product product)

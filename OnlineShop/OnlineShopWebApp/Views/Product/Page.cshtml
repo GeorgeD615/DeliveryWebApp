@@ -40,6 +40,24 @@
                     <div class="row">
                         <div class="col-8 align-content-lg-start pt-2">
                             <p><b>@product.Name</b><br>@product.Cost руб.</p>
+                            <p>
+                                @if (product.Grade != null)
+                                {
+                                    @for (int i = 1; i <= (int)Math.Round((double)product.Grade); ++i)
+                                    {
+                                        <label for="rate-6" style="font-size: 14px; color: #faec1b;
+                                            text-shadow: 0 0 2px #ffffff, 0 0 10px #ffee58;">
+                                            <i class="fa-solid fa-star"></i>
+                                        </label>
+                                    }
+                                    @for (int i = (int)Math.Round((double)product.Grade) + 1; i <= 5; ++i)
+                                    {
+                                        <label style="font-size: 14px;">
+                                            <i class="fa-solid fa-star"></i>
+                                        </label>
+                                    }
+                                }
+                            </p>
                         </div>
                         <div class="col-1 justify-content-lg-end">
                             <a asp-controller="carts" asp-action="addProduct" asp-route-userName="@User.Identity.Name" asp-route-productId="@product.Id" class="btn btn-outline-cartChangeAmount" role="button">

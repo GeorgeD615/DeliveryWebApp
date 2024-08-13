@@ -1,17 +1,18 @@
 ﻿﻿@using OnlineShopWebApp.Models.Products
 @model ProductViewModel
+                
 @if (Model != null)
 {
     <div class="row">
         @if(Model.ImagesPaths.Length < 2)
         {
-            <div class="col-4">
+            <div class="col-4 me-1">
                 <img class="img-fluid img-thumbnail" src="@Model.ImagePath" alt="Изображение товара" />
             </div>
         }
         else
         {
-            <div id="carouselExampleControls" class="carousel slide col-4" data-bs-ride="carousel">
+            <div id="carouselExampleControls" class="carousel slide col-4 me-1" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="@Model.ImagesPaths.FirstOrDefault()" class="img-fluid img-thumbnail" alt="Изображение товара">
@@ -33,30 +34,130 @@
                 </button>
             </div>
         }
-        <div class="col-3">
-            <h2>@Model.Name</h2>
-            <h5>@Model.Description</h5>
+        <div class="col-7">
             <div class="row">
-                <div class="col-5 ml-1">
+                <div class="col-6">
+                    <h1 style="font-family: 'Bezier Sans' , sans-serif; color:#E3A457; font-weight:600">
+                        @Model.Name
+                    </h1>
+                    <h5 class="mt-3 mb-3">@Model.Description</h5>
+                </div>
+                <div class="col-6">
+                    @if(Model.Grade != null)
+                    {
+                        @for (int i = 1; i <= (int)Math.Round((double)Model.Grade); ++i)
+                        {
+                            <label for="rate-6" style="color: #faec1b;
+                                        text-shadow: 0 0 2px #ffffff, 0 0 10px #ffee58;">
+                                <i class="fa-solid fa-star"></i>
+                            </label>
+                        }
+                        @for (int i = (int)Math.Round((double)Model.Grade) + 1; i <= 5; ++i)
+                        {
+                            <label>
+                                <i class="fa-solid fa-star"></i>
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-3">
+                    <p style="font-size:35px; font-weight:600">@Model.Cost ₽</p>
+                </div>
+                <div class="col-1 mt-2 me-1">
                     <a asp-controller="carts" asp-action="addProduct" asp-route-userName="@User.Identity.Name" asp-route-productId="@Model.Id" class="btn btn-outline-cartChangeAmount" role="button">
-                        @await Html.PartialAsync("AddToCartIcon") @Model.Cost руб.
+                        @await Html.PartialAsync("AddToCartIcon")
                     </a>
                 </div>
-                <div class="col-6 p-0">
+                <div class="col-1 mt-2 me-1">
                     <a asp-controller="favorites" asp-action="addFavorite" asp-route-userName="@User.Identity.Name" asp-route-productId="@Model.Id" class="btn btn-outline-addFavorite" role="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"><path fill="currentColor" d="M7 5a4 4 0 0 0-4 4c0 3.552 2.218 6.296 4.621 8.22A21.5 21.5 0 0 0 12 19.91a21.6 21.6 0 0 0 4.377-2.69C18.78 15.294 21 12.551 21 9a4 4 0 0 0-4-4c-1.957 0-3.652 1.396-4.02 3.2a1 1 0 0 1-1.96 0C10.652 6.396 8.957 5 7 5m5 17c-.316-.02-.56-.147-.848-.278a23.5 23.5 0 0 1-4.781-2.942C3.777 16.705 1 13.449 1 9a6 6 0 0 1 6-6 6.18 6.18 0 0 1 5 2.568A6.18 6.18 0 0 1 17 3a6 6 0 0 1 6 6c0 4.448-2.78 7.705-5.375 9.78a23.6 23.6 0 0 1-4.78 2.942c-.543.249-.732.278-.845.278"></path></svg>
                     </a>
                 </div>
+                <div class="col-6 mt-2">
+                    <a asp-controller="product" asp-action="page" asp-route-numberOfProductsPerPage="10" asp-route-pageNumber="1" class="btn btn-outline-secondary p-2" role="button">Вернуться на главную</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-10">
-        </div>
-        <div class="col-2">
-            <a asp-controller="product" asp-action="page" asp-route-numberOfProductsPerPage="10" asp-route-pageNumber="1" class="btn btn-outline-dark" role="button">Вернуться на главную</a>
-        </div>
-    </div>
+    <br></br>
+    if (User.Identity.IsAuthenticated)
+    {
+        <h3>Место для вашего отзыва:</h3>
+        <form method="post">
+            <input type="hidden" asp-for="Id" value="@Model.Id"></input>
+            <div class="row">
+                <div class="mb-1 col-5">
+                    <textarea asp-for="NewReviewText" name="NewReviewText" rows="3" class="form-control" aria-label="With textarea"></textarea>
+                </div>
+                <div class="col-2">
+                    <span class="star-rating">
+                        <label for="rate-1" style="--i:1"><i class="fa-solid fa-star"></i></label>
+                        <input asp-for="NewReviewGrade" type="radio" id="rate-1" value="1">
+                        <label for="rate-2" style="--i:2"><i class="fa-solid fa-star"></i></label>
+                        <input asp-for="NewReviewGrade" type="radio" id="rate-2" value="2" checked>
+                        <label for="rate-3" style="--i:3"><i class="fa-solid fa-star"></i></label>
+                        <input asp-for="NewReviewGrade" type="radio" id="rate-3" value="3">
+                        <label for="rate-4" style="--i:4"><i class="fa-solid fa-star"></i></label>
+                        <input asp-for="NewReviewGrade" type="radio" id="rate-4" value="4">
+                        <label for="rate-5" style="--i:5"><i class="fa-solid fa-star"></i></label>
+                        <input asp-for="NewReviewGrade" type="radio" id="rate-5" value="5">
+                    </span>
+                    <button asp-controller="product" asp-action="createReview" type="submit" class="btn btn-outline-cartChangeAmount mt-2">
+                        Отправить
+                    </button>
+                </div>
+            </div>
+        </form>
+    }
+    else
+    {
+        <h3>Авторизуйтесь, чтобы оставить отзыв.</h3>
+    }
+    @if(Model.Reviews != null && Model.Reviews.Any())
+    {
+        <h3 class="mt-5">Отзывы других пользователей</h3>
+        @foreach (var review in Model.Reviews)
+        {
+            <div class="row">
+                <div class="col-7">
+                    <hr></hr>
+                    <div class="row mb-3 mt-2">
+                        <div class="col-2">
+                            <img class="img-fluid rounded-circle" src="@review.UserAvatarUrl" alt="Avatar" width="90px">
+                        </div>
+                        <div class="col-5">
+                            <p><span style="font-weight:bold">@review.UserName</span> <span style="color : gray;">@review.CreationTime?.ToString("dd/MM/yyyy")</span></p>
+                            <p>@review.Text</p>
+                        </div>
+                        <div class="col-5 text-end">
+                            <p>
+                                @for (int i = 1; i <= review.Grade; ++i)
+                                {
+                                    <label for="rate-6" style="color: #faec1b;
+                                    text-shadow: 0 0 2px #ffffff, 0 0 10px #ffee58;">
+                                        <i class="fa-solid fa-star"></i>
+                                    </label>
+                                }
+                                @for (int i = review.Grade + 1; i <= 5; ++i)
+                                {
+                                    <label>
+                                        <i class="fa-solid fa-star"></i>
+                                    </label>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h3 class="mt-5">Отзывов пока нет — ваш может стать первым.</h3>
+    }
 }
 else
 {
