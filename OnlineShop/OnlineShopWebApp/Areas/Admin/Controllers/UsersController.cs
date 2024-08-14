@@ -7,6 +7,7 @@ using OnlineShop.Db.Models;
 using OnlineShopWebApp.Models.Helpers;
 using OnlineShopWebApp.Models.Users;
 using OnlineShopWebApp.Models.ViewModels;
+using OnlineShopWebApp.ReviewApi;
 
 namespace OnlineShopWebApp.Areas.Admin.Controllers
 {
@@ -15,9 +16,11 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<User> usersManager;
-        public UsersController(UserManager<User> usersManager)
+        private readonly ReviewApiClient reviewApiClient;
+        public UsersController(UserManager<User> usersManager, ReviewApiClient reviewApiClient)
         {
             this.usersManager = usersManager;
+            this.reviewApiClient = reviewApiClient;
         }
 
         public async Task<ActionResult> Index()
@@ -93,6 +96,13 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
         public async Task<ActionResult> Remove(string userId)
         {
+            var currentUser = await usersManager.GetUserAsync(HttpContext.User);
+
+            if(currentUser!.Id == userId)
+                return RedirectToAction(nameof(Index));
+
+            await reviewApiClient.DeleteReviewsByUserIdAsync(userId);
+
             var user = await usersManager.FindByIdAsync(userId);
             await usersManager.DeleteAsync(user!);
             return RedirectToAction(nameof(Index));
@@ -116,7 +126,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
 
             var user = new User() { UserName = createUserViewModel.RegistrationModel.Login };
             await usersManager.CreateAsync(user, createUserViewModel.RegistrationModel.Password);
-            await usersManager.AddToRoleAsync(user, Constants.UserRoleName);
+            await usersManager.AddToRoleAsync(user, createUserViewModel.RoleId);
 
             return RedirectToAction(nameof(Index));
         }

@@ -73,7 +73,7 @@
                     <div class="col-4 gray">Статус заказа:</div>
                     <div class="col-8">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" class="btn btn-outline-cartChangeAmount dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 @EnumHelper.GetDisplayName(Model.StateOfOrder)
                             </button>
                             <ul class="dropdown-menu">
@@ -89,8 +89,8 @@
                     </div>
                 </div>
                 <br>
-                <div class="m-4">
-                    <a asp-area="admin" asp-controller="orders" asp-action="index" class="btn btn-dark">Вернуться к заказам</a>
+                <div class="m-4 text-end">
+                    <a asp-area="admin" asp-controller="orders" asp-action="index" class="btn btn-outline-dark">Вернуться к заказам</a>
                 </div>
             </div>
         </div>

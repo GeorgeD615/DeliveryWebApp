@@ -20,6 +20,11 @@
     <div class="card-body">
         @if (Model.Any())
         {
+            <div class="text-lg-start">
+                <a asp-area="admin" asp-controller="users" asp-action="create" class="btn btn-outline-cartChangeAmount">
+                    Создать пользователя
+                </a>
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -49,11 +54,11 @@
         else
         {
             <h2>Пока нет пользователей</h2>
+            <div class="text-lg-start">
+                <a asp-area="admin" asp-controller="users" asp-action="create" class="btn btn-outline-dark">
+                    Создать пользователя
+                </a>
+            </div>
         }
-        <div class="text-lg-start">
-            <a asp-area="admin" asp-controller="users" asp-action="create" class="btn btn-outline-dark">
-                Создать пользователя
-            </a>
-        </div>
     </div>
 </div>

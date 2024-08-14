@@ -28,7 +28,7 @@ namespace OnlineShopWebApp.Areas.Admin.Controllers
         public async Task<ActionResult> EditStatusAsync(Guid orderId, StateOfOrder status)
         {
             await ordersRepository.EditStatusAsync(orderId, status);
-            return RedirectToAction(nameof(ShowInfoAsync), new { orderId });
+            return RedirectToAction("ShowInfo", new { orderId });
         }
     }
 }
