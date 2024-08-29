@@ -1,7 +1,4 @@
-﻿using OnlineShop.Db.Models;
-using System.Net.Http.Json;
-
-namespace OnlineShopWebApp.ReviewApi
+﻿namespace OnlineShopWebApp.ReviewApi
 {
     public class ReviewApiClient
     {
