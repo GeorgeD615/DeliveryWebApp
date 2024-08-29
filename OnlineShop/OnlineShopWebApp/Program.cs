@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Net.Http.Headers;
 using OnlineShop.Db;
 using OnlineShop.Db.Implementations;
 using OnlineShop.Db.Interfaces;
