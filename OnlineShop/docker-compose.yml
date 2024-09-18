@@ -1,0 +1,51 @@
+version: '3.4'
+services:
+  mssqlserver:
+    container_name: review_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment: 
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1Secure*Password1
+    networks:
+      - my_network
+
+  reviewsapi:
+    container_name: reviews_api
+    image: georged615/reviews_api:latest
+    ports:
+      - 5001:80
+    depends_on:
+      - mssqlserver
+    restart: unless-stopped 
+    networks:
+      - my_network
+
+  mssqlserver-shop:
+    container_name: online_shop_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment: 
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1Secure*Password1
+    networks:
+      - my_network
+
+  onlineshopwebapp:
+    container_name: online_shop_app_mvc
+    image: ${DOCKER_REGISTRY-}online_shop_web_app
+    build:
+      context: .
+      dockerfile: OnlineShopWebApp/Dockerfile
+    ports:
+      - 5000:8080
+    depends_on:
+      - mssqlserver-shop
+      - reviewsapi
+    restart: unless-stopped 
+    networks:
+      - my_network
+    volumes:
+      - ./wwwroot/images:/app/wwwroot/images:rw
+
+networks:
+  my_network:
+

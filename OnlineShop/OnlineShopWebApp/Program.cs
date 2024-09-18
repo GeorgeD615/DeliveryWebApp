@@ -21,7 +21,7 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 
 });
 
-string connection = builder.Configuration.GetConnectionString("online_shop");
+string connection = builder.Configuration.GetConnectionString("docker");
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(connection));
@@ -50,7 +50,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddHttpClient("ReviewApi", httpClient =>
 {
-    httpClient.BaseAddress = new Uri("https://localhost:7274/");
+    httpClient.BaseAddress = new Uri("http://reviews_api/");
 });
 
 // Add services to the container.
