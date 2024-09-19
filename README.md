@@ -53,9 +53,30 @@ cd DeliveryWebApp/OnlineShop
 
 <h2>Основные страницы</h2>
 <ul>
-  <li><strong>Главная страница:</strong></li>
-  <li><strong>Личный кабинет:</strong></li>
-  <li><strong>Страница блюда:</strong></li>
-  <li><strong>Корзина:</strong></li>
-  <li><strong>Админ панель (страница заказов):</strong></li>
+  <li>
+    <strong>Главная страница:</strong>
+    <br>
+    <img src="https://github.com/GeorgeD615/DeliveryWebApp/blob/main/Screenshots/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%20(241).png" height="400" alt="Главная страница">
+  </li>
+  <li>
+    <strong>Личный кабинет:</strong>
+    <br>
+    <img src="https://github.com/GeorgeD615/DeliveryWebApp/blob/main/Screenshots/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%20(243).png" height="400" alt="Личный кабинет">
+  </li>
+  <li>
+    <strong>Страница блюда:</strong>
+    <br>
+    <img src="https://github.com/GeorgeD615/DeliveryWebApp/blob/main/Screenshots/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%20(240).png" height="400" alt="Страница блюда">
+  </li>
+  <li>
+    <strong>Корзина:</strong>
+    <br>
+    <img src="https://github.com/GeorgeD615/DeliveryWebApp/blob/main/Screenshots/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%20(242).png" height="400" alt="Корзина">
+  </li>
+  <li>
+    <strong>Админ панель (страница заказов):</strong>
+    <br>
+    <img src="https://github.com/GeorgeD615/DeliveryWebApp/blob/main/Screenshots/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%20(244).png" height="400" alt="Админ панель">
+  </li>
 </ul>
+
