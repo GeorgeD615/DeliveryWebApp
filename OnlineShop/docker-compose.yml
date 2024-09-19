@@ -12,8 +12,6 @@ services:
   reviewsapi:
     container_name: reviews_api
     image: georged615/reviews_api:latest
-    ports:
-      - 5001:80
     depends_on:
       - mssqlserver
     restart: unless-stopped 
@@ -31,12 +29,9 @@ services:
 
   onlineshopwebapp:
     container_name: online_shop_app_mvc
-    image: ${DOCKER_REGISTRY-}online_shop_web_app
-    build:
-      context: .
-      dockerfile: OnlineShopWebApp/Dockerfile
+    image: georged615/online_shop_web_app:latest
     ports:
-      - 5000:8080
+      - 80:8080
     depends_on:
       - mssqlserver-shop
       - reviewsapi
