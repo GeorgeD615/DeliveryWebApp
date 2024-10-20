@@ -39,7 +39,7 @@ services:
     networks:
       - my_network
     volumes:
-      - ./wwwroot/images:/app/wwwroot/images:rw
+      - .OnlineShopWebApp/wwwroot/images:/app/OnlineShopWebApp/wwwroot/images:rw
 
 networks:
   my_network:
